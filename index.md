@@ -3,10 +3,8 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: default
-# TODO: for some reason (bug?) the title is set to '{{ site.title }}' when this is not specified
-title: Welcome
 ---
-# {{ site.title }}
+# Hyperfoil
 <h3 id="project_description">{{ site.description }}</h3>
 
 <div id="features">
