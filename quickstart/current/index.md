@@ -36,7 +36,7 @@ In the future you might find [editing with schema]({{ "/docs/editor.md" | absolu
 Let's start a mocking server of our own and hit it with more requests:
 ```
 > go get github.com/jmartin82/mmock
-> mmock -server-ip localhost -server-port 8080 -config-path examples/random-urls.server.yaml
+> mmock -server-ip localhost -server-port 8080 -config-path examples/random-urls.server
 ```
 If you prefer running that as Docker container, use
 ```
