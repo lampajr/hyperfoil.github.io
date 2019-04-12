@@ -1,4 +1,4 @@
-# Getting started: complex workflow
+# Getting started: Complex workflow
 
 The [previous example]({{ "/quickstart/quickstart2.html" | absolute_url }}) was the first 'real' benchmark, but it didn't do anything different from what you could run through `ab`, `siege` or similar tools.
 
@@ -11,8 +11,7 @@ Of course, the results were not suffering from the [coordinated omission problem
 Start the server and fire the scenario the usual way:
 
 ```
-> docker run -v $(pwd)/examples:/config:z -p 8080:8083 \
-    jordimartin/mmock -config-path=/config/choose-movie.server
+> docker run -v $(pwd)/examples/choose-movie.server:/config:z -p 8080:8083 jordimartin/mmock
 > bin/cli.sh
 [hyperfoil@localhost]$ run-local examples/choose-movie.hf.yaml
 ```

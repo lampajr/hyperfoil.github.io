@@ -3,7 +3,7 @@ redirect_from:
 - /quickstart/
 ---
 
-# Getting started: first benchmark
+# Getting started: First benchmark
 
 1. Download [latest release](https://github.com/Hyperfoil/Hyperfoil/releases/latest) and unpack it
 ```
