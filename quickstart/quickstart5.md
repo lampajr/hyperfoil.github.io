@@ -15,6 +15,11 @@ Let's take a look into the example, where we'll slowly (over 5 seconds) increase
 <script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/eshop-scale.hf.yaml?footer=no"></script>
 {% endraw %}
 
+Don't forget to start the mock server as we've used in the previous quickstart.
+```
+> docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
+```
+
 Synchronizing multiple workloads across iteration can become a bit cumbersome. That's why we can keep similar types of workflow together, and split the phase into *forks*. In fact forks will become different phases, but these will be linked together so that you can refer to all of them as to a single phase. Take a look at the benchmark rewritten to use forks:
 
 {% raw %}

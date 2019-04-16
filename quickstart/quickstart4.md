@@ -12,7 +12,7 @@ In Hyperfoil, this all is expressed through *phases*. We've already seen phases 
 
 There's a matching mock server to run this scenario:
 ```
-> docker run -v $(pwd)/examples/choose-movie.server:/config:z -p 8080:8083 jordimartin/mmock
+> docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 
 In [next quickstart]({{ "/quickstart/quickstart5.html" }}) you'll learn how to repeat and link the phases.
