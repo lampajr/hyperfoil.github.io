@@ -4,7 +4,9 @@ Until now we have always started our benchmarks from the CLI, using the `run-loc
 
 When testing a reasonably performing system you need multiple nodes driving the load - we call them *agents*. These agents sync up, receive commands and report statistics to a master node, the *controller*. This node exposes a RESTful API to upload & start the benchmark, watch its progress and download results.
 
-There are couple of scripts in the `bin/` directory, notably `bin/controller.sh`, `bin/agent.sh` and `bin/standalone.sh`. You can guess what type of node the former two start; `standalone.sh` starts the controller and one agent in a single JVM. The nodes run as clustered [Vert.x](https://vertx.io/) servers and communicate over the event bus.
+There are two other scripts in the `bin/` directory:
+* `standalone.sh` starts both the controller and (one) agent in a single JVM.
+* `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
 
 Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the [examples/single-request.hf.yaml]({{ site.github.repository_url }}/blob/master/distribution/src/main/resources/examples/single-request.hf.yaml) benchmark:
 
