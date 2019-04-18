@@ -27,9 +27,9 @@ github:
   repository_url: https://github.com/Hyperfoil/Hyperfoil
 
 last_release:
-  zip: hyperfoil-0.1.zip
-  dir: hyperfoil-0.1
-  url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.1/hyperfoil-0.1.zip
+  zip: hyperfoil-0.2.zip
+  dir: hyperfoil-0.2
+  url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.2/hyperfoil-0.2.zip
 
 # Build settings
 markdown: kramdown
