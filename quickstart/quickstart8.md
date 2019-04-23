@@ -13,15 +13,11 @@ Let's start with a `io.hyperfoil.api.config.Step` implementation. The interface 
 
 We'll create a step that will divide variable from a session by a (configurable) constant and store the result in another variable. As the step creates a new variable we need to reserve a space for this in the session; that's why it will implement `io.hyperfoil.api.session.ResourceUtilizer` as well:
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil/blob/master/distribution/src/main/java/io/hyperfoil/example/DivideStep.java?footer=no&slice=23:61"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='23:61' %}
 
 Then we need a builder class that will allow us to configure the step. To keep related classes together we will define it as inner static class:
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil/blob/master/distribution/src/main/java/io/hyperfoil/example/DivideStep.java?footer=no&slice=62:105"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='62:105' %}
 
 As the comments say, the builder is using fluent setter syntax to set the attributes. When you want to nest attributes under another builder, you can just add parameter-less method `FooBuilder foo()` the returns an instance of `FooBuilder`; the parser will fill this instance as well. There are some interfaces your builder can implement to accept lists or different structures, but the description is out of scope of this quickstart.
 
@@ -37,15 +33,11 @@ The last class we need to define is the builder factory. As we need the record f
 
 The class can be placed as inner static class of `DivideStep` as well. Make sure the the return type from `newBuilder` method is the concrete type, in this case `Builder` and not the `StepBuilder`. This is important for tools that generate schema or documentation.
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil/blob/master/distribution/src/main/java/io/hyperfoil/example/DivideStep.java?footer=no&slice=106:147"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='106:147' %}
 
 The whole class [can be inspected here](http://github.com/Hyperfoil/Hyperfoil/blob/master/distribution/src/main/java/io/hyperfoil/example/DivideStep.java) and it is already included in the `extensions` directory. You can try running `bin/standalone.sh`, upload and run [examples/divide.hf.yaml](https://github.com/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/divide.hf.yaml). You should see about 5 log messages in the server log.
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/two-agents.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/two-agents.hf.yaml' %}
 
 There are several other integration points but `Step`:
 * `io.hyperfoil.api.session.Action` is very similar to step, but it does not allow blocking. Implement `Action.BuilderFactory` to define new actions.

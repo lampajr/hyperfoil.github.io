@@ -6,9 +6,7 @@ Also, driving constant load may not be the best way to run the benchmark: often 
 
 In Hyperfoil, this all is expressed through *phases*. We've already seen phases in the [first quickstart]({{ "/quickstart/quickstart3.html" | absolute_url }}) as we wanted to execute a non-default type of load - running the workload only once. Let's take a look on the eshop case first:
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/eshop.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/eshop.hf.yaml' %}
 
 There's a matching mock server to run this scenario:
 ```

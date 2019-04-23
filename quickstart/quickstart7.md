@@ -8,9 +8,7 @@ In this quickstart we'll use the SSH deployer; make sure your machine has SSH se
 
 When we were running in the standalone or local mode we did not have to set any agents in the benchmark definition. That changes now as we need to inform the controller where the agents should be deployed. Let's see a benchmark - [two-agents.hf.yaml]({{ site.github.repository_url }}/blob/master/distribution/src/main/resources/examples/two-agents.hf.yaml) that has those agents defined.
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/two-agents.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/two-agents.hf.yaml' %}
 
 The load the benchmark generates is evenly split among the agents, so if you want to use another agent, you don't need to do any calculations - just add the agent and you're good to go.
 

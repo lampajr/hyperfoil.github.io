@@ -15,9 +15,7 @@ If you prefer running that as Docker container, use
 
 Here is the benchmark we're going to run:
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/random-urls.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/random-urls.hf.yaml' %}
 
 So let's run this through CLI:
 ```

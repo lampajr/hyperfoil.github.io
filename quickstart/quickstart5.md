@@ -11,9 +11,7 @@ At this point it would be useful to mention the lifecycle of phases; phase is in
 
 Let's take a look into the example, where we'll slowly (over 5 seconds) increase load to 10+5 users/sec, run with this load for 10 seconds, again increase it by another 10+5 users/sec and so forth until we reach 100+50 users per second. As we define `maxIterations` for these phases the benchmark will actually contain phases `browsingUserRampUp/0`, `browsingUserRampUp/1`, `browsingUserRampUp/2` and so forth.
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/eshop-scale.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/eshop-scale.hf.yaml' %}
 
 Don't forget to start the mock server as we've used in the previous quickstart.
 ```
@@ -22,9 +20,7 @@ Don't forget to start the mock server as we've used in the previous quickstart.
 
 Synchronizing multiple workloads across iteration can become a bit cumbersome. That's why we can keep similar types of workflow together, and split the phase into *forks*. In fact forks will become different phases, but these will be linked together so that you can refer to all of them as to a single phase. Take a look at the benchmark rewritten to use forks:
 
-{% raw %}
-<script src="https://gist-it.appspot.com/github/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/eshop-forks.hf.yaml?footer=no"></script>
-{% endraw %}
+{% include codesample.html src='distribution/src/main/resources/examples/eshop-forks.hf.yaml' %}
 
 This definition will create phases `rampUp/0/browsingUser`, `rampUp/0/buyingUser`, `rampUp/1/browsingUser` etc. - you'll see them in statistics.
 
