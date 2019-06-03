@@ -42,6 +42,6 @@ You might wonder why the test did only 47 requests in 5 seconds, instead of 50. 
 
 Also, the test might take a few milliseconds longer than the configured 5 seconds. We wait for all the requests to be responded and grab statistics only after that.
 
-In the next quickstart you'll see a (more complex scenario)[{{ "/quickstart/quickstart3.html" | absolute_url }}]
+In the next quickstart you'll see a [more complex scenario]({{ "/quickstart/quickstart3.html" | absolute_url }})
 
 {% include quickstart_links.md %}
