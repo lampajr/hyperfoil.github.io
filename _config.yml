@@ -29,6 +29,7 @@ github:
 last_release:
   zip: hyperfoil-0.2.zip
   dir: hyperfoil-0.2
+  tag: release-0.2
   url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.2/hyperfoil-0.2.zip
 
 # Build settings

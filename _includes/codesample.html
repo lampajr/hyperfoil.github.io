@@ -7,7 +7,7 @@ var code = document.createElement('code');
 code.className = "prettyprint";
 pre.insertBefore(code, null);
 document.currentScript.parentNode.insertBefore(pre, document.currentScript)
-fetch('https://raw.githubusercontent.com/Hyperfoil/Hyperfoil/master/{{ include.src }}')
+fetch('https://raw.githubusercontent.com/Hyperfoil/Hyperfoil/{{ site.last_release.tag }}/{{ include.src }}')
   .then(function(response) {
       if (!response.ok) {
           console.log(response.statusText);
