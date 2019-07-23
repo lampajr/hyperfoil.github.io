@@ -10,15 +10,26 @@ document.currentScript.parentNode.insertBefore(pre, document.currentScript)
 fetch('https://raw.githubusercontent.com/Hyperfoil/Hyperfoil/{{ site.last_release.tag }}/{{ include.src }}')
   .then(function(response) {
       if (!response.ok) {
-          console.log(response.statusText);
-      }
-      response.text().then(function (text) {
+          fetch('https://raw.githubusercontent.com/Hyperfoil/Hyperfoil/master/{{ include.src }}')
+            .then(function(response) {
+                response.text().then(function (text) {
 {% if include.slice != nil %}
-        var slice = "{{ include.slice }}".split(":");
-        text = text.split(/\r?\n/).slice(slice[0], slice[1]).join("\n");
+                  var slice = "{{ include.slice }}".split(":");
+                  text = text.split(/\r?\n/).slice(slice[0], slice[1]).join("\n");
 {% endif %}
-        code.innerHTML = text;
-        prettyPrint();
-      })
+                  code.innerHTML = text;
+                  prettyPrint();
+                })
+            })
+      } else {
+        response.text().then(function (text) {
+{% if include.slice != nil %}
+          var slice = "{{ include.slice }}".split(":");
+          text = text.split(/\r?\n/).slice(slice[0], slice[1]).join("\n");
+{% endif %}
+          code.innerHTML = text;
+          prettyPrint();
+        })
+      }
   })
 </script>

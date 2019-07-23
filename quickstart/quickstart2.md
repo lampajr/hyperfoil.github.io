@@ -1,7 +1,7 @@
 # Getting started: Steps and statistics
 
 In [previous quickstart]({{ "/quickstart/quickstart1.html" | absolute_url }}) you created a benchmark
-that fires only one HTTP request. Our next example [random-urls.hf.yaml](https://github.com/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/random-urls.hf.yaml) is going to hit random URLs at this server with 10 requests per second. We'll see how to generate random data and collect statistics for different URLs.
+that fires only one HTTP request. Our next example {% include example_link.md src='random-urls.hf.yaml' %} is going to hit random URLs at this server with 10 requests per second. We'll see how to generate random data and collect statistics for different URLs.
 
 First start a mocking server:
 ```

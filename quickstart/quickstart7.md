@@ -6,7 +6,7 @@ Hyperfoil operates as a cluster of [Vert.x](https://vertx.io/). When the benchma
 
 In this quickstart we'll use the SSH deployer; make sure your machine has SSH server running on port 22 and you can login using your pubkey `~/.ssh/id_rsa`. The SSH deployer copies the necessary JARs to `/tmp/hyperfoil/agentlib/` and starts the agent there.
 
-When we were running in the standalone or local mode we did not have to set any agents in the benchmark definition. That changes now as we need to inform the controller where the agents should be deployed. Let's see a benchmark - [two-agents.hf.yaml]({{ site.github.repository_url }}/blob/master/distribution/src/main/resources/examples/two-agents.hf.yaml) that has those agents defined.
+When we were running in the standalone or local mode we did not have to set any agents in the benchmark definition. That changes now as we need to inform the controller where the agents should be deployed. Let's see a benchmark - {% include example_link.md src='two-agents.hf.yaml' %} that has those agents defined.
 
 {% include codesample.html src='distribution/src/main/resources/examples/two-agents.hf.yaml' %}
 

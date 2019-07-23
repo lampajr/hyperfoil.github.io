@@ -35,7 +35,7 @@ The class can be placed as inner static class of `DivideStep` as well. Make sure
 
 {% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='106:147' %}
 
-The whole class [can be inspected here](http://github.com/Hyperfoil/Hyperfoil/blob/master/distribution/src/main/java/io/hyperfoil/example/DivideStep.java) and it is already included in the `extensions` directory. You can try running `bin/standalone.sh`, upload and run [examples/divide.hf.yaml](https://github.com/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/divide.hf.yaml). You should see about 5 log messages in the server log.
+The whole class {% include ghlink.md text='can be inspected here' src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' %} and it is already included in the `extensions` directory. You can try running `bin/standalone.sh`, upload and run {% include example_link.md src='divide.hf.yaml' %}. You should see about 5 log messages in the server log.
 
 {% include codesample.html src='distribution/src/main/resources/examples/two-agents.hf.yaml' %}
 
@@ -44,6 +44,6 @@ There are several other integration points but `Step`:
 * `StatusHandler`, `HeaderHandler` and `BodyHandler` in `io.hyperfoil.api.http` package process different stages of HTTP response parsing. All these have `BuilderFactory` inner interface for you to implement.
 * `io.hyperfoil.api.connection.Processor` performs later generic stages of response processing. As this interface is generic, there are two factories that you could use: `i.h.a.c.Request.ProcessorBuilderFactory` and `i.h.a.c.HttpRequest.ProcessorBuilderFactory`.
 
-This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "docs/current/index.html" | absolute_url }}) or talk to us on [Zulip](https://hyperfoil.zulipchat.com/).
+This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "/docs/" | absolute_url }}) or talk to us on [Zulip](https://hyperfoil.zulipchat.com/).
 
 {% include quickstart_links.md %}

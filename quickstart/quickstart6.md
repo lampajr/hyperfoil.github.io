@@ -8,7 +8,7 @@ There are two other scripts in the `bin/` directory:
 * `standalone.sh` starts both the controller and (one) agent in a single JVM.
 * `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
 
-Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the [examples/single-request.hf.yaml]({{ site.github.repository_url }}/blob/master/distribution/src/main/resources/examples/single-request.hf.yaml) benchmark:
+Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the {% include example_link.md src='single-request.hf.yaml' %} benchmark:
 
 ```
 > bin/cli.sh
@@ -39,7 +39,7 @@ example:
 	test:            1 267.91 ms 268.44 ms 268.44 ms 268.44 ms 268.44 ms 268.44 ms      0      1      0      0        0      0
 ```
 
-By the time you type the `stats` command into CLI the benchmark is already completed and the CLI shows stats for the whole run. Let's try running the [eshop-scale.hf.yaml](https://github.com/Hyperfoil/Hyperfoil//blob/master/distribution/src/main/resources/examples/eshop-scale.hf.yaml) we've seen in previous quickstart; this will give us some time to observe on-line statistics as the benchmark is progressing:
+By the time you type the `stats` command into CLI the benchmark is already completed and the CLI shows stats for the whole run. Let's try running the {% include example_link.md src='eshop-scale.hf.yaml' %} we've seen in previous quickstart; this will give us some time to observe on-line statistics as the benchmark is progressing:
 
 ```
 > docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock

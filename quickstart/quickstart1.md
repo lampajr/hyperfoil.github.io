@@ -36,7 +36,7 @@ Requests/sec: 4.166666666666667
 ```
 Doing one request is not much of a benchmark and the statistics above are moot, but hey, this is a quickstart.
 
-Now that you know how to run a benchmark, let's take a deeper look into [examples/single-request.hf.yaml]({{ site.github.repository_url }}/blob/master/distribution/src/main/resources/examples/single-request.hf.yaml).
+Now that you know how to run a benchmark, let's take a deeper look into {% include example_link.md src='single-request.hf.yaml' %}.
 
 {% include codesample.html src='distribution/src/main/resources/examples/single-request.hf.yaml' %}
 
