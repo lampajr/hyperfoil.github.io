@@ -1,0 +1,2088 @@
+---
+redirect_from: /schema
+---
+{
+  "$schema" : "http://json-schema.org/draft-07/schema",
+  "$id" : "http://hyperfoil.io/schema",
+  "description" : "Hyperfoil benchmark configuration",
+  "type" : "object",
+  "additionalProperties" : false,
+  "required" : [ "name", "http" ],
+  "properties" : {
+    "$schema" : {
+      "description" : "This should point to either http://hyperfoil.io/schema or local file",
+      "type" : "string"
+    },
+    "name" : {
+      "description" : "Name of the benchmark.",
+      "type" : "string"
+    },
+    "agents" : {
+      "description" : "Agent nodes that should drive the load.",
+      "oneOf" : [ {
+        "type" : "object",
+        "patternProperties" : {
+          ".*" : {
+            "$ref" : "#/definitions/agent"
+          }
+        }
+      }, {
+        "type" : "array",
+        "additionalItems" : false,
+        "items" : {
+          "type" : "object",
+          "minProperties" : 1,
+          "maxProperties" : 1,
+          "patternProperties" : {
+            ".*" : {
+              "$ref" : "#/definitions/agent"
+            }
+          }
+        }
+      } ]
+    },
+    "threads" : {
+      "type" : "integer",
+      "minimum" : 1
+    },
+    "ergonomics" : {
+      "$ref" : "#/definitions/ergonomics"
+    },
+    "http" : {
+      "oneOf" : [ {
+        "type" : "array",
+        "additionalItems" : false,
+        "items" : {
+          "$ref" : "#/definitions/http"
+        }
+      }, {
+        "$ref" : "#/definitions/http"
+      } ]
+    },
+    "phases" : {
+      "description" : "Benchmark execution phases.",
+      "type" : "array",
+      "additionalItems" : false,
+      "minItems" : 1,
+      "items" : {
+        "type" : "object",
+        "minProperties" : 1,
+        "maxProperties" : 1,
+        "additionalProperties" : {
+          "type" : "object",
+          "additionalProperties" : false,
+          "properties" : {
+            "always" : {
+              "description" : "Run fixed number of concurrent users.",
+              "allOf" : [ {
+                "$ref" : "#/definitions/phase"
+              }, {
+                "required" : [ "users" ],
+                "properties" : {
+                  "users" : {
+                    "description" : "Number of started users",
+                    "$ref" : "#/definitions/incrementableInteger"
+                  }
+                }
+              } ]
+            },
+            "atOnce" : {
+              "description" : "Start fixed number of concurrent users.",
+              "allOf" : [ {
+                "$ref" : "#/definitions/phase"
+              }, {
+                "required" : [ "users" ],
+                "properties" : {
+                  "users" : {
+                    "description" : "Number of started users",
+                    "$ref" : "#/definitions/incrementableInteger"
+                  }
+                }
+              } ]
+            },
+            "constantPerSec" : {
+              "description" : "Add new users to the system at constant rate.",
+              "allOf" : [ {
+                "$ref" : "#/definitions/phase"
+              }, {
+                "required" : [ "usersPerSec" ],
+                "properties" : {
+                  "usersPerSec" : {
+                    "description" : "Rate for new users",
+                    "$ref" : "#/definitions/incrementableNumber"
+                  },
+                  "maxSessionsEstimate" : {
+                    "description" : "Estimate of maximum number of users executing this phase.",
+                    "$ref" : "#/definitions/positiveInteger"
+                  },
+                  "variance" : {
+                    "description" : "Add new users randomly following Poisson process (true, default) or evenly (false).",
+                    "type" : "boolean"
+                  }
+                }
+              } ]
+            },
+            "rampPerSec" : {
+              "description" : "Add new users to the system at varying rate.",
+              "allOf" : [ {
+                "$ref" : "#/definitions/phase"
+              }, {
+                "required" : [ "initialUsersPerSec", "targetUsersPerSec" ],
+                "properties" : {
+                  "initialUsersPerSec" : {
+                    "description" : "Rate for new users at the beginning of phase",
+                    "$ref" : "#/definitions/incrementableNumber"
+                  },
+                  "targetUsersPerSec" : {
+                    "description" : "Rate for new users at the end of phase",
+                    "$ref" : "#/definitions/incrementableNumber"
+                  },
+                  "maxSessionsEstimate" : {
+                    "description" : "Estimate of maximum number of users executing this phase.",
+                    "$ref" : "#/definitions/positiveInteger"
+                  },
+                  "variance" : {
+                    "description" : "Add new users randomly following Poisson process (true, default) or evenly (false).",
+                    "type" : "boolean"
+                  }
+                }
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "stairCase" : {
+      "desription" : "Shortcut for alternating rampPerSec and constPerSec phases",
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "initialRampUpDuration" : {
+          "description" : "Duration of the first ramp-up.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "steadyStateDuration" : {
+          "description" : "Duration of each steady-state iteration.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "rampUpDuration" : {
+          "description" : "Duration of each ramp-up iteration between steady-states.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "initialUsersPerSec" : {
+          "description" : "Number of users per second after initial ramp-up.",
+          "$ref" : "#/definitions/positiveNumber"
+        },
+        "incrementUsersPerSec" : {
+          "description" : "Number of users added in each iteration.",
+          "$ref" : "#/definitions/positiveNumber"
+        },
+        "maxIterations" : {
+          "description" : "Maximum number of steady-state phases.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "maxUnfinishedSessions" : {
+          "description" : "Maximum allowed number of active sessions when each phase finishes.",
+          "$ref" : "#/definitions/positiveInteger"
+        }
+      }
+    },
+    "usersPerSec" : {
+      "description" : "Single-phase shortcut: Rate for new users",
+      "$ref" : "#/definitions/incrementableNumber"
+    },
+    "maxSessionsEstimate" : {
+      "description" : "Single-phase shortcut: Estimate of maximum number of users executing this phase.",
+      "$ref" : "#/definitions/positiveInteger"
+    },
+    "duration" : {
+      "description" : "Single-phase shortcut: Time relative to phase start for the phase to be finished.",
+      "$ref" : "#/definitions/timeMillis"
+    },
+    "maxDuration" : {
+      "description" : "Single-phase shortcut: Hard limit, relative to phase start, after which the phase will be terminated.",
+      "$ref" : "#/definitions/timeMillis"
+    },
+    "scenario" : {
+      "description" : "Single-phase shortcut: the scenario",
+      "$ref" : "#/definitions/scenario"
+    }
+  },
+  "definitions" : {
+    "agent" : {
+      "oneOf" : [ {
+        "type" : [ "string", "number", "boolean" ]
+      }, {
+        "type" : "object",
+        "patternProperties" : {
+          ".*" : {
+            "type" : [ "string", "number", "boolean" ]
+          }
+        }
+      } ]
+    },
+    "ergonomics" : {
+      "description" : "Adjust scenario to implement common functionality out-of-the-box.",
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "repeatCookies" : {
+          "description" : "Store cookies in session and resend them on future requests. Default is true.",
+          "type" : "boolean"
+        },
+        "userAgentFromSession" : {
+          "description" : "Append session ID and client hostname as user agent",
+          "type" : "boolean"
+        }
+      }
+    },
+    "http" : {
+      "description" : "HTTP connection pool configuration.",
+      "type" : "object",
+      "additionalProperties" : false,
+      "required" : [ "host" ],
+      "properties" : {
+        "protocol" : {
+          "enum" : [ "http", "https" ]
+        },
+        "host" : {
+          "description" : "Target hostname. For simplicity this can include scheme and port, too.",
+          "type" : "string"
+        },
+        "port" : {
+          "description" : "Target TCP port",
+          "type" : "integer",
+          "minimum" : "1",
+          "maximum" : "65535"
+        },
+        "addresses" : {
+          "description" : "List of IP addresses that should be used. The connections will be randomly created to addresses in this list, or using `host` if it's empty.",
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "additionalItems" : false
+        },
+        "allowHttp1x" : {
+          "description" : "Allow using HTTP 1.0 and HTTP 1.1 connections. Default is true.",
+          "type" : "boolean"
+        },
+        "allowHttp2" : {
+          "description" : "Allow using HTTP 2.0 connections. Default is true.",
+          "type" : "boolean"
+        },
+        "directHttp2" : {
+          "description" : "Start HTTP 2.0 connections without HTTP 1.x -> 2.0 upgrade. Default is false.",
+          "type" : "boolean"
+        },
+        "maxHttp2Streams" : {
+          "description" : "Maximum number of concurrent HTTP 2.0 streams on single TCP connection. Default is 100.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "sharedConnections" : {
+          "description" : "Maximum number of connections to the server, shared between all phases and sessions. Default is 1.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "pipeliningLimit" : {
+          "description" : "Maximum number of HTTP 1.1 requests pipelined on a connection. Default is 1.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "requestTimeout" : {
+          "description" : "Default timeout for all HTTP requests. Default is 30 seconds.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "rawBytesHandlers" : {
+          "description" : "Add handlers to support parsing raw HTTP responses. Default is true.",
+          "type" : "boolean"
+        }
+      }
+    },
+    "incrementableInteger" : {
+      "oneOf" : [ {
+        "$ref" : "#/definitions/positiveInteger"
+      }, {
+        "type" : "object",
+        "additionalProperties" : false,
+        "required" : [ "base", "increment" ],
+        "properties" : {
+          "base" : {
+            "$ref" : "#/definitions/positiveInteger"
+          },
+          "increment" : {
+            "type" : "integer"
+          }
+        }
+      } ]
+    },
+    "incrementableNumber" : {
+      "oneOf" : [ {
+        "$ref" : "#/definitions/positiveNumber"
+      }, {
+        "type" : "object",
+        "additionalProperties" : false,
+        "required" : [ "base", "increment" ],
+        "properties" : {
+          "base" : {
+            "$ref" : "#/definitions/positiveNumber"
+          },
+          "increment" : {
+            "type" : "number"
+          }
+        }
+      } ]
+    },
+    "positiveInteger" : {
+      "type" : "integer",
+      "minimum" : 1
+    },
+    "positiveNumber" : {
+      "type" : "number",
+      "exclusiveMinimum" : 0
+    },
+    "phase" : {
+      "type" : "object",
+      "oneOf" : [ {
+        "required" : [ "scenario" ]
+      }, {
+        "required" : [ "forks" ]
+      } ],
+      "properties" : {
+        "startTime" : {
+          "description" : "Scheduled time (relative to benchmark start) for the phase to start. Default is immediatelly.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "startAfter" : {
+          "description" : "Phases that must be finished for this phase to start.",
+          "$ref" : "#/definitions/phaseReferenceList"
+        },
+        "startAfterStrict" : {
+          "description" : "Phases that must be terminated for this phase to start.",
+          "$ref" : "#/definitions/phaseReferenceList"
+        },
+        "duration" : {
+          "description" : "Time relative to phase start for the phase to be finished.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "maxDuration" : {
+          "description" : "Hard limit, relative to phase start, after which the phase will be terminated.",
+          "$ref" : "#/definitions/timeMillis"
+        },
+        "maxUnfinishedSessions" : {
+          "description" : "Maximum allowed number of active sessions when the phase finishes.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "maxIterations" : {
+          "description" : "Maximum number of phase iterations. Default is 1.",
+          "$ref" : "#/definitions/positiveInteger"
+        },
+        "scenario" : {
+          "$ref" : "#/definitions/scenario"
+        },
+        "forks" : {
+          "description" : "Concurrent sub-phases sharing the limits and users arrivals.",
+          "oneOf" : [ {
+            "type" : "array",
+            "minItems" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "additionalProperties" : {
+                "$ref" : "#/definitions/fork"
+              }
+            }
+          }, {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/definitions/fork"
+            }
+          } ]
+        }
+      }
+    },
+    "fork" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "weight" : {
+          "type" : "number"
+        },
+        "scenario" : {
+          "$ref" : "#/definitions/scenario"
+        }
+      }
+    },
+    "phaseReferenceList" : {
+      "oneOf" : [ {
+        "$ref" : "#/definitions/phaseReference"
+      }, {
+        "type" : "array",
+        "additionalItems" : false,
+        "minItems" : 1,
+        "items" : {
+          "$ref" : "#/definitions/phaseReference"
+        }
+      } ]
+    },
+    "phaseReference" : {
+      "oneOf" : [ {
+        "type" : "string"
+      }, {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "phase" : {
+            "type" : "string"
+          },
+          "iteration" : {
+            "enum" : [ "none", "previous", "same" ]
+          },
+          "fork" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "phase" ]
+      } ]
+    },
+    "scenario" : {
+      "oneOf" : [ {
+        "description" : "Actions that a single user will execute.",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "initialSequences" : {
+            "description" : "Sequences scheduled for execution with a new session",
+            "type" : "array",
+            "additionalItems" : false,
+            "minLength" : 1,
+            "items" : {
+              "$ref" : "#/definitions/sequence"
+            }
+          },
+          "sequences" : {
+            "description" : "Sequences that need to be explicitly triggered.",
+            "type" : "array",
+            "additionalItems" : false,
+            "minLength" : 1,
+            "items" : {
+              "$ref" : "#/definitions/sequence"
+            }
+          },
+          "orderedSequences" : {
+            "description" : "Automatically chained sequences.",
+            "type" : "array",
+            "additionalItems" : false,
+            "minLength" : 1,
+            "items" : {
+              "$ref" : "#/definitions/sequence"
+            }
+          }
+        }
+      }, {
+        "description" : "Automatically chained sequences.",
+        "type" : "array",
+        "additionalItems" : false,
+        "minItems" : 1,
+        "items" : {
+          "$ref" : "#/definitions/sequence"
+        }
+      } ]
+    },
+    "sequence" : {
+      "type" : "object",
+      "patternProperties" : {
+        ".*" : {
+          "type" : "array",
+          "additionalItems" : false,
+          "minLength" : 1,
+          "items" : {
+            "$ref" : "#/definitions/step"
+          }
+        }
+      }
+    },
+    "step" : {
+      "oneOf" : [ {
+        "type" : "object",
+        "additionalProperties" : false,
+        "$comment" : "Steps are inserted here through Generator",
+        "properties" : {
+          "log" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.LogStep$Builder"
+          },
+          "poll" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.PollStep$Builder"
+          },
+          "stop" : {
+            "type" : "null"
+          },
+          "set" : {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.SetStep$Builder"
+            }, {
+              "type" : "string"
+            } ]
+          },
+          "setInt" : {
+            "oneOf" : [ {
+              "type" : "string"
+            }, {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.SetIntStep$Builder"
+            } ]
+          },
+          "template" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.TemplateStep$Builder"
+          },
+          "json" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.JsonStep$Builder"
+          },
+          "breakSequence" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.BreakSequenceStep$Builder"
+          },
+          "nextSequence" : {
+            "type" : "string"
+          },
+          "foreach" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.ForeachStep$Builder"
+          },
+          "httpRequest" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$Builder"
+          },
+          "awaitAllResponses" : {
+            "type" : "null"
+          },
+          "clearHttpCache" : {
+            "type" : "null"
+          },
+          "scheduleDelay" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.ScheduleDelayStep$Builder"
+          },
+          "awaitDelay" : {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.AwaitDelayStep$Builder"
+            }, {
+              "type" : "string"
+            } ]
+          },
+          "thinkTime" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.ScheduleDelayStep$Builder"
+          },
+          "stopwatch" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.StopwatchBeginStep$Builder"
+          },
+          "awaitCondition" : {
+            "type" : "string"
+          },
+          "awaitInt" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.AwaitIntStep$Builder"
+          },
+          "awaitVar" : {
+            "type" : "string"
+          },
+          "unset" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.UnsetStep$Builder"
+          },
+          "addToInt" : {
+            "oneOf" : [ {
+              "type" : "string"
+            }, {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.AddToIntStep$Builder"
+            } ]
+          },
+          "randomInt" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomIntStep$Builder"
+          },
+          "randomItem" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomItemStep$Builder"
+          },
+          "randomCsvRow" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomCsvRowStep$Builder"
+          },
+          "pullSharedMap" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.PullSharedMapStep$Builder"
+          },
+          "pushSharedMap" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.PushSharedMapStep$Builder"
+          },
+          "divide" : {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.example.DivideStep$Builder"
+            }, {
+              "type" : "string"
+            } ]
+          },
+          "noop" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.NoopStep$Builder"
+          }
+        }
+      }, {
+        "enum" : [ "stop", "awaitAllResponses", "clearHttpCache", "noop" ]
+      } ]
+    },
+    "timeMillis" : {
+      "oneOf" : [ {
+        "type" : "integer"
+      }, {
+        "type" : "string",
+        "pattern" : "[0-9]* *[smh]?"
+      } ]
+    },
+    "timeNanos" : {
+      "type" : "string",
+      "pattern" : "[0-9.] *(ms|us|ns|s|m|h)?"
+    },
+    "io.hyperfoil.core.steps.LogStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        },
+        "vars" : {
+          "oneOf" : [ {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.api.config.ListBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.PollStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "periodMs" : {
+          "type" : "integer"
+        },
+        "maxRetries" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.SetStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "var" : {
+          "type" : "string"
+        },
+        "objectArray" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.SetStep$ObjectArrayBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.SetStep$ObjectArrayBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.SetStep$ObjectArrayBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "size" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.SetIntStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.TemplateStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "pattern" : {
+          "type" : "string"
+        },
+        "toVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.JsonStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "query" : {
+          "type" : "string"
+        },
+        "toVar" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.BreakSequenceStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "onBreak" : {
+          "type" : "string"
+        },
+        "condition" : {
+          "type" : "string"
+        },
+        "dependency" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.builders.IntCondition$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "greaterThan" : {
+          "type" : "integer"
+        },
+        "greaterOrEqualTo" : {
+          "type" : "integer"
+        },
+        "lessThan" : {
+          "type" : "integer"
+        },
+        "lessOrEqualTo" : {
+          "type" : "integer"
+        },
+        "equalTo" : {
+          "type" : "integer"
+        },
+        "notEqualTo" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.ForeachStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "sequence" : {
+          "type" : "string"
+        },
+        "counterVar" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "dependency" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "CONNECT" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "DELETE" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
+          } ]
+        },
+        "body" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder"
+              }
+            } ]
+          } ]
+        },
+        "path" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
+          }, {
+            "type" : "string"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "authority" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "handler" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpResponseHandlersImpl$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpResponseHandlersImpl$Builder"
+            }
+          } ]
+        },
+        "sync" : {
+          "type" : "boolean"
+        },
+        "HEAD" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
+          } ]
+        },
+        "method" : {
+          "enum" : [ "GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "TRACE", "CONNECT" ]
+        },
+        "GET" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "PUT" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "PATCH" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "TRACE" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "POST" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "OPTIONS" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
+          } ]
+        },
+        "timeout" : {
+          "type" : "string"
+        },
+        "sla" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$ListBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$ListBuilder"
+            }
+          } ]
+        },
+        "headerAppender" : {
+          "type" : "string"
+        },
+        "headers" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "oneOf" : [ {
+                  "type" : "string"
+                }, {
+                  "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder"
+                } ]
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "oneOf" : [ {
+                    "type" : "string"
+                  }, {
+                    "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder"
+                  } ]
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$HeadersBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$HeadersBuilder"
+            }
+          } ]
+        },
+        "metric" : {
+          "oneOf" : [ {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "type" : "string"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.StringGeneratorImplBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "pattern" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "pattern" : {
+          "type" : "string"
+        },
+        "form" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
+            }
+          } ]
+        },
+        "text" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "pattern" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$FormBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.HttpResponseHandlersImpl$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "body" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.http.BodyHandler$BuilderFactory"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.http.BodyHandler$BuilderFactory"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "status" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.http.StatusHandler$BuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.http.StatusHandler$BuilderFactory"
+              }
+            } ]
+          } ]
+        },
+        "onCompletion" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$BuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.session.Action$BuilderFactory"
+              }
+            } ]
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "header" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.http.HeaderHandler$BuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.http.HeaderHandler$BuilderFactory"
+              }
+            } ]
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "rawBytesHandler" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.HtmlHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "copy" : {
+          "type" : "string"
+        },
+        "onEmbeddedResource" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "copy" : {
+          "type" : "string"
+        },
+        "processor" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.connection.HttpRequest$ProcessorBuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.connection.HttpRequest$ProcessorBuilderFactory"
+              }
+            } ]
+          } ]
+        },
+        "ignoreExternal" : {
+          "type" : "boolean"
+        },
+        "fetchResource" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.ArrayRecorder$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "toVar" : {
+          "type" : "string"
+        },
+        "maxSize" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.NewSequenceProcessor$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "sequence" : {
+          "type" : "string"
+        },
+        "copy" : {
+          "type" : "string"
+        },
+        "counterVar" : {
+          "type" : "string"
+        },
+        "maxSequences" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.SimpleRecorder$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "toVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.api.connection.HttpRequest$ProcessorBuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "array" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.ArrayRecorder$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "newSequence" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+        },
+        "simple" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.SimpleRecorder$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "copy" : {
+          "type" : "string"
+        },
+        "metric" : {
+          "oneOf" : [ {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "onCompletion" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$BuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.session.Action$BuilderFactory"
+              }
+            } ]
+          } ]
+        },
+        "maxResources" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.AddToIntStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.ClearHttpCacheStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.UnsetStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.api.session.Action$BuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "addToInt" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.AddToIntStep$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "clearHttpCache" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.steps.ClearHttpCacheStep$Builder"
+        },
+        "setInt" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.SetIntStep$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "set" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.SetStep$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "unset" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.UnsetStep$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.JsonHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "toArray" : {
+          "type" : "string"
+        },
+        "copy" : {
+          "type" : "string"
+        },
+        "query" : {
+          "type" : "string"
+        },
+        "processor" : {
+          "oneOf" : [ {
+            "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.api.connection.Request$ProcessorBuilderFactory"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.api.connection.Request$ProcessorBuilderFactory"
+              }
+            } ]
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.api.connection.Request$ProcessorBuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "array" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.ArrayRecorder$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "newSequence" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+        },
+        "simple" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.SimpleRecorder$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.LogInvalidHandler$BodyHandlerBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.PassthroughHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "processor" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.connection.HttpRequest$ProcessorBuilderFactory"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.connection.HttpRequest$ProcessorBuilderFactory"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "defrag" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "io.hyperfoil.api.http.BodyHandler$BuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "parseHtml" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$Builder"
+        },
+        "json" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.JsonHandler$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "logInvalid" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.LogInvalidHandler$BodyHandlerBuilder"
+        },
+        "passthrough" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.PassthroughHandler$Builder"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.RangeStatusValidator$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "min" : {
+          "type" : "integer"
+        },
+        "max" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.StatusToCounterHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "add" : {
+          "type" : "integer"
+        },
+        "init" : {
+          "type" : "integer"
+        },
+        "set" : {
+          "type" : "integer"
+        },
+        "var" : {
+          "type" : "string"
+        },
+        "expectStatus" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.api.http.StatusHandler$BuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "range" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RangeStatusValidator$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "counter" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.StatusToCounterHandler$Builder"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.CountHeadersHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.LogInvalidHandler$HeaderHandlerBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.RecordHeaderTimeHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "metric" : {
+          "type" : "string"
+        },
+        "header" : {
+          "type" : "string"
+        },
+        "unit" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.api.http.HeaderHandler$BuilderFactory" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "countHeaders" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.CountHeadersHandler$Builder"
+        },
+        "logInvalid" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.LogInvalidHandler$HeaderHandlerBuilder"
+        },
+        "recordHeaderTime" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RecordHeaderTimeHandler$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.api.config.SLABuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "blockedRatio" : {
+          "type" : "number"
+        },
+        "limits" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
+            }
+          } ]
+        },
+        "window" : {
+          "type" : "string"
+        },
+        "meanResponseTime" : {
+          "type" : "string"
+        },
+        "errorRatio" : {
+          "type" : "number"
+        }
+      }
+    },
+    "io.hyperfoil.api.config.SLABuilder$LimitsBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.api.config.SLABuilder$ListBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$HeadersBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "withKey" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.ScheduleDelayStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "enum" : [ "FROM_LAST", "FROM_NOW" ]
+        },
+        "min" : {
+          "type" : "string"
+        },
+        "max" : {
+          "type" : "string"
+        },
+        "key" : {
+          "type" : "string"
+        },
+        "negativeExponential" : {
+          "type" : "null"
+        },
+        "duration" : {
+          "type" : "string"
+        },
+        "fromNow" : {
+          "type" : "null"
+        },
+        "fromLast" : {
+          "type" : "null"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.AwaitDelayStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.StopwatchBeginStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "step" : {
+          "type" : "string"
+        },
+        "insertBefore" : {
+          "type" : "string"
+        },
+        "insertAfter" : {
+          "type" : "string"
+        },
+        "stepBuilder" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.AwaitIntStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "var" : {
+          "type" : "string"
+        },
+        "greaterThan" : {
+          "type" : "integer"
+        },
+        "greaterOrEqualTo" : {
+          "type" : "integer"
+        },
+        "lessThan" : {
+          "type" : "integer"
+        },
+        "lessOrEqualTo" : {
+          "type" : "integer"
+        },
+        "equalTo" : {
+          "type" : "integer"
+        },
+        "notEqualTo" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.RandomIntStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "min" : {
+          "type" : "integer"
+        },
+        "max" : {
+          "type" : "integer"
+        },
+        "toVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.RandomItemStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "list" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomItemStep$Builder$ItemBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomItemStep$Builder$ItemBuilder"
+            }
+          } ]
+        },
+        "file" : {
+          "type" : "string"
+        },
+        "toVar" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.RandomItemStep$Builder$ItemBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.generators.RandomCsvRowStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "file" : {
+          "type" : "string"
+        },
+        "columns" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomCsvRowStep$Builder$ColumnsBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.RandomCsvRowStep$Builder$ColumnsBuilder"
+            }
+          } ]
+        },
+        "skipComments" : {
+          "type" : "boolean"
+        },
+        "removeQuotes" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.RandomCsvRowStep$Builder$ColumnsBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.PullSharedMapStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "match" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.PushSharedMapStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "vars" : {
+          "oneOf" : [ {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.example.DivideStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "toVar" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "divisor" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.NoopStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    }
+  }
+}
