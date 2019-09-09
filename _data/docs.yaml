@@ -8,7 +8,7 @@
   link: /docs/benchmark.html
   description: Structure of the YAML benchmark definition.
 - title: Steps and handlers reference
-  link: /docs/steps.html
+  link: /docs/steps/index.html
   description: List of all the steps you can execute
 - title: Topics
   link: /docs/topics.html
