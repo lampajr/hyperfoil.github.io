@@ -43,9 +43,9 @@ You can fetch release, distribute and start the cluster using Ansible Galaxy scr
 
 First, get the scripts:
 ```
-ansible-galaxy install hyperfoil.hyperfoil_setup
-ansible-galaxy install hyperfoil.hyperfoil_shutdown
-ansible-galaxy install hyperfoil.hyperfoil_test
+ansible-galaxy install hyperfoil.hyperfoil_setup,{{ site.last_release.galaxy_version }}
+ansible-galaxy install hyperfoil.hyperfoil_shutdown,{{ site.last_release.galaxy_version }}
+ansible-galaxy install hyperfoil.hyperfoil_test,{{ site.last_release.galaxy_version }}
 ```
 
 Now, edit your `hosts` file, it could look like this:

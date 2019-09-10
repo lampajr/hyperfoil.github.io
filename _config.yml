@@ -30,6 +30,7 @@ last_release:
   zip: hyperfoil-0.3.zip
   dir: hyperfoil-0.3
   tag: release-0.3
+  galaxy_version: "0.3"
   url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.3/hyperfoil-0.3.zip
 
 # Build settings
