@@ -4,24 +4,24 @@ Issues a HTTP request and registers handlers for the response.
 
 | Property | Description |
 | ------- | -------- |
-| [authority](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
-| authority (alternative)| HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
+| authority | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
+| [authority](#authority) (alternative)| HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
 | body | HTTP request body (specified as string).  |
 | [body](#body) (alternative)| HTTP request body.  |
-| [CONNECT](#CONNECT) | Issue HTTP CONNECT request to given path.  |
-| CONNECT (alternative)| Issue HTTP CONNECT request to given path.  |
+| CONNECT | Issue HTTP CONNECT request to given path.  |
+| [CONNECT](#CONNECT) (alternative)| Issue HTTP CONNECT request to given path.  |
 | DELETE | Issue HTTP DELETE request to given path.  |
 | [DELETE](#DELETE) (alternative)| Issue HTTP DELETE request to given path.  |
-| [GET](#GET) | Issue HTTP GET request to given path.  |
-| GET (alternative)| Issue HTTP GET request to given path.  |
+| GET | Issue HTTP GET request to given path.  |
+| [GET](#GET) (alternative)| Issue HTTP GET request to given path.  |
 | [handler](#handler) | HTTP response handlers.  |
-| [HEAD](#HEAD) | Issue HTTP HEAD request to given path.  |
-| HEAD (alternative)| Issue HTTP HEAD request to given path.  |
+| HEAD | Issue HTTP HEAD request to given path.  |
+| [HEAD](#HEAD) (alternative)| Issue HTTP HEAD request to given path.  |
 | headerAppender | <font color="#606060">&lt;no description&gt;</font> |
 | [headers](#headers) | HTTP headers sent in the request.  |
 | method | HTTP method used for the request. <br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
-| [metric](#metric) | Allows categorizing request statistics into metrics based on the request path.  |
-| metric (alternative)| Requests statistics will use this metric name.  |
+| metric | Requests statistics will use this metric name.  |
+| [metric](#metric) (alternative)| Allows categorizing request statistics into metrics based on the request path.  |
 | OPTIONS | Issue HTTP OPTIONS request to given path.  |
 | [OPTIONS](#OPTIONS) (alternative)| Issue HTTP OPTIONS request to given path.  |
 | PATCH | Issue HTTP PATCH request to given path.  |
@@ -29,11 +29,11 @@ Issues a HTTP request and registers handlers for the response.
 | [path](#path) | HTTP path (absolute or relative), including query and fragment.  |
 | POST | Issue HTTP POST request to given path.  |
 | [POST](#POST) (alternative)| Issue HTTP POST request to given path.  |
-| [PUT](#PUT) | Issue HTTP PUT request to given path.  |
-| PUT (alternative)| Issue HTTP PUT request to given path.  |
+| PUT | Issue HTTP PUT request to given path.  |
+| [PUT](#PUT) (alternative)| Issue HTTP PUT request to given path.  |
 | [sla](#sla) | List of SLAs the requests are subject to.  |
-| sync | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <br> Default is <code>true</code>.  |
-| timeout | Request timeout - after this time the request will be marked as failed and connection will be closed. <br> Defaults to value set globally in <code>http</code> section.  |
+| sync | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>.  |
+| timeout | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section.  |
 | TRACE | Issue HTTP TRACE request to given path.  |
 | [TRACE](#TRACE) (alternative)| Issue HTTP TRACE request to given path.  |
 
@@ -151,7 +151,7 @@ Parses HTML tags and invokes handlers based on criteria.
 
 ### <a id="handler.body.parseHtml.onEmbeddedResource"></a>handler.body.parseHtml.onEmbeddedResource
 
-Handles <code>&lt;img src="..."&gt;</code>, <code>&lt;link href="..."&gt;</code>, <code>&lt;embed src="..."&gt;</code>, <code>&lt;frame src="..."&gt;</code>, <code>&lt;iframe src="..."&gt;</code>, <code>&lt;object data="..."&gt;</code> and <code>&lt;script src="..."&gt;</code>. <br> Does not handle <code>&lt;source src="..."&gt;</code> or <code>&lt;track src="..."&gt;</code> because browser would choose only one of the options. 
+Handles <code>&lt;img src="..."&gt;</code>, <code>&lt;link href="..."&gt;</code>, <code>&lt;embed src="..."&gt;</code>, <code>&lt;frame src="..."&gt;</code>, <code>&lt;iframe src="..."&gt;</code>, <code>&lt;object data="..."&gt;</code> and <code>&lt;script src="..."&gt;</code>. <p> Does not handle <code>&lt;source src="..."&gt;</code> or <code>&lt;track src="..."&gt;</code> because browser would choose only one of the options. 
 
 | Property | Description |
 | ------- | -------- |

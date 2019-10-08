@@ -24,7 +24,7 @@
 * [randomInt](./step_randomInt.html): Stores random (linearly distributed) integer into session variable. 
 * [randomItem](./step_randomItem.html): Stores random item from a list or array into session variable. 
 * [scheduleDelay](./step_scheduleDelay.html): Block the current sequence for specified duration. 
-* [set](./step_set.html): Set variable in session to certain value. 
+* [set](./step_set.html): Set variable to given value. 
 * [setInt](./step_setInt.html): Set session variable to an integral value. 
 * [stop](./step_stop.html): Immediately stop the user session (break all running sequences). 
 * [stopwatch](./step_stopwatch.html): Run nested sequence of steps, recording execution time. 

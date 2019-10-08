@@ -4,7 +4,7 @@ Stores data in an array stored as session variable.
 
 | Inline definition |
 | -------- |
-| Use format <code>variable[maxSize]</code> |
+| Use format <code>toVar[maxSize]</code>. |
 
 
 | Property | Description |
