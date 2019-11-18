@@ -20,20 +20,41 @@ redirect_from:
 > bin/cli.sh
 ```
 
-<span>3.</span> Run the minimalistic benchmark, doing only single request to `http://hyperfoil.io`:
+For our first benchmark we'll start an embedded server (controller) within the CLI:
+
+```
+[hyperfoil]$ start-local
+Starting controller in default directory (/tmp/hyperfoil)
+Controller started, listening on 127.0.0.1:41621
+Connecting to the controller...
+Connected!
+```
+
+<span>3.</span> Upload the minimalistic benchmark, doing only single request to `http://hyperfoil.io`, and run it:
 
 
 ```
-[hyperfoil@localhost]$ run-local examples/single-request.hf.yaml
-Running benchmark 'single-request'
-Using 1 thread(s)
-Target servers: http://hyperfoil.io:80/ (1 connections)
-1 requests in 0.24s
-                 Avg    Stdev      Max
-Latency:      229.11 ms      0 ns 229.64 ms
-Requests/sec: 4.166666666666667
+[hyperfoil@in-vm]$ upload examples/single-request.hf.yaml
+Loaded benchmark single-request, uploading...
+... done.
+[hyperfoil@in-vm]$ run single-request
+Started run 0001
+Run 0001, benchmark single-request
+Agents: in-vm[STARTING]
+Started: 2019/11/15 16:11:43.725    Terminated: 2019/11/15 16:11:43.899
+NAME     STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION
+example  TERMINATED  16:11:43.725             16:11:43.899  174 ms (exceeded by 174 ms)  1 users at once
+```
+
+<span>4.</span> Check out performance results:
 
 ```
+[hyperfoil@in-vm]$ stats
+Total stats from run 000A
+PHASE    METRIC  REQUESTS  MEAN       p50        p90        p99        p99.9      p99.99     2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
+example  test           1  172.49 ms  173.02 ms  173.02 ms  173.02 ms  173.02 ms  173.02 ms    0    1    0    0      0         0       0       0 ns
+```
+
 Doing one request is not much of a benchmark and the statistics above are moot, but hey, this is a quickstart.
 
 Now that you know how to run a benchmark, let's take a deeper look into {% include example_link.md src='single-request.hf.yaml' %}.

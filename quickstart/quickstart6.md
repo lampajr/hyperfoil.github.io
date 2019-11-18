@@ -1,11 +1,12 @@
 # Getting started: Running the server
 
-Until now we have always started our benchmarks from the CLI, using the `run-local` command. This spawns the benchmark in the CLI JVM just using the core logic, and prints out basic statistics to the console. That might be convenient for a quick test or when developing the scenario, but it's not something that you'd use for a full-fledged benchmark.
+Until now we have always started our benchmarks using an embedded *controller* in the CLI, using the `start-local` command. This spawns a server in the CLI JVM. CLI communicates with it using standard REST API, though the server port is randomized and listens on localhost only. All the benchmarks and run results are also stored in `/tmp/hyperfoil/` - you can change the directory as an argument to the `start-local` command.
+While the embedded controller might be convenient for a quick test or when developing the scenario it's not something that you'd use for a full-fledged benchmark.
 
 When testing a reasonably performing system you need multiple nodes driving the load - we call them *agents*. These agents sync up, receive commands and report statistics to a master node, the *controller*. This node exposes a RESTful API to upload & start the benchmark, watch its progress and download results.
 
 There are two other scripts in the `bin/` directory:
-* `standalone.sh` starts both the controller and (one) agent in a single JVM.
+* `standalone.sh` starts both the controller and (one) agent in a single JVM. This is not too different from the controller embedded in CLI.
 * `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
 
 Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the {% include example_link.md src='single-request.hf.yaml' %} benchmark:
@@ -51,6 +52,13 @@ Loaded benchmark eshop-scale, uploading...
 ... done.
 [hyperfoil@localhost]$ run eshop-scale
 Started run 0002
+Run 0002, benchmark eshop-scale
+...
+```
+
+Here the console would automatically jump into the `status` command, displaying the progress of the benchmark online. Press Ctrl+C to cancel that (it won't stop the benchmark run) and run the `stats` command:
+
+```
 [hyperfoil@localhost]$ stats
 Recent stats from run 0002
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
@@ -62,7 +70,7 @@ browsingUserSteady/000:
 Press Ctr+C to stop watching...
 ```
 
-You can also see the online progress of the benchmark in terms of phases using the `status` command (hint: use `status --all` to display all phases, including those not started or already terminated):
+You can go back to the run progress using the `status` command (hint: use `status --all` to display all phases, including those not started or already terminated):
 
 ```
 [hyperfoil@localhost]$ status
@@ -74,6 +82,8 @@ browsingUserRampUp/006  RUNNING  16:28:54.565  2477 ms
 buyingUserRampUp/006    RUNNING  16:28:54.565  2477 ms
 Press Ctrl+C to stop watching...
 ```
+
+Since we are showing this quickstart running the controller and CLI on the same machine it's easy to fetch results locally from `/tmp/hyperfoil/run/XXXX/...`. To save you SSHing into the controller host and finding the directories in a 'true remote' case there's the `export` command; This fetches statistics to your computer where you're running CLI. You can chose between default JSON format (e.g. `export 0002 -f json -d /path/to/dir`) and CSV format (`export 0002 -f csv -d /path/to/dir`) - the latter packs all CSV files into single ZIP file for your convenience.
 
 When you find out that the benchmark is not going well, you can terminate it prematurely:
 
