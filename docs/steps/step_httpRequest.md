@@ -73,10 +73,10 @@ Form element (e.g. as if coming from an INPUT field).
 
 | Property | Description |
 | ------- | -------- |
+| fromVar | Input field value from session variable.  |
 | name | Input field name.  |
 | pattern | Input field value replacing session variables in a pattern, e.g. <code>foo${myvariable}var</code>  |
 | value | Input field value (verbatim).  |
-| var | Input field value from session variable.  |
 
 ### <a id="CONNECT"></a>CONNECT
 
@@ -114,77 +114,11 @@ Manages processing of HTTP responses.
 
 | Property | Description |
 | ------- | -------- |
-| [body](#handler.body) | Handle HTTP response body.  |
+| [body](index.html#processors) | Handle HTTP response body.  |
 | [header](#handler.header) | Handle HTTP response headers.  |
 | [onCompletion](index.html#actions) | Action executed when the HTTP response is fully received.  |
 | rawBytesHandler | Handler processing not parsed HTTP response.  |
 | [status](#handler.status) | Handle HTTP response status.  |
-
-### <a id="handler.body"></a>handler.body
-
-Handle HTTP response body. 
-
-| Property | Description |
-| ------- | -------- |
-| [json](#handler.body.json) | Parses JSON responses using simple queries.  |
-| logInvalid | Logs body chunks from requests marked as invalid.  |
-| [parseHtml](#handler.body.parseHtml) | Parses HTML tags and invokes handlers based on criteria.  |
-| [passthrough](#handler.body.passthrough) | Adapter sending the body to a processor.  |
-
-### <a id="handler.body.json"></a>handler.body.json
-
-Parses JSON responses using simple queries. 
-
-| Property | Description |
-| ------- | -------- |
-| [processor](index.html#processors) | Pass the selected parts to another processor.  |
-| query | Query selecting the part of JSON.  |
-| toArray | Shortcut to store selected parts in an array in the session. Must follow the pattern <code>variable[maxSize]</code>  |
-
-### <a id="handler.body.parseHtml"></a>handler.body.parseHtml
-
-Parses HTML tags and invokes handlers based on criteria. 
-
-| Property | Description |
-| ------- | -------- |
-| [onEmbeddedResource](#handler.body.parseHtml.onEmbeddedResource) | Handler firing upon reference to other resource, e.g. image, stylesheet...  |
-
-### <a id="handler.body.parseHtml.onEmbeddedResource"></a>handler.body.parseHtml.onEmbeddedResource
-
-Handles <code>&lt;img src="..."&gt;</code>, <code>&lt;link href="..."&gt;</code>, <code>&lt;embed src="..."&gt;</code>, <code>&lt;frame src="..."&gt;</code>, <code>&lt;iframe src="..."&gt;</code>, <code>&lt;object data="..."&gt;</code> and <code>&lt;script src="..."&gt;</code>. <p> Does not handle <code>&lt;source src="..."&gt;</code> or <code>&lt;track src="..."&gt;</code> because browser would choose only one of the options. 
-
-| Property | Description |
-| ------- | -------- |
-| [fetchResource](#handler.body.parseHtml.onEmbeddedResource.fetchResource) | Automatically download referenced resource.  |
-| ignoreExternal | Ignore resources hosted on servers that are not covered in the <code>http</code> section.  |
-| [processor](index.html#processors) | Custom processor invoked pointing to attribute data - e.g. in case of <code>&lt;img&gt;</code> tag the processor gets contents of the <code>src</code> attribute.  |
-
-### <a id="handler.body.parseHtml.onEmbeddedResource.fetchResource"></a>handler.body.parseHtml.onEmbeddedResource.fetchResource
-
-Automates download of embedded resources. 
-
-| Property | Description |
-| ------- | -------- |
-| maxResources | Maximum number of resources that can be fetched.  |
-| [metric](#handler.body.parseHtml.onEmbeddedResource.fetchResource.metric) | Metrics selector for downloaded resources.  |
-| [onCompletion](index.html#actions) | Action performed when the download of all resources completes.  |
-
-### <a id="handler.body.parseHtml.onEmbeddedResource.fetchResource.metric"></a>handler.body.parseHtml.onEmbeddedResource.fetchResource.metric
-
-Metrics selector for downloaded resources. 
-
-| Property | Description |
-| ------- | -------- |
-| &lt;list of strings&gt; | {::nomarkdown}Allows categorizing request statistics into metrics based on the request path. The expressions are evaluated in the order as provided in the list. Use one of: <ul> <li><code>regexp -&gt; replacement</code>, e.g. <code>([^?]*)(\?.*)? -&gt; $1</code> to drop the query part. <li><code>regexp</code> (don't do any replaces and use the full path), e.g. <code>.*.jpg</code> <li><code>-&gt; name</code> (metric applied if none of the previous expressions match). </ul> {:/} |
-
-### <a id="handler.body.passthrough"></a>handler.body.passthrough
-
-Adapter sending the body to a processor. 
-
-| Property | Description |
-| ------- | -------- |
-| defrag | Automatically defragment the body, passing the whole response in single chunk.  |
-| [processor](index.html#processors) | Processor that this handler delegates to.  |
 
 ### <a id="handler.header"></a>handler.header
 
@@ -250,8 +184,15 @@ Generic builder for generating a string.
 
 | Property | Description |
 | ------- | -------- |
-| &lt;any&gt; | Use header name (e.g. <code>Content-Type</code>) as key and value verbatim.  |
+| [&lt;any&gt;](#headers.&lt;any&gt;) | Use header name (e.g. <code>Content-Type</code>) as key and value verbatim.  |
 | [&lt;any&gt;](#headers.&lt;any&gt;) (alternative)| Use header name (e.g. <code>Content-Type</code>) as key and specify value in the mapping.  |
+| header | <font color="#606060">&lt;no description&gt;</font> |
+
+### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
+
+| Property | Description |
+| ------- | -------- |
+| header | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
 

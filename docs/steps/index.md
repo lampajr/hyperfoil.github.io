@@ -3,7 +3,7 @@
 
 
 ## Steps
-* [addToInt](./step_addToInt.html): Add integral value to variable. 
+* [addToInt](./step_addToInt.html): Add value to integer variable in the session. 
 * [awaitAllResponses](./step_awaitAllResponses.html): Block current sequence until all requests receive the response. 
 * [awaitCondition](./step_awaitCondition.html): Block current sequence until condition becomes true. 
 * [awaitDelay](./step_awaitDelay.html): Block this sequence until referenced delay point. 
@@ -25,7 +25,7 @@
 * [randomItem](./step_randomItem.html): Stores random item from a list or array into session variable. 
 * [scheduleDelay](./step_scheduleDelay.html): Block the current sequence for specified duration. 
 * [set](./step_set.html): Set variable to given value. 
-* [setInt](./step_setInt.html): Set session variable to an integral value. 
+* [setInt](./step_setInt.html): Set variable to given value. 
 * [stop](./step_stop.html): Immediately stop the user session (break all running sequences). 
 * [stopwatch](./step_stopwatch.html): Run nested sequence of steps, recording execution time. 
 * [template](./step_template.html): Format pattern into session variable. 
@@ -42,6 +42,14 @@
 
 
 ## Processors
+* [addToInt](./processor_addToInt.html): Add value to integer variable in the session. 
 * [array](./processor_array.html): Stores data in an array stored as session variable. 
+* [clearHttpCache](./processor_clearHttpCache.html): Drops all entries from HTTP cache in the session. 
+* [closeConnection](./processor_closeConnection.html)
+* [json](./processor_json.html): Parses JSON responses using simple queries. 
 * [newSequence](./processor_newSequence.html): Instantiates a sequence for each invocation. The sequences will have increasing sequence ID. 
+* [queue](./processor_queue.html)
+* [set](./processor_set.html): Set variable in session to certain value. 
+* [setInt](./processor_setInt.html): Set session variable to an integral value. 
 * [simple](./processor_simple.html): Stores data in a session variable (overwriting on multiple occurences). 
+* [unset](./processor_unset.html): Undefine variable name. 

@@ -10,6 +10,6 @@ Define a point in future until which we should wait. Does not cause waiting.
 | key | Key that is referenced later in `awaitDelay` step. If you're introducing the delay through `thinkTime` do not use this property.  |
 | max | Upper cap on the duration (if randomized).  |
 | min | Lower cap on the duration (if randomized).  |
-| negativeExponential | Randomize the duration with negative-exponential distribution, using <code>duration</code> as the mean value. <br>Note: property does not have any value |
+| random | Randomize the duration. <br>Options:{::nomarkdown}<ul><li><code>CONSTANT</code>: {:/}Do not randomize; use constant duration. {::nomarkdown}</li><li><code>LINEAR</code>: {:/}Use linearly random duration between <code>min</code> and <code>max</code> (inclusively). {::nomarkdown}</li><li><code>NEGATIVE_EXPONENTIAL</code>: {:/}Use negative-exponential duration with expected value of <code>duration</code>, capped at <code>min</code> and <code>max</code> (inclusively). {::nomarkdown}</li></ul>{:/} |
 | type | Alternative way to set delay reference point. See `fromNow` and `fromLast` property setters. <br>Options:{::nomarkdown}<ul><li><code>FROM_LAST</code></li><li><code>FROM_NOW</code></li></ul>{:/} |
 
