@@ -95,5 +95,90 @@ Finally, run the playbook:
 ansible-playbook -i hosts example.yml
 ```
 
+## Deploying in Kubernetes/Openshift
+
+A convenient alternative to running Hyperfoil on hosts with SSH access is deploying it in Kubernetes or Openshift. You manually deploy only the controller; each agent is then started when the run starts as a `pod` in the same namespace and stopped when the run completes.
+
+Following steps install Hyperfoil controller in Openshift, assuming that you have all the required priviledges. With vanilla Kubernetes the steps would be analogous:
+
+<span>1.</span> Create new namespace for hyperfoil:
+```
+> oc new-project hyperfoil
+```
+
+<span>2.</span> Create required resources:
+```
+> curl -s -L k8s.hyperfoil.io | oc apply -f -
+role.rbac.authorization.k8s.io/controller created
+serviceaccount/controller created
+service/hyperfoil created
+rolebinding.rbac.authorization.k8s.io/controller created
+deploymentconfig.apps.openshift.io/controller created
+route.route.openshift.io/hyperfoil created
+```
+
+The route should follow the format `hyperfoil-hyperfoil.apps.my.cluster.domain` - feel free to customize this.
+
+<span>3.</span> Wait until the image gets downloaded and the container starts:
+```
+> oc get po
+NAME                  READY   STATUS              RESTARTS   AGE
+controller-1-pqbvs    1/1     Running             0          57s
+controller-1-deploy   0/1     Completed           0          72s
+```
+
+<span>4.</span> Open CLI and connect to the controller
+
+While default Hyperfoil port is 8090, Openshift router will expose the service on port 80.
+```
+> bin/cli.sh
+[hyperfoil]$ connect hyperfoil-hyperfoil.apps.my.cluster.domain -p 80
+Connected!
+WARNING: Server time seems to be off by 12124 ms
+```
+
+<span>5.</span> Upload & run benchmarks as usual - we're using {% include example_link.md src='k8s-hello-world.hf.yaml' %} in this example.
+
+Note that it can take several seconds to spin up containers with agents.
+
+```
+[hyperfoil@hyperfoil-hyperfoil]$ upload examples/k8s-hello-world.hf.yaml
+Loaded benchmark k8s-hello-world, uploading...
+... done.
+[hyperfoil@hyperfoil-hyperfoil]$ run k8s-hello-world
+Started run 0000
+Run 0000, benchmark k8s-hello-world
+Agents: agent-one[STARTING]
+Started: 2019/11/18 19:07:36.752    Terminated: 2019/11/18 19:07:41.778
+NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION
+main  TERMINATED  19:07:36.753             19:07:41.778  5025 ms (exceeded by 25 ms)  5.00 users per second
+[hyperfoil@hyperfoil-hyperfoil]$
+```
+
+You can adjust on which nodes will the agent get scheduled using the `node` property:
+
+```
+agents:
+  my-agent:
+    node: my-worker-node
+```
+
+This sets the `kubernetes.io/hostname` label to `my-worker-node`. You can also set multiple custom labels for the `nodeSelector`, separated by commas:
+
+```
+agents:
+  my-agent:
+    node: foo=bar,kubernetes.io/os=linux
+```
+
+By default the controller stops all agents immediatelly after the run terminates. In case of errors this is not too convenient as you might want to inspect agent log. To prevent automatic agent shutdown, add property `stop: false` to the agent definition.
+
+If you want to further adjust logging in the agent, create a `ConfigMap` with the Log4j2 configuration file encoded under key `log4j2.xml`; you can then point agent to this file using property `log: my-config-map` or `log: my-config-map/log4j2.xml` (you can use different keys, too). Hyperfoil will mount this configmap as a volume to this agent.
+
+You can also customize the agent using property `extras`; anything in this property will be passed to the agent JVM. And if you need to try out with a different version of Hyperfoil in the agents, you can override the image used by setting `image: quay.io/hyperfoil/hyperfoil:my-version`.
+
+At this moment the CLI command `log` does not work as both controller and agents log to standard output rather than to a file. Use `oc log controller-xxxx` to inspect the logs instead. This will be addressed in the future.
+
+Running Hyperfoil inside the cluster you are trying to test might skew results due to different network topology compared to driving the load from 'outside' (as real users would do). It is your responsibility to validate if your setup and separation between load driver and SUT (system under test) is correct. You have been warned.
 
 {% include docs_links.md %}

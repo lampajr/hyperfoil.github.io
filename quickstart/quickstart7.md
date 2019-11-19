@@ -4,7 +4,7 @@
 
 Hyperfoil operates as a cluster of [Vert.x](https://vertx.io/). When the benchmark is started, it deploys agents on other nodes according to the benchmark configuration - these are Vert.x nodes, too. Together controller and agents form a cluster and communicate over the event bus.
 
-In this quickstart we'll use the SSH deployer; make sure your machine has SSH server running on port 22 and you can login using your pubkey `~/.ssh/id_rsa`. The SSH deployer copies the necessary JARs to `/tmp/hyperfoil/agentlib/` and starts the agent there.
+In this quickstart we'll use the SSH deployer; make sure your machine has SSH server running on port 22 and you can login using your pubkey `~/.ssh/id_rsa`. The SSH deployer copies the necessary JARs to `/tmp/hyperfoil/agentlib/` and starts the agent there. For instructions to run Hyperfoil in Kubernetes or Openshift please consult the [Installation docs]({{ "docs/installation.html#deploying-in-kubernetesopenshift" | absolute_url }}).
 
 When we were running in the standalone or local mode we did not have to set any agents in the benchmark definition. That changes now as we need to inform the controller where the agents should be deployed. Let's see a benchmark - {% include example_link.md src='two-agents.hf.yaml' %} that has those agents defined.
 
