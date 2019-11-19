@@ -86,7 +86,7 @@ HTTP configuration has these properties:
 | ----------------- | ------- | ----------- |
 | protocol          |         | Either `http` or `https` |
 | host              |         | Hostname of the server. For convenience you can use the `http[s]://host[:port]` inline syntax as shown above |
-| port              | `80`&nbsp;or&nbsp;`443` | Default is based on the `protocol` | |
+| port              | `80`&nbsp;or&nbsp;`443` | Default is based on the `protocol` |
 | sharedConnections | 1       | Number of connections to open. This number is split between all agents and executor threads evenly; if there are too many agents/executors each will get at least 1 connection. It is recommended to redefine this parameter. |
 | addresses         |         | Supply list of IPs or IP:port targets that will be used for the connections instead of resolving the `host` in DNS and using `port` as set - `host` and `port` will be used only for `Host` headers and SNI. If this list contains more addresses the connections will be split evenly. |
 | requestTimeout    | 30 seconds | Default request timeout, this can be overridden in each `httpRequest`. |
@@ -96,8 +96,8 @@ HTTP configuration has these properties:
 | maxHttp2Streams   | 100     | Maximum number of requests concurrently enqueued on single HTTP 2.0 connection. |
 | pipeliningLimit   | 1       | Maximum number of requests pipelined on single HTTP 1.1 connection. |
 | rawBytesHandlers  | true    | Enable or disable using handlers that process HTTP response raw bytes. |
-| [keyManager](#keymanager-configuration)        |         | TLS key manager for setting up client certificates. |
-| [trustManager](#trustmanager-configuration)      |         | TLS trust manager for setting up server certificates. |
+| [keyManager](#keymanager-configuration) |         | TLS key manager for setting up client certificates. |
+| [trustManager](#trustmanager-configuration) |         | TLS trust manager for setting up server certificates. |
 
 ### KeyManager configuration
 
