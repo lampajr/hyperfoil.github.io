@@ -10,6 +10,9 @@
 - title: Steps and handlers reference
   link: /docs/steps/index.html
   description: List of all the steps you can execute
+- title: Controller REST API
+  link: /docs/restapi.html
+  description: Learn to interact with the controller
 - title: Topics
   link: /docs/topics.html
   description: Benchmarking is hard. Let's talk about that.
