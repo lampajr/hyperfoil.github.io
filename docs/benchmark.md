@@ -28,7 +28,9 @@ agents:
     foo: bar
 ```
 
-The definition is passed to an instance of `i.h.api.deployment.Deployer` which will interpret the definition. Deployer implementation is registred using the `java.util.ServiceLoader` and selected through the `io.hyperfoil.deployer` system property. The default (and as of now the only) implementation is `ssh`.
+The definition is passed to an instance of `i.h.api.deployment.Deployer` which will interpret the definition. Deployer implementation is registred using the `java.util.ServiceLoader` and selected through the `io.hyperfoil.deployer` system property. The default implementation is `ssh`.
+
+### SSH Deployer
 
 `ssh` deployer accepts either the `[user@]host[:port]` inline syntax or these properties:
 
@@ -51,6 +53,28 @@ agents:
     port: 22
     dir: /some/other/path
 ```
+
+### Kubernetes deployer
+
+To activate the kubernetes deployer you should set `-Dio.hyperfoil.deployer=k8s`; the [recommended installation]({{ "/docs/installation.html#deploying-in-kubernetesopenshift" | absolute_url }}) does that automatically.
+
+The agents are configured the same way as with SSH deployment, only the properties differ. Full reference is provided below.
+
+Example:
+```
+agents:
+  my-agent:
+    node: my-worker-node
+```
+
+| Property  | Default | Description |
+| --------- | ------- | ----------- |
+| node      |         | Configures the labels for the `nodeSelector`. If the value does not contain equals sign (`=`) or comma (`,`) this sets the desired value of label `kubernetes.io/hostname`. You can also set multiple custom labels separated by commas, e.g. `foo=bar,kubernetes.io/os=linux`.
+| stop      | true    | By default the controller stops all agents immediatelly after the run terminates. In case of errors this is not too convenient as you might want to perform further analysis. To prevent automatic agent shutdown set this to false. |
+| log       |         | Name of config map (e.g. `my-config-map`) or config map and its entry (e.g. `my-config-map/log4j2.xml`) that contains the Log4j2 configuration file. Default entry from the config map is `log4j2.xml`. Hyperfoil will mount this configmap as a volume to this agent. |
+| extras    |         | Anything in this property will be passed to the agent JVM. |
+| image     | quay.io/hyperfoil/hyperfoil:*controller-version* | Different version of Hyperfoil in the agents |
+| fetchLogs | true    | Automatically watch agents' logs and store them in the run directory. |
 
 ## Ergonomics
 

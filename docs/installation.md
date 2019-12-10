@@ -155,29 +155,9 @@ main  TERMINATED  19:07:36.753             19:07:41.778  5025 ms (exceeded by 25
 [hyperfoil@hyperfoil-hyperfoil]$
 ```
 
-You can adjust on which nodes will the agent get scheduled using the `node` property:
+You can find more details about adjusting the agents in the [benchmark format reference]({{ "/docs/benchmark.html#kubernetes-deployer" | absolute_url }}).
 
-```
-agents:
-  my-agent:
-    node: my-worker-node
-```
-
-This sets the `kubernetes.io/hostname` label to `my-worker-node`. You can also set multiple custom labels for the `nodeSelector`, separated by commas:
-
-```
-agents:
-  my-agent:
-    node: foo=bar,kubernetes.io/os=linux
-```
-
-By default the controller stops all agents immediatelly after the run terminates. In case of errors this is not too convenient as you might want to inspect agent log. To prevent automatic agent shutdown, add property `stop: false` to the agent definition.
-
-If you want to further adjust logging in the agent, create a `ConfigMap` with the Log4j2 configuration file encoded under key `log4j2.xml`; you can then point agent to this file using property `log: my-config-map` or `log: my-config-map/log4j2.xml` (you can use different keys, too). Hyperfoil will mount this configmap as a volume to this agent.
-
-You can also customize the agent using property `extras`; anything in this property will be passed to the agent JVM. And if you need to try out with a different version of Hyperfoil in the agents, you can override the image used by setting `image: quay.io/hyperfoil/hyperfoil:my-version`.
-
-At this moment the CLI command `log` does not work as both controller and agents log to standard output rather than to a file. Use `oc log controller-xxxx` to inspect the logs instead. This will be addressed in the future.
+At this moment the CLI command `log` does not work as both controller and agents log to standard output rather than to a file. Use `oc log controller-xxxx` to inspect the logs instead. This will be addressed in the future (note: already fixed in master).
 
 Running Hyperfoil inside the cluster you are trying to test might skew results due to different network topology compared to driving the load from 'outside' (as real users would do). It is your responsibility to validate if your setup and separation between load driver and SUT (system under test) is correct. You have been warned.
 
