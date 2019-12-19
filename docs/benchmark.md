@@ -6,6 +6,8 @@ The best authoritative reference will always be the schema; we recommend [using 
 | -------------------------- | ------------------ |
 | name                       | Name of the benchmark, as later identified in the CLI |
 | [agents](#agents)          | List of one or more agents for clustered runs. This section can be omitted in [standalone mode]({{ "/docs/installation.html#starting-the-controller-manually" | absolute_url }}). |
+| [pre]({{ "/docs/installation.html#hooks" | absolute_url }})              | Hooks executed before any benchmark run starts |
+| [post]({{ "/docs/installation.html#hooks" | absolute_url }})             | Hooks executed after any benchmark run terminates |
 | [ergonomics](#ergonomics)  |  Utility options that modify scenarios |
 | [http](#http)              | Configure target servers and HTTP connection options. |
 | [phases](#phases)          | List of [phases]({{ "/docs/concepts.html#phases" | absolute_url }}) in this benchmark. |
@@ -54,7 +56,7 @@ agents:
     dir: /some/other/path
 ```
 
-### Kubernetes deployer
+### Kubernetes/Openshift deployer
 
 To activate the kubernetes deployer you should set `-Dio.hyperfoil.deployer=k8s`; the [recommended installation]({{ "/docs/installation.html#deploying-in-kubernetesopenshift" | absolute_url }}) does that automatically.
 

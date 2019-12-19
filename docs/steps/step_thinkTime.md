@@ -1,6 +1,11 @@
 # thinkTime
 
-Define a point in future until which we should wait. Does not cause waiting. 
+Block current sequence for specified duration. 
+
+| Inline definition |
+| -------- |
+| Duration of the delay with appropriate suffix (e.g. `ms` or `s`). |
+
 
 | Property | Description |
 | ------- | -------- |

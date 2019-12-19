@@ -1,4 +1,5 @@
 #### Documentation index
+{:.no_toc}
 
 <ol>
 {% for item in site.data.docs %}

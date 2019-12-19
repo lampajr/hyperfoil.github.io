@@ -17,7 +17,6 @@ Issues a HTTP request and registers handlers for the response.
 | [handler](#handler) | HTTP response handlers.  |
 | HEAD | Issue HTTP HEAD request to given path.  |
 | [HEAD](#HEAD) (alternative)| Issue HTTP HEAD request to given path.  |
-| headerAppender | <font color="#606060">&lt;no description&gt;</font> |
 | [headers](#headers) | HTTP headers sent in the request.  |
 | method | HTTP method used for the request. <br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
 | metric | Requests statistics will use this metric name.  |
@@ -117,7 +116,6 @@ Manages processing of HTTP responses.
 | [body](index.html#processors) | Handle HTTP response body.  |
 | [header](#handler.header) | Handle HTTP response headers.  |
 | [onCompletion](index.html#actions) | Action executed when the HTTP response is fully received.  |
-| rawBytesHandler | Handler processing not parsed HTTP response.  |
 | [status](#handler.status) | Handle HTTP response status.  |
 
 ### <a id="handler.header"></a>handler.header
@@ -184,15 +182,8 @@ Generic builder for generating a string.
 
 | Property | Description |
 | ------- | -------- |
-| [&lt;any&gt;](#headers.&lt;any&gt;) | Use header name (e.g. <code>Content-Type</code>) as key and value verbatim.  |
+| &lt;any&gt; | Use header name (e.g. <code>Content-Type</code>) as key and value verbatim.  |
 | [&lt;any&gt;](#headers.&lt;any&gt;) (alternative)| Use header name (e.g. <code>Content-Type</code>) as key and specify value in the mapping.  |
-| header | <font color="#606060">&lt;no description&gt;</font> |
-
-### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
-
-| Property | Description |
-| ------- | -------- |
-| header | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
 
@@ -201,6 +192,7 @@ Specifies value that should be sent in headers.
 | Property | Description |
 | ------- | -------- |
 | fromVar | Load header value from session variable.  |
+| pattern | Load header value using a pattern.  |
 
 ### <a id="metric"></a>metric
 
@@ -286,16 +278,7 @@ Percentile limits.
 
 | Property | Description |
 | ------- | -------- |
-| [&lt;any&gt;](#sla.&lt;list of mappings&gt;.limits.&lt;any&gt;) | Use percentile (value between 0.0 and 1.0) as key and response time with unit (e.g. `ms`) in suffix as value.  |
-| add | <font color="#606060">&lt;no description&gt;</font> |
-
-### <a id="sla.&lt;list of mappings&gt;.limits.&lt;any&gt;"></a>sla.&lt;list of mappings&gt;.limits.&lt;any&gt;
-
-Percentile limits. 
-
-| Property | Description |
-| ------- | -------- |
-| add | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;any&gt; | Use percentile (value between 0.0 and 1.0) as key and response time with unit (e.g. `ms`) in suffix as value.  |
 
 ### <a id="TRACE"></a>TRACE
 
