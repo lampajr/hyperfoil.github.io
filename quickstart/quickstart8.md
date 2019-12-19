@@ -39,6 +39,40 @@ There are several other integration points but `Step`:
 * `StatusHandler`, `HeaderHandler` and `BodyHandler` in `io.hyperfoil.api.http` package process different stages of HTTP response parsing. All these have `BuilderFactory` inner interface for you to implement.
 * `io.hyperfoil.api.connection.Processor` performs later generic stages of response processing. As this interface is generic, there are two factories that you could use: `i.h.a.c.Request.ProcessorBuilderFactory` and `i.h.a.c.HttpRequest.ProcessorBuilderFactory`.
 
+There is quite some boilerplate code in the process of creating a new component; that's why you can use Hyperfoil Codegen Maven plugin to scaffold the basic outline for you. Go to the module where you want the component generated and run:
+
+```
+mvn io.hyperfoil:hyperfoil-codegen-maven-plugin:skeleton
+```
+
+The plugin will ask you for the package name, component name and type and write down the source code skeleton. You can provide the parameters right on commandline like
+
+```
+mvn io.hyperfoil:hyperfoil-codegen-maven-plugin:skeleton \
+    -Dskeleton.package=foo.bar -Dskeleton.name=myComponent -Dskeleton.type=step
+```
+
+Note: the generator does not add the dependency to `org.kohsuke.metainf-services:metainf-services` to this module's `pom.xml`, you need to do that manually.
+
+If you add `io.hyperfoil` as a plugin group to your `$HOME/.m2/settings.xml` like this:
+
+```xml
+<settings>
+  <pluginGroups>
+    <pluginGroup>io.hyperfoil</pluginGroup>
+  </pluginGroups>
+  ...
+</settings>
+```
+
+you can use the short syntax for the generator:
+
+```
+mvn hyperfoil-codegen:skeleton -Dskeleton.name=....
+```
+
+---
+
 This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "/docs/" | absolute_url }}) or talk to us on [Zulip](https://hyperfoil.zulipchat.com/).
 
 {% include quickstart_links.md %}
