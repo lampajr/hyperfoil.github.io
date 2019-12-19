@@ -31,15 +31,23 @@ This variant won't deploy any agents remotely and therefore it does not need any
 
 Here is the comprehensive list of all the properties Hyperfoil recognizes:
 
-| Property                      | Default           | Description                           |
-| ------------------------------|-------------------|---------------------------------------|
-| io.hyperfoil.controller.host  | localhost         | Host for Controller REST server       |
-| io.hyperfoil.controller.port  |              8090 | Port for Controller REST server       |
-| io.hyperfoil.rootdir          | /tmp/hyperfoil    | Root directory for stored files       |
-| io.hyperfoil.benchmarkdir     | *root*/benchmark  | Benchmark files (YAML and serialized) |
-| io.hyperfoil.rundir           | *root*/run        | Run result files (configs, stats...)  |
-| io.hyperfoil.deployer         | ssh               | Implementation for agents deployment  |
-| io.hyperfoil.deployer.timeout | 15000 ms          | Timeout for agents to start           |
+| Property                             | Default            | Description                           |
+| -------------------------------------|--------------------|---------------------------------------|
+| io.hyperfoil.controller.host         | localhost          | Host for Controller REST server       |
+| io.hyperfoil.controller.port         |              8090  | Port for Controller REST server       |
+| io.hyperfoil.rootdir                 | /tmp/hyperfoil     | Root directory for stored files       |
+| io.hyperfoil.benchmarkdir            | *root*/benchmark   | Benchmark files (YAML and serialized) |
+| io.hyperfoil.rundir                  | *root*/run         | Run result files (configs, stats...)  |
+| io.hyperfoil.deployer                | ssh                | Implementation for agents deployment  |
+| io.hyperfoil.deployer.timeout        | 15000 ms           | Timeout for agents to start           |
+| io.hyperfoil.agent.debug.port        |                    | If set, agent will be started with JVM debug port open |
+| io.hyperfoil.agent.debug.suspend     | n                  | Suspend parameter for the debug port  |
+| io.hyperfoil.controller.cluster.ip   | first non-loopback | Hostname/IP used for clustering with agents |
+| io.hyperfoil.controller.cluster.port |               7800 | Default JGroups clustering port       |
+| io.hyperfoil.controller.external.uri |                    | Externally advertised URI of REST server |
+| io.hyperfoil.trigger.url             |                    | See below                             |
+
+If `io.hyperfoi.trigger.url` is set the controller does not start benchmark run right away after hitting `/benchmark/my-benchmark/start` ; instead it responds with status 301 and header Location set to concatenation of this string and `BENCHMARK=my-benchmark&RUN_ID=xxxx`. CLI interprets that response as a request to hit CI instance on this URL, assuming that CI will trigger a new job that will eventually call `/benchmark/my-benchmark/start?runId=xxxx` with header `x-trigger-job`. This is useful if the the CI has to synchronize Hyperfoil to other benchmarks that don't use this controller instance.
 
 ## Starting the controller via Ansible
 
@@ -101,39 +109,55 @@ ansible-playbook -i hosts example.yml
 
 ## Deploying in Kubernetes/Openshift
 
-A convenient alternative to running Hyperfoil on hosts with SSH access is deploying it in Kubernetes or Openshift. You manually deploy only the controller; each agent is then started when the run starts as a `pod` in the same namespace and stopped when the run completes.
+A convenient alternative to running Hyperfoil on hosts with SSH access is deploying it in Kubernetes or Openshift. The recommended way to install it using an operator in your Openshift console - just go to Operators - OperatorHub and search for 'hyperfoil', and follow the installation wizard. Alternatively you can [deploy the controller manually]({{ "/docs/k8s_manual.html" | absolute_url }})
 
-Following steps install Hyperfoil controller in Openshift, assuming that you have all the required priviledges. With vanilla Kubernetes the steps would be analogous:
+In order to start a Hyperfoil Controller instance in your cluster, create a new namespace `hyperfoil`: Go to Operators - Installed Operators and open Hyperfoil. In upper left corner select 'Project: ' - Create project and fill out the details. Then click on the 'Hyperfoil' tab and find the button 'Create Hyperfoil'.
 
-<span>1.</span> Create new namespace for hyperfoil:
-```
-> oc new-project hyperfoil
-```
+You should see a YAML definition like this:
 
-<span>2.</span> Create required resources:
-```
-> curl -s -L k8s.hyperfoil.io | oc apply -f -
-role.rbac.authorization.k8s.io/controller created
-serviceaccount/controller created
-service/hyperfoil created
-rolebinding.rbac.authorization.k8s.io/controller created
-deploymentconfig.apps.openshift.io/controller created
-route.route.openshift.io/hyperfoil created
-```
-
-The route should follow the format `hyperfoil-hyperfoil.apps.my.cluster.domain` - feel free to customize this.
-
-<span>3.</span> Wait until the image gets downloaded and the container starts:
-```
-> oc get po
-NAME                  READY   STATUS              RESTARTS   AGE
-controller-1-pqbvs    1/1     Running             0          57s
-controller-1-deploy   0/1     Completed           0          72s
+```yaml
+apiVersion: hyperfoil.io/v1alpha1
+kind: Hyperfoil
+metadata:
+  name: example-hyperfoil
+  namespace: hyperfoil
+spec:
+  agentDeployTimeout: 60000
+  log: myConfigMap/log4j2-superverbose.xml
+  route: hyperfoil.apps.mycloud.example.com
+  version: latest
 ```
 
-<span>4.</span> Open CLI and connect to the controller
+Change the `name` to just `hyperfoil` (or whatever you prefer) and delete all the content from the `spec` section:
 
-While default Hyperfoil port is 8090, Openshift router will expose the service on port 80.
+```yaml
+apiVersion: hyperfoil.io/v1alpha1
+kind: Hyperfoil
+metadata:
+  name: hyperfoil
+  namespace: hyperfoil
+spec:
+```
+
+This is a perfectly valid Hyperfoil resource with everything set to default values. You can customize some properties in the `spec` section further:
+
+| Property                   | Description        |
+| -------------------------- | ------------------ |
+| version                    | Tag for controller image. Defaults to version matching the operator version (operator 0.5.x will default to 0.5 ) |
+| image                      | Controller image. If 'version' is defined, too, the tag is replaced (or appended). Defaults to 'quay.io/hyperfoil/hyperfoil' |
+| route                      | Host for the route leading to Controller REST endpoint. |
+| log                        | Name of the config map and optionally its entry (separated by '/': e.g myconfigmap/log4j2-superverbose.xml) storing Log4j2 configuration file. By default the Controller uses its embedded configuration. |
+| agentDeployTimeout         | Deploy timeout for agents, in milliseconds. |
+| triggerUrl                 | Value for `io.hyperfoil.trigger.url` - [see above](#starting-the-controller-manually)
+| preHooks                   | Name of config map holding hooks that run before the run starts. |
+| postHooks                  | Name of config map holding hooks that run when the run finishes. |
+| persistentVolumeClaim      | Name of the PVC Hyperfoil should mount for its workdir. |
+
+
+The operator deploys only the controller; each agent is then started when the run starts as a `pod` in the same namespace and stopped when the run completes.
+
+When the resource becomes ready (you can check it out through Openshift CLI using `oc get hf`) the controller pod should be up and running. Now you can open Hyperfoil CLI and connect to the controller. While default Hyperfoil port is 8090, Openshift router will expose the service on port 80.
+
 ```
 > bin/cli.sh
 [hyperfoil]$ connect hyperfoil-hyperfoil.apps.my.cluster.domain -p 80
@@ -141,9 +165,7 @@ Connected!
 WARNING: Server time seems to be off by 12124 ms
 ```
 
-<span>5.</span> Upload & run benchmarks as usual - we're using {% include example_link.md src='k8s-hello-world.hf.yaml' %} in this example.
-
-Note that it can take several seconds to spin up containers with agents.
+Now you can upload & run benchmarks as usual - we're using {% include example_link.md src='k8s-hello-world.hf.yaml' %} in this example. Note that it can take several seconds to spin up containers with agents.
 
 ```
 [hyperfoil@hyperfoil-hyperfoil]$ upload examples/k8s-hello-world.hf.yaml
@@ -159,9 +181,7 @@ main  TERMINATED  19:07:36.753             19:07:41.778  5025 ms (exceeded by 25
 [hyperfoil@hyperfoil-hyperfoil]$
 ```
 
-You can find more details about adjusting the agents in the [benchmark format reference]({{ "/docs/benchmark.html#kubernetes-deployer" | absolute_url }}).
-
-At this moment the CLI command `log` does not work as both controller and agents log to standard output rather than to a file. Use `oc log controller-xxxx` to inspect the logs instead. This will be addressed in the future (note: already fixed in master).
+You can find more details about adjusting the agents in the [benchmark format reference]({{ "/docs/benchmark.html#kubernetesopenshift-deployer" | absolute_url }}).
 
 Running Hyperfoil inside the cluster you are trying to test might skew results due to different network topology compared to driving the load from 'outside' (as real users would do). It is your responsibility to validate if your setup and separation between load driver and SUT (system under test) is correct. You have been warned.
 
