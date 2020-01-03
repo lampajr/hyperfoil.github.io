@@ -116,6 +116,7 @@ Manages processing of HTTP responses.
 | [body](index.html#processors) | Handle HTTP response body.  |
 | [header](#handler.header) | Handle HTTP response headers.  |
 | [onCompletion](index.html#actions) | Action executed when the HTTP response is fully received.  |
+| [rawBytes](#handler.rawBytes) | Handler processing HTTP response before parsing.  |
 | [status](#handler.status) | Handle HTTP response status.  |
 
 ### <a id="handler.header"></a>handler.header
@@ -125,8 +126,31 @@ Handle HTTP response headers.
 | Property | Description |
 | ------- | -------- |
 | countHeaders | Stores number of occurences of each header in custom statistics (these can be displayed in CLI using the <code>stats -c</code> command).  |
+| [filter](#handler.header.filter) | Compares if the header name matches expression and invokes a processor with the value.  |
 | logInvalid | Logs headers from requests marked as invalid.  |
 | [recordHeaderTime](#handler.header.recordHeaderTime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time).  |
+
+### <a id="handler.header.filter"></a>handler.header.filter
+
+Compares if the header name matches expression and invokes a processor with the value. 
+
+| Property | Description |
+| ------- | -------- |
+| [header](#handler.header.filter.header) | Condition on the header name.  |
+| [processor](index.html#processors) | Processor that will be invoked with the value (converted to ByteBuf).  |
+
+### <a id="handler.header.filter.header"></a>handler.header.filter.header
+
+
+| Inline definition |
+| -------- |
+| String that should be matched. |
+
+| Property | Description |
+| ------- | -------- |
+| caseSensitive | True if the case must match, false if the check is case-insensitive.  |
+| copy | <br>Note: property does not have any value |
+| matchVar | Fetch the value from a variable.  |
 
 ### <a id="handler.header.recordHeaderTime"></a>handler.header.recordHeaderTime
 
@@ -137,6 +161,27 @@ Records alternative metric based on values from a header (e.g. when a proxy repo
 | header | Header carrying the time.  |
 | metric | Name of the created metric.  |
 | unit | Time unit in the header; use either `ms` or `ns`.  |
+
+### <a id="handler.rawBytes"></a>handler.rawBytes
+
+Handler processing HTTP response before parsing. 
+
+| Property | Description |
+| ------- | -------- |
+| [responseSizeRecorder](#handler.rawBytes.responseSizeRecorder) | Accumulates response sizes into custom metric.  |
+
+### <a id="handler.rawBytes.responseSizeRecorder"></a>handler.rawBytes.responseSizeRecorder
+
+Accumulates response sizes into custom metric. 
+
+
+| Inline definition |
+| -------- |
+| Name of the custom metric. |
+
+| Property | Description |
+| ------- | -------- |
+| customMetric | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="handler.status"></a>handler.status
 
@@ -162,6 +207,11 @@ Counts how many times given status is received.
 ### <a id="handler.status.range"></a>handler.status.range
 
 Marks requests that don't fall into the desired range as invalid. 
+
+
+| Inline definition |
+| -------- |
+| Single status code (<code>204</code>), masked code (<code>2xx</code>) or range (<code>200-399</code>). |
 
 | Property | Description |
 | ------- | -------- |

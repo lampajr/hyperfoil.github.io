@@ -27,6 +27,7 @@
 * [setInt](./step_setInt.html): Set session variable to an integral value. 
 * [stop](./step_stop.html): Immediately stop the user session (break all running sequences). 
 * [stopwatch](./step_stopwatch.html): Run nested sequence of steps, recording execution time. 
+* [stringToInt](./step_stringToInt.html)
 * [template](./step_template.html): Format pattern into session variable. 
 * [thinkTime](./step_thinkTime.html): Block current sequence for specified duration. 
 * [unset](./step_unset.html): Undefine variable name. 
@@ -37,6 +38,7 @@
 * [clearHttpCache](./action_clearHttpCache.html): Drops all entries from HTTP cache in the session. 
 * [set](./action_set.html): Set variable in session to certain value. 
 * [setInt](./action_setInt.html): Set session variable to an integral value. 
+* [stringToInt](./action_stringToInt.html)
 * [unset](./action_unset.html): Undefine variable name. 
 
 
@@ -51,4 +53,5 @@
 * [set](./processor_set.html): Set variable in session to certain value. 
 * [setInt](./processor_setInt.html): Set session variable to an integral value. 
 * [simple](./processor_simple.html): Stores data in a session variable (overwriting on multiple occurences). 
+* [stringToInt](./processor_stringToInt.html)
 * [unset](./processor_unset.html): Undefine variable name. 

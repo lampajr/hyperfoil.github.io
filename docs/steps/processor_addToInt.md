@@ -9,6 +9,7 @@ Add value to integer variable in the session.
 
 | Property | Description |
 | ------- | -------- |
+| orElseSetTo | If the variable is currently not set, set it to this value instead of addition.  |
 | value | Value added (can be negative).  |
 | var | Variable name.  |
 
