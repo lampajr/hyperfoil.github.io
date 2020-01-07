@@ -31,6 +31,8 @@ public void prepareBuild() {
 }
 ```
 
+Note that when you insert any builders in the `prepareBuild()` methods it is possible that its prepare phase won't be executed (if inserting to already prepared sequence), though it *might be* (if inserting to sequence that is yet to be prepared). It's up to the calling code to make sure that the inserted component will be prepared.
+
 As mentioned above, components often embed other components. To service-load a component, e.g. an `Action` you define these methods in the builder:
 
 ```java
@@ -43,7 +45,7 @@ public Builder onEvent(Action.Builder onEvent) {
 }
 
 // This is the service-loading method.
-public ServiceLoadedBuilderProvider<Action> onEvent() {
+public ServiceLoadedBuilderProvider<Action.Builder> onEvent() {
     return new ServiceLoadedBuilderProvider<>(Action.Builder.class, locator, this::onEvent);
 }
 ```
