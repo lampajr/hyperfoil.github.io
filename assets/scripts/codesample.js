@@ -16,7 +16,7 @@ function insertCodesample(where, tag, src, slice) {
                       slice = slice.split(":");
                       text = text.split(/\r?\n/).slice(slice[0], slice[1]).join("\n");
                     }
-                      code.innerHTML = text;
+                      code.innerHTML = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                       prettyPrint();
                     })
                 })
@@ -26,7 +26,7 @@ function insertCodesample(where, tag, src, slice) {
                 slice = slice.split(":");
                 text = text.split(/\r?\n/).slice(slice[0], slice[1]).join("\n");
               }
-              code.innerHTML = text;
+              code.innerHTML = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
               prettyPrint();
             })
           }
