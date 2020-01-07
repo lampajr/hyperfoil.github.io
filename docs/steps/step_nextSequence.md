@@ -7,7 +7,7 @@ Schedules a new sequence instance to be executed.
 | Name of the instantiated sequence. |
 
 
-| Property | Description |
-| ------- | -------- |
-| name | Sequence name.  |
+| Property | Type | Description |
+| ------- | ------- | -------- |
+| name | String | Sequence name.  |
 

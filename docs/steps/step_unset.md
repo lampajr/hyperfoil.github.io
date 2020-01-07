@@ -7,7 +7,7 @@ Undefine variable name.
 | Variable name. |
 
 
-| Property | Description |
-| ------- | -------- |
-| var | Variable name.  |
+| Property | Type | Description |
+| ------- | ------- | -------- |
+| var | String | Variable name.  |
 

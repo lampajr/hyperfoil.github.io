@@ -7,7 +7,7 @@ Block this sequence until referenced delay point.
 | Delay point created in <code>scheduleDelay.key</code>. |
 
 
-| Property | Description |
-| ------- | -------- |
-| key | Delay point created in <code>scheduleDelay.key</code>.  |
+| Property | Type | Description |
+| ------- | ------- | -------- |
+| key | String | Delay point created in <code>scheduleDelay.key</code>.  |
 
