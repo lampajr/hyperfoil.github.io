@@ -23,5 +23,6 @@
 .feature img { width: 100px; border: 0px; vertical-align: bottom; display: table-cell; }
 
 .anchor { visibility: hidden ;}
+.anchor:hover { color: #C00000; }
 .anchor::before { content: '\00A7'; position: absolute; margin-left: -1.5ex; display: block; width: 1.5ex; font-size: 0.85em; padding-top: 0.15em; }
 h2:hover .anchor, h3:hover .anchor { visibility: visible; }

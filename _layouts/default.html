@@ -9,7 +9,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
       function prependHeaders(){
-        $(this).prepend('<a class="anchor" href="#' + $(this).attr("id") + '"></a>')
+        if ($(this).attr("id")) {
+          $(this).prepend('<a class="anchor" href="#' + $(this).attr("id") + '"></a>')
+        }
       }
       $(function(){
         $("h2").each(prependHeaders)
