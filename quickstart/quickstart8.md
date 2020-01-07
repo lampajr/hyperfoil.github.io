@@ -71,6 +71,8 @@ you can use the short syntax for the generator:
 mvn hyperfoil-codegen:skeleton -Dskeleton.name=....
 ```
 
+See also further information about [custom extensions development]({{ "/docs/extensions.html" | absolute_url }}).
+
 ---
 
 This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "/docs/" | absolute_url }}) or talk to us on [Zulip](https://hyperfoil.zulipchat.com/).

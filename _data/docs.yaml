@@ -13,6 +13,9 @@
 - title: Controller REST API
   link: /docs/restapi.html
   description: Learn to interact with the controller
+- title: Extensions development
+  link: /docs/extensions.html
+  description: Further information about custom components (such as steps and handlers)
 - title: Frequently Asked Questions
   link: /docs/faq.html
 - title: Topics
