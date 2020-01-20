@@ -18,6 +18,9 @@
   description: Further information about custom components (such as steps and handlers)
 - title: Frequently Asked Questions
   link: /docs/faq.html
+- title: Troubleshooting
+  description: Common technical issues that you could hit during benchmark development.
+  link: /docs/troubleshooting.html
 - title: Topics
   link: /docs/topics.html
   description: Benchmarking is hard. Let's talk about that.
