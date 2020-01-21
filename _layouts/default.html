@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width,maximum-scale=2">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ '/assets/scripts/jquery.navgoco.min.js' | relative_url }}"></script>
+	  <link rel="stylesheet" href="{{ '/assets/css/jquery.navgoco.css' | relative_url }}" type="text/css" media="screen" />
+
     <script>
       function prependHeaders(){
         if ($(this).attr("id")) {
@@ -16,6 +19,14 @@
       $(function(){
         $("h2").each(prependHeaders)
         $("h3").each(prependHeaders)
+      })
+      $(function() {
+        $('.nav').navgoco({
+          accordion: true,
+        });
+      });
+      $(function() {
+        $('.active').parent().addClass("open").css("display", "")
       })
     </script>
 
@@ -43,6 +54,13 @@
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
+      {% if page.menu != false %}
+      <section id="docs_nav_menu" class="inner" style="padding: 0px;">
+        <div style="position:relative; left: -230px; top: 50px;">
+          {% include docs_menu.md %}
+        </div>
+      </section>
+      {% endif %}
       <section id="main_content" class="inner">
         {{ content }}
       </section>

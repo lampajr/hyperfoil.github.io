@@ -3,6 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: default
+menu: false
 ---
 # Hyperfoil
 <h3 id="project_description">{{ site.description }}</h3>

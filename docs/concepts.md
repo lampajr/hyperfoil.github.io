@@ -1,10 +1,12 @@
 # Concepts
 
+This document explains some core terms used throughout the documentation.
+
 ## Controller and agents
 
 While it is possible to run benchmarks directly from CLI, in its nature Hyperfoil is a distributed tool with master-slave architecture. **Controller** has the master role; this is a [Vert.x]((https://vertx.io))-based server with REST API. When a benchmark is started controller deploys agents (according to the benchmark definition), pushes the benchmark definition to these agents and orchestrates benchmark phases. **Agents** execute the benchmark, periodically sending statistics to the controller. This way the controller can combine and evaluate statistics from all agents on the fly. When the benchmark is completed all agents terminate.
 
-All communication between the controller and agents happens over Vert.x eventbus - therefore it is independent on the deployment type. (Currently only SSH-based deployment is implemented, requiring pubkey access to the agent nodes).
+All communication between the controller and agents happens over Vert.x eventbus - therefore it is independent on the deployment type.
 
 ## Phases
 
@@ -32,5 +34,3 @@ It is also necessary to know how many sessions we should preallocate - maximum c
 Scenario consists of one or more **sequences** that are composed of **steps**. Steps are similar to statements in programming language and sequences are an equivalent of blocks of code.
 
 While most of the time the scenario will consist of sequential operations as the user is not multi-tasking, the browser (or other system you're simulating) actually executes some operations in parallel - e.g. during page load it loads images concurrently. Therefore at any time the session contains one or more active **sequence instances**; when all sequence instances are done, the session has finished and can be recycled for a new user. Most of the time the scenario will start with only one active instance and as it progresses, it might create instances of other sequences (e.g after evaluating a condition it creates a sequence instance according to the branching logic).
-
-{% include docs_links.md %}

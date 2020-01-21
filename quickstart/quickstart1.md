@@ -64,5 +64,3 @@ Now that you know how to run a benchmark, let's take a deeper look into {% inclu
 In the future you might find [editing with schema]({{ "/docs/editor.html" | absolute_url }}) useful but at this point any editor with YAML syntax highlighting will do the job.
 
 Ready? Let's continue with [something a bit more realistic]({{ "/quickstart/quickstart2.html" | absolute_url }})...
-
-{% include quickstart_links.md %}

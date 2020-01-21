@@ -1,30 +1,48 @@
-- title: Concepts
-  link: /docs/concepts.html
-  description: Learn about controller and agents, and composition of the benchmark.
-- title: Installation
-  link: /docs/installation.html
-  description: Build, install and run Hyperfoil
-- title: Benchmark definition format
-  link: /docs/benchmark.html
-  description: Structure of the YAML benchmark definition.
-- title: Steps and handlers reference
-  link: /docs/steps/index.html
-  description: List of all the steps you can execute
-- title: Controller REST API
-  link: /docs/restapi.html
-  description: Learn to interact with the controller
-- title: Extensions development
-  link: /docs/extensions.html
-  description: Further information about custom components (such as steps and handlers)
-- title: Frequently Asked Questions
-  link: /docs/faq.html
-- title: Troubleshooting
-  description: Common technical issues that you could hit during benchmark development.
-  link: /docs/troubleshooting.html
-- title: Topics
-  link: /docs/topics.html
-  description: Benchmarking is hard. Let's talk about that.
+- title: Overview
   items:
-  - title: Coordinated omission
-    link: /docs/coordinated_omission.html
-    description: The fallacy of most benchmark tools.
+  - title: Introduction
+    link: /docs/intro.html
+  - title: Concepts
+    link: /docs/concepts.html
+  - title: Frequently Asked Questions
+    link: /docs/faq.html
+- title: Getting started
+  items:
+  - title: First benchmark
+    link: /quickstart/quickstart1.html
+  - title: Steps and statistics
+    link: /quickstart/quickstart2.html
+  - title: Complex workflow
+    link: /quickstart/quickstart3.html
+  - title: Phases - basics
+    link: /quickstart/quickstart4.html
+  - title: Linking phases
+    link: /quickstart/quickstart5.html
+  - title: Running the server
+    link: /quickstart/quickstart6.html
+  - title: Clustered Hyperfoil
+    link: /quickstart/quickstart7.html
+  - title: Custom components
+    link: /quickstart/quickstart8.html
+- title: User Guide
+  items:
+  - title: Installation
+    link: /docs/installation.html
+  - title: Benchmark definition format
+    link: /docs/benchmark.html
+  - title: Troubleshooting
+    link: /docs/troubleshooting.html
+- title: Reference
+  link: /docs/steps/index.html
+- title: Custom extensions
+  link: /docs/extensions.html
+- title: Controller API
+  link: /docs/restapi.html
+
+#- title: Topics
+#  link: /docs/topics.html
+#  description: Benchmarking is hard. Let's talk about that.
+#  items:
+#  - title: Coordinated omission
+#    link: /docs/coordinated_omission.html
+#    description: The fallacy of most benchmark tools.

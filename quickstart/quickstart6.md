@@ -96,5 +96,3 @@ Killed.
 ```
 
 In the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}) we will deal with starting clustered Hyperfoil.
-
-{% include quickstart_links.md %}

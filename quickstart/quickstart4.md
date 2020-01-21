@@ -14,5 +14,3 @@ There's a matching mock server to run this scenario:
 ```
 
 In [next quickstart]({{ "/quickstart/quickstart5.html" }}) you'll learn how to repeat and link the phases.
-
-{% include quickstart_links.md %}

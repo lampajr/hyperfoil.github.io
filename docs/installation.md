@@ -212,5 +212,3 @@ post:
 The lists of hooks from controller directories and benchmark are merged; if there's a conflict between two hooks from these two sources the final execution order is not defined (but both get executed).
 
 In case of inline command execution the `stderr` output will stay on stderr, `stdout` will be caputered by Hyperfoil and stored in `*rundir*/*XXXX*/hooks.json`. As the post-hooks are executed after `info.json` and `all.json` get written the output cannot be included inside those files. This order of execution was chosen because it's likely that you will upload these files to a database - yes, using a post-hook.
-
-{% include docs_links.md %}

@@ -20,5 +20,3 @@ Start the server and fire the scenario the usual way:
 ```
 
 Is this scenario too simplistic? Let's [define phases]({{ "/quickstart/quickstart4.html" | absolute_url }})...
-
-{% include quickstart_links.md %}

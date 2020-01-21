@@ -45,5 +45,3 @@ You see that we did 106 requests which fits the assumption about running 10 user
 Vert.x clustering is using [Infinispan](http://infinispan.org/) and [JGroups](http://www.jgroups.org/); depending on your networking setup it might not work out-of-the-box. If you experience any trouble, check out the [FAQ]({{ "/faq" | absolute_url }}).
 
 [Next quickstart]({{ "/quickstart/quickstart8.html" | absolute_url }}) will get back to the scenario definition; we'll show you how to extend Hyperfoil with custom steps and handlers.
-
-{% include quickstart_links.md %}

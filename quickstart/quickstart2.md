@@ -45,5 +45,3 @@ There are several things worth mentioning in this example:
 - The test took 44 ms longer than the configured 5 seconds. We terminate the test only after all responses for sent requests arrive (or time out).
 
 In the next quickstart you'll see a [more complex scenario]({{ "/quickstart/quickstart3.html" | absolute_url }})
-
-{% include quickstart_links.md %}

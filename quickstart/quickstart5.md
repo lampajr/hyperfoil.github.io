@@ -27,5 +27,3 @@ This definition will create phases `rampUp/0/browsingUser`, `rampUp/0/buyingUser
 You could orchestrate the phases as it suits you, using `startAfter`, `startAfterStrict` (this requires the referenced phase to me *terminated* instead of *finished* as with `startAfter`) or `startTime` with relative time since benchmark start.
 
 This sums up basic principles, in [next quickstart]({{ "/quickstart/quickstart6.html" | absolute_url }}) you'll see how to start and use Hyperfoil in distributed mode.
-
-{% include quickstart_links.md %}
