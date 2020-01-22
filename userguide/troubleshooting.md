@@ -2,12 +2,12 @@
 
 Common technical issues that you could hit during benchmark development.
 
-### It doesn't work. Can you help me?
+## It doesn't work. Can you help me?
 
 The first step to identifying any issue is getting a verbose log - setting logging level to TRACE. How exactly you do that depends on the way you deploy Hyperfoil:
 
 1. If you use CLI and the `start-local` command, just run it as `start-local -l TRACE` which sets the default logging level. You'll find the log in `/tmp/hyperfoil.local.log` by default.
-2. If you run Hyperfoil manually in [standalone mode]({{ "docs/installation.html#starting-the-controller-manually" | absolute_url }}) (non-clustered) the agent will run in the same JVM as the controller. You need to add `-Dlog4j.configurationFile=file:///path/to/log4j2-trace.xml` option when starting `standalone.sh`. If you start Hyperfoil through Ansible the same is set using `hyperfoil_log_config` variable.
+2. If you run Hyperfoil manually in [standalone mode]({{ "/userguide/installation/start_manual.html" | absolute_url }}) (non-clustered) the agent will run in the same JVM as the controller. You need to add `-Dlog4j.configurationFile=file:///path/to/log4j2-trace.xml` option when starting `standalone.sh`. If you start Hyperfoil through Ansible the same is set using `hyperfoil_log_config` variable.
 3. If you run Hyperfoil in clustered mode, the failing code is probably in the agents. You need to pass the logging settings to agents using the deployer; with [SSH deployer]({{ "/docs/benchmark.html#ssh-deployer" | absolute_url }}) you need to add `-Dlog4j.configurationFile=file:///path/to/log4j2-trace.xml` to the `extras` property, in [Kubernetes/Openshift]({{ "/docs/benchmark.html#kubernetesopenshift-deployer" | absolute_url }}) there is the `log` option that lets you set the logging configuration through a config-map.
 
 An example of Log4j2 configuration file with TRACE logging on is here:
@@ -32,7 +32,7 @@ TRACE-level logging can be very verbose to a point where it will pose a bottlene
 
 If you need to print variable values for debugging, check out [log step]({{ "/docs/steps/step_log.html" | absolute_url }}).
 
-### My phase fails with SLA failure 'Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.'
+## My phase fails with SLA failure 'Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.'
 
 By default Hyperfoil uses single connection to each HTTP(s) host; the default is set so low to force you thinking about connection limits early during test development. If you don't override this value as in:
 
@@ -52,7 +52,7 @@ you get the error above, as the default SLA does not allow a session (virtual us
 
 on each request to drop the default SLA. The `blockedRatio` value is a threshold ratio between time spent waiting for a free connection and waiting for the response.
 
-### When I set 'Host' header for HTTP request I get warnings
+## When I set 'Host' header for HTTP request I get warnings
 
 Hyperfoil automatically inserts the 'Host' header to each request and when you try to override that for certain request it emits a warning:
 

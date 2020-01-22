@@ -27,11 +27,33 @@
 - title: User Guide
   items:
   - title: Installation
-    link: /docs/installation.html
+    link: /userguide/installation.html
+    items:
+    - title: Starting manually
+      link: /userguide/installation/start_manual.html
+    - title: Starting via Ansible
+      link: /userguide/installation/ansible.html
+    - title: Kubernetes/Openshift
+      link: /userguide/installation/k8s.html
+    - title: Manual K8s/Openshift
+      link: /userguide/installation/k8s_manual.html
+  - title: Hooks
+    link: /userguide/hooks.html
   - title: Benchmark definition format
-    link: /docs/benchmark.html
+    link: /userguide/benchmark.html
+    items:
+    - title: Agents
+      link: /userguide/benchmark/agents.html
+    - title: Ergonomics
+      link: /userguide/benchmark/ergonomics.html
+    - title: HTTP
+      link: /userguide/benchmark/http.html
+    - title: Phases
+      link: /userguide/benchmark/phases.html
+    - title: Scenario
+      link: /userguide/benchmark/scenario.html
   - title: Troubleshooting
-    link: /docs/troubleshooting.html
+    link: /userguide/troubleshooting.html
 - title: Reference
   link: /docs/reference_index.html
   include: reference.html

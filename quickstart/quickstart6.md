@@ -9,7 +9,7 @@ There are two other scripts in the `bin/` directory:
 * `standalone.sh` starts both the controller and (one) agent in a single JVM. This is not too different from the controller embedded in CLI.
 * `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
 
-Also note that it is possible to [run Hyperfoil in Openshift]({{ "/docs/installation.html#deploying-in-kubernetesopenshift" | absolute_url }}).
+Also note that it is possible to [run Hyperfoil in Openshift]({{ "/userguide/installation/k8s.html" | absolute_url }}).
 
 Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the {% include example_link.md src='single-request.hf.yaml' %} benchmark:
 
