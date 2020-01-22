@@ -3,6 +3,8 @@
 
 @import "jekyll-theme-slate";
 
+html, body { height: 100%; }
+
 .inner { max-width: 800px; }
 
 #project_title { font-size: 28px; }

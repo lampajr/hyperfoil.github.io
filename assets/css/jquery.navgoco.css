@@ -12,6 +12,8 @@
     width: 200px;
     padding:0px;
     margin: 0px;
+    overflow-y: auto;
+    max-height: calc(100% - 110px);
 }
 
 .nav > li {

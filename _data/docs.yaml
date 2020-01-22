@@ -33,7 +33,8 @@
   - title: Troubleshooting
     link: /docs/troubleshooting.html
 - title: Reference
-  link: /docs/steps/index.html
+  link: /docs/reference_index.html
+  include: reference.html
 - title: Custom extensions
   link: /docs/extensions.html
 - title: Controller API

@@ -1,0 +1,16 @@
+<ul>
+{% for p in site.pages %}
+    {% if p.url contains include.prefix %}
+        {% if p.url == page.url %}
+        <li class="active">
+        {% else %}
+        <li>
+        {% endif %}
+        <a href="{{ p.url }}">{{ p.title }}</a>{% if include.excerpt != nil %}:
+            {% assign content = p.content | newline_to_br | replace: '<p>', '<br />' | strip_newlines | split: '<br />' %}
+            {{ content[2] }}
+        {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}
+</ul>
