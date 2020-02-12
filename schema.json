@@ -1173,44 +1173,50 @@ redirect_from: /schema
       "properties" : {
         "CONNECT" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }
-          }, {
             "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
           } ]
         },
         "DELETE" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }
-          }, {
             "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
           } ]
         },
         "GET" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }
-          }, {
             "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
           } ]
         },
         "HEAD" : {
@@ -1441,6 +1447,21 @@ redirect_from: /schema
         }
       }
     },
+    "io.hyperfoil.core.generators.StringGeneratorImplBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
     "io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
@@ -1520,21 +1541,6 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : { }
-    },
-    "io.hyperfoil.core.generators.StringGeneratorImplBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "fromVar" : {
-          "type" : "string"
-        },
-        "pattern" : {
-          "type" : "string"
-        },
-        "value" : {
-          "type" : "string"
-        }
-      }
     },
     "io.hyperfoil.api.config.SLABuilder" : {
       "type" : "object",
@@ -2084,10 +2090,16 @@ redirect_from: /schema
         "caseSensitive" : {
           "type" : "boolean"
         },
-        "copy" : {
-          "type" : "null"
+        "endsWith" : {
+          "type" : "string"
         },
         "matchVar" : {
+          "type" : "string"
+        },
+        "startsWith" : {
+          "type" : "string"
+        },
+        "value" : {
           "type" : "string"
         }
       }
