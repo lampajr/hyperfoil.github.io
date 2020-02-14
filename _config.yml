@@ -18,7 +18,7 @@ email: hyperfoil@hyperfoil.io
 description: >- # this means to ignore newlines until "baseurl:"
   Microservice-oriented distributed benchmark framework.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://hyperfoil.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://hyperfoil.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: hyperfoil-does-not-tweet
 github_username:  Hyperfoil
 github:

@@ -1,6 +1,7 @@
 ---
 redirect_from:
 - /docs
+- /docs/
 ---
 # Introduction to Hyperfoil
 
