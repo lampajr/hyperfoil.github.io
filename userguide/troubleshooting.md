@@ -52,6 +52,8 @@ you get the error above, as the default SLA does not allow a session (virtual us
 
 on each request to drop the default SLA. The `blockedRatio` value is a threshold ratio between time spent waiting for a free connection and waiting for the response.
 
+You could also wonder why the sessions are missing a connection when the scenario should guarantee there's always a free connection e.g. when using `always` phase type with same number of users and connections. However this may not hold when the connection is closed (either explicitly or after receiving a 5xx response) - while Hyperfoil starts replacing that connection immediatelly it takes a moment. If you expects connections to be closed add a few (10%) extra connections. Another reason could be poor balancing of connections and sessions to threads (should be gone in version 0.8).
+
 ## When I set 'Host' header for HTTP request I get warnings
 
 Hyperfoil automatically inserts the 'Host' header to each request and when you try to override that for certain request it emits a warning:
