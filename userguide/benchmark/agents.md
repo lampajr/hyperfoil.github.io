@@ -13,6 +13,12 @@ agents:
 
 The definition is passed to an instance of `i.h.api.deployment.Deployer` which will interpret the definition. Deployer implementation is registred using the `java.util.ServiceLoader` and selected through the `io.hyperfoil.deployer` system property. The default implementation is `ssh`.
 
+## Common properties
+
+| Property | Default          | Description |
+| -------- | ---------------- | ----------- |
+| threads  | from benchmark   | Number of threads used by the agent (overrides `threads` in benchmark root).
+
 ## SSH Deployer
 
 `ssh` deployer accepts either the `[user@]host[:port]` inline syntax or these properties:

@@ -61,6 +61,8 @@
   link: /docs/extensions.html
 - title: Controller API
   link: /docs/restapi.html
+- title: Release notes
+  link: /docs/release_notes.html
 
 #- title: Topics
 #  link: /docs/topics.html

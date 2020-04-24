@@ -53,6 +53,7 @@ Allows building HTTP request body from session variables.
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | form | [Builder](#bodyform) | Build form as if we were sending the request using HTML form. This option automatically adds <code>Content-Type: application/x-www-form-urlencoded</code> to the request headers.  |
+| fromFile | String | Send contents of the file. Note that this method does NOT set content-type automatically.  |
 | fromVar | String | Use variable content as request body.  |
 | pattern | String | Pattern replacing <code>${sessionvar}</code> with variable contents in a string.  |
 | text | String | String sent as-is.  |
@@ -170,20 +171,16 @@ Handler processing HTTP response before parsing.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| responseSizeRecorder | [ResponseSizeRecorder.Builder](#handlerrawBytesresponseSizeRecorder) | Accumulates response sizes into custom metric.  |
+| transferSizeRecorder | [TransferSizeRecorder.Builder](#handlerrawBytestransferSizeRecorder) | Accumulates request and response sizes into custom metrics.  |
 
-### <a id="handler.rawBytes.responseSizeRecorder"></a>handler.rawBytes.responseSizeRecorder
+### <a id="handler.rawBytes.transferSizeRecorder"></a>handler.rawBytes.transferSizeRecorder
 
-Accumulates response sizes into custom metric. 
-
-
-| Inline definition |
-| -------- |
-| Name of the custom metric. |
+Accumulates request and response sizes into custom metrics. 
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| customMetric | String | Name of the custom metric.  |
+| requestMetric | String | Name of the custom metric for collecting sent request bytes.  |
+| responseMetric | String | Name of the custom metric for collecting response bytes.  |
 
 ### <a id="handler.status"></a>handler.status
 
@@ -318,8 +315,9 @@ Defines a Service Level Agreement (SLA) - conditions that must hold for benchmar
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| blockedRatio | double | Maximum allowed ratio of time spent waiting for usable connection to sum of response latencies. Default is 0 - client must not be blocked.  |
+| blockedRatio | double | Maximum allowed ratio of time spent waiting for usable connection to sum of response latencies and blocked time. Default is 0 - client must not be blocked. Set to 1 if the client can block without limits.  |
 | errorRatio | double | Maximum allowed ratio of errors. Valid values are 0.0 - 1.0 (inclusive).  |
+| invalidRatio | double | Maximum allowed ratio of responses marked as invalid. Valid values are 0.0 - 1.0 (inclusive).  |
 | limits | [Builder](#slalist-of-mappingslimits) | Percentile limits.  |
 | meanResponseTime | String | Maximum allowed mean (average) response time. Use suffix `ns`, `us`, `ms` or `s` to specify units.  |
 | window | String | Period over which the stats should be collected. By default the SLA applies to stats from whole phase.  |

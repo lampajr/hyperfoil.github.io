@@ -17,8 +17,9 @@ There are different types of phases based on the mode of starting new users:
 
 | Type           | Description |
 | -------------- | ----------- |
-| constantPerSec | The benchmark will start certain number of users according to a schedule regardless of previously started users completing the scenario. This is the open-model. |
-| rampPerSec     | Similar to `constantPerSec` but ramps up or down the number of started users throughout the execution of the phase. |
+| constantRate   | The benchmark will start certain number of users according to a schedule regardless of previously started users completing the scenario. This is the open-model. |
+| increasingRate | Similar to `constantRate` but ramps up the number of started users throughout the execution of the phase. |
+| decreasingRate | The same as `increasingRate` but requires `initialUsersPerSec` > `targetUsersPerSec`. |
 | atOnce         | All users are be started when the phase starts running and once the scenario is completed the users won't retry the scenario. |
 | always         | There is fixed number of users and once the scenario is completed the users will start executing the scenario from beginning. This is called a closed-model and is similar to the way many benchmarks with fixed number of threads work. |
 
@@ -29,7 +30,7 @@ See the example of phases configuration:
 phases:
 # Over one minute ramp the number of users started each second from 1 to 100
 - rampUp:
-    rampPerSec:
+    increasingRate:
       initialUsersPerSec: 1
       targetUsersPerSec: 100
       # We expect at most 200 users being active at one moment - see below
@@ -38,7 +39,7 @@ phases:
       scenario: ...
 # After rampUp is finished, run for 5 minutes and start 100 new users each second
 - steadyState:
-    constantPerSec:
+    constantRate:
       usersPerSec: 100
       maxSessionsEstimate: 200
       startAfter: rampUp
@@ -83,15 +84,15 @@ Below are properties specific for different phase types:
   * `users`: Number of users started at the start of the phase.
 * `always`:
   * `users`: Number of users started at the start of the phase. When a user finishes it is immediatelly restarted (any pause must be part of the scenario).
-* `constantPerSec`:
+* `constantRate`:
   * `usersPerSec`: Number of users started each second.
   * `variance`: Randomize delays between starting users following the [exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution). That way the starting users behave as the [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process). If this is set to `false` users will be started with uniform delays. Default is `true`.
   * `maxSessionsEstimate`: Number of preallocated sessions. This number is split between all agents/executors evenly.
-* `rampPerSec`:
+* `increasingRate` / `decreasingRate`:
   * `initialUsersPerSec`: Rate of started users at the beginning of the phase.
   * `targetUsersPerSec`: Rate of started users at the end of the phase.
-  * `variance`: Same as in `constantPerSec`.
-  * `maxSessionsEstimate`: Same as in `constantPerSec`.
+  * `variance`: Same as in `constantRate
+  * `maxSessionsEstimate`: Same as in `constantRate`.
 
 Hyperfoil initializes all phases before the benchmark starts, pre-allocating memory for sessions.
 In the open-model phases it's not possible to know how many users will be active at the same moment
@@ -112,7 +113,7 @@ For all purposes but the benchmark configuration these become regular phases of 
 ...
 phases:
 - steadyState:
-    constantPerSec:
+    constantRate:
       usersPerSec: 30
       duration: 5m
       forks:
@@ -137,7 +138,7 @@ In some types of tests it's useful to repeat given phase with increasing load - 
 ...
 phases:
 - rampUp:
-    rampPerSec:
+    increasingRate:
       # Create phases rampUp/000, rampUp/001 and rampUp/002
       maxIterations: 3
       # rampUp/000 will go from 1 to 100 users, rampUp will go from 101 to 200 users...
@@ -154,7 +155,7 @@ phases:
       duration: 1m
       scenario: ...
 - steadyState:
-    constantPerSec:
+    constantRate:
       maxIterations: 3
       usersPerSec:
         base: 100

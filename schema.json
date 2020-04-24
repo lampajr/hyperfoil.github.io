@@ -100,7 +100,7 @@ redirect_from: /schema
                 }
               } ]
             },
-            "constantPerSec" : {
+            "constantRate" : {
               "description" : "Add new users to the system at constant rate.",
               "allOf" : [ {
                 "$ref" : "#/definitions/phase"
@@ -122,38 +122,15 @@ redirect_from: /schema
                 }
               } ]
             },
-            "rampPerSec" : {
-              "description" : "Add new users to the system at varying rate.",
-              "allOf" : [ {
-                "$ref" : "#/definitions/phase"
-              }, {
-                "required" : [ "initialUsersPerSec", "targetUsersPerSec" ],
-                "properties" : {
-                  "initialUsersPerSec" : {
-                    "description" : "Rate for new users at the beginning of phase",
-                    "$ref" : "#/definitions/incrementableNumber"
-                  },
-                  "targetUsersPerSec" : {
-                    "description" : "Rate for new users at the end of phase",
-                    "$ref" : "#/definitions/incrementableNumber"
-                  },
-                  "maxSessions" : {
-                    "description" : "Maximum number of users (active sessions) executing this phase concurrently.",
-                    "$ref" : "#/definitions/positiveInteger"
-                  },
-                  "variance" : {
-                    "description" : "Add new users randomly following Poisson process (true, default) or evenly (false).",
-                    "type" : "boolean"
-                  }
-                }
-              } ]
+            "increasingRate" : {
+              "$ref" : "#/definitions/rampRatePhase"
             }
           }
         }
       }
     },
     "staircase" : {
-      "desription" : "Shortcut for alternating rampPerSec and constPerSec phases",
+      "desription" : "Shortcut for alternating increasingRate and constantRate phases",
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -441,6 +418,32 @@ redirect_from: /schema
         "required" : [ "phase" ]
       } ]
     },
+    "rampRatePhase" : {
+      "description" : "Add new users to the system at varying rate.",
+      "allOf" : [ {
+        "$ref" : "#/definitions/phase"
+      }, {
+        "required" : [ "initialUsersPerSec", "targetUsersPerSec" ],
+        "properties" : {
+          "initialUsersPerSec" : {
+            "description" : "Rate for new users at the beginning of phase",
+            "$ref" : "#/definitions/incrementableNumber"
+          },
+          "targetUsersPerSec" : {
+            "description" : "Rate for new users at the end of phase",
+            "$ref" : "#/definitions/incrementableNumber"
+          },
+          "maxSessions" : {
+            "description" : "Maximum number of users (active sessions) executing this phase concurrently.",
+            "$ref" : "#/definitions/positiveInteger"
+          },
+          "variance" : {
+            "description" : "Add new users randomly following Poisson process (true, default) or evenly (false).",
+            "type" : "boolean"
+          }
+        }
+      } ]
+    },
     "scenario" : {
       "oneOf" : [ {
         "description" : "Actions that a single user will execute.",
@@ -551,7 +554,11 @@ redirect_from: /schema
             "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$Builder"
           },
           "json" : {
-            "$ref" : "#/definitions/io.hyperfoil.core.steps.JsonStep$Builder"
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.JsonStep$Builder"
+            }, {
+              "type" : "string"
+            } ]
           },
           "log" : {
             "$ref" : "#/definitions/io.hyperfoil.core.steps.LogStep$Builder"
@@ -616,7 +623,11 @@ redirect_from: /schema
             "$ref" : "#/definitions/io.hyperfoil.core.steps.StopwatchBeginStep$Builder"
           },
           "stringToInt" : {
-            "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+            }, {
+              "type" : "string"
+            } ]
           },
           "template" : {
             "$ref" : "#/definitions/io.hyperfoil.core.generators.TemplateStep$Builder"
@@ -928,33 +939,6 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.builders.IntCondition$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "equalTo" : {
-          "type" : "integer"
-        },
-        "fromVar" : {
-          "type" : "string"
-        },
-        "greaterOrEqualTo" : {
-          "type" : "integer"
-        },
-        "greaterThan" : {
-          "type" : "integer"
-        },
-        "lessOrEqualTo" : {
-          "type" : "integer"
-        },
-        "lessThan" : {
-          "type" : "integer"
-        },
-        "notEqualTo" : {
-          "type" : "integer"
-        }
-      }
-    },
     "io.hyperfoil.core.steps.AddToIntAction$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
@@ -1123,7 +1107,11 @@ redirect_from: /schema
           } ]
         },
         "stringToInt" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          }, {
+            "type" : "string"
+          } ]
         },
         "unset" : {
           "oneOf" : [ {
@@ -1134,10 +1122,40 @@ redirect_from: /schema
         }
       }
     },
+    "io.hyperfoil.core.builders.IntCondition$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "equalTo" : {
+          "type" : "integer"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "greaterOrEqualTo" : {
+          "type" : "integer"
+        },
+        "greaterThan" : {
+          "type" : "integer"
+        },
+        "lessOrEqualTo" : {
+          "type" : "integer"
+        },
+        "lessThan" : {
+          "type" : "integer"
+        },
+        "notEqualTo" : {
+          "type" : "integer"
+        }
+      }
+    },
     "io.hyperfoil.core.steps.JsonStep$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "delete" : {
+          "type" : "boolean"
+        },
         "format" : {
           "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
         },
@@ -1147,8 +1165,66 @@ redirect_from: /schema
         "query" : {
           "type" : "string"
         },
+        "replace" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.processor.Transformer$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.processor.Transformer$Builder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "toArray" : {
+          "type" : "string"
+        },
         "toVar" : {
           "type" : "string"
+        },
+        "unquote" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "io.hyperfoil.core.generators.ActionsTransformer$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "actions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+            }
+          } ]
+        },
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "pattern" : {
+          "type" : "string"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.api.processor.Transformer$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "actions" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.generators.ActionsTransformer$Builder"
         }
       }
     },
@@ -1173,50 +1249,44 @@ redirect_from: /schema
       "properties" : {
         "CONNECT" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "DELETE" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "GET" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "HEAD" : {
@@ -1279,30 +1349,34 @@ redirect_from: /schema
         },
         "PUT" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }
-          }, {
             "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
           } ]
         },
         "TRACE" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }
-          }, {
             "type" : "string"
+          }, {
+            "oneOf" : [ {
+              "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+            }, {
+              "type" : "array",
+              "minLength" : 1,
+              "additionalItems" : false,
+              "items" : {
+                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
+              }
+            } ]
           } ]
         },
         "authority" : {
@@ -1404,18 +1478,16 @@ redirect_from: /schema
         },
         "path" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "sla" : {
@@ -1446,179 +1518,6 @@ redirect_from: /schema
           "type" : "string"
         }
       }
-    },
-    "io.hyperfoil.core.generators.StringGeneratorImplBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "fromVar" : {
-          "type" : "string"
-        },
-        "pattern" : {
-          "type" : "string"
-        },
-        "value" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "form" : {
-          "oneOf" : [ {
-            "type" : "object",
-            "patternProperties" : {
-              ".*" : {
-                "type" : "string"
-              }
-            }
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "type" : "object",
-              "minProperties" : 1,
-              "maxProperties" : 1,
-              "patternProperties" : {
-                ".*" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }, {
-            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
-            }
-          }, {
-            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
-            }
-          } ]
-        },
-        "fromVar" : {
-          "type" : "string"
-        },
-        "pattern" : {
-          "type" : "string"
-        },
-        "text" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "fromVar" : {
-          "type" : "string"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "pattern" : {
-          "type" : "string"
-        },
-        "value" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.HttpRequestStep$FormBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.api.config.SLABuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "blockedRatio" : {
-          "type" : "number"
-        },
-        "errorRatio" : {
-          "type" : "number"
-        },
-        "limits" : {
-          "oneOf" : [ {
-            "type" : "object",
-            "patternProperties" : {
-              ".*" : {
-                "type" : "string"
-              }
-            }
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "type" : "object",
-              "minProperties" : 1,
-              "maxProperties" : 1,
-              "patternProperties" : {
-                ".*" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }, {
-            "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
-            }
-          } ]
-        },
-        "meanResponseTime" : {
-          "type" : "string"
-        },
-        "window" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.api.config.SLABuilder$LimitsBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.api.config.SLABuilder$ListBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "fromVar" : {
-          "type" : "string"
-        },
-        "pattern" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.HttpRequestStep$HeadersBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
     },
     "io.hyperfoil.core.steps.HttpResponseHandlersImpl$Builder" : {
       "type" : "object",
@@ -1686,6 +1585,57 @@ redirect_from: /schema
         }
       }
     },
+    "io.hyperfoil.core.handlers.StatusToCounterHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "add" : {
+          "type" : "integer"
+        },
+        "expectStatus" : {
+          "type" : "integer"
+        },
+        "init" : {
+          "type" : "integer"
+        },
+        "set" : {
+          "type" : "integer"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.RangeStatusValidator$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "max" : {
+          "type" : "integer"
+        },
+        "min" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "io.hyperfoil.api.http.StatusHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "minProperties" : 1,
+      "maxProperties" : 1,
+      "properties" : {
+        "counter" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.StatusToCounterHandler$Builder"
+        },
+        "range" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RangeStatusValidator$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        }
+      }
+    },
     "io.hyperfoil.core.handlers.ArrayRecorder$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
@@ -1710,6 +1660,12 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "delete" : {
+          "type" : "boolean"
+        },
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
         "processor" : {
           "oneOf" : [ {
             "$ref" : "#/definitions/io.hyperfoil.api.processor.RequestProcessorBuilder"
@@ -1725,8 +1681,28 @@ redirect_from: /schema
         "query" : {
           "type" : "string"
         },
+        "replace" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.processor.Transformer$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.processor.Transformer$Builder"
+            }
+          }, {
+            "type" : "string"
+          } ]
+        },
         "toArray" : {
           "type" : "string"
+        },
+        "toVar" : {
+          "type" : "string"
+        },
+        "unquote" : {
+          "type" : "boolean"
         }
       }
     },
@@ -1851,7 +1827,11 @@ redirect_from: /schema
           } ]
         },
         "stringToInt" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          }, {
+            "type" : "string"
+          } ]
         },
         "unset" : {
           "oneOf" : [ {
@@ -1985,7 +1965,11 @@ redirect_from: /schema
           } ]
         },
         "stringToInt" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.StringToIntAction$Builder"
+          }, {
+            "type" : "string"
+          } ]
         },
         "unset" : {
           "oneOf" : [ {
@@ -2020,30 +2004,6 @@ redirect_from: /schema
             "items" : {
               "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
             }
-          } ]
-        }
-      }
-    },
-    "io.hyperfoil.core.handlers.ResponseSizeRecorder$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "customMetric" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.api.http.RawBytesHandler$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "minProperties" : 1,
-      "maxProperties" : 1,
-      "properties" : {
-        "responseSizeRecorder" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.ResponseSizeRecorder$Builder"
-          }, {
-            "type" : "string"
           } ]
         }
       }
@@ -2148,56 +2108,207 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.StatusToCounterHandler$Builder" : {
+    "io.hyperfoil.core.handlers.TransferSizeRecorder$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "add" : {
-          "type" : "integer"
+        "requestMetric" : {
+          "type" : "string"
         },
-        "expectStatus" : {
-          "type" : "integer"
-        },
-        "init" : {
-          "type" : "integer"
-        },
-        "set" : {
-          "type" : "integer"
-        },
-        "var" : {
+        "responseMetric" : {
           "type" : "string"
         }
       }
     },
-    "io.hyperfoil.core.handlers.RangeStatusValidator$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "max" : {
-          "type" : "integer"
-        },
-        "min" : {
-          "type" : "integer"
-        }
-      }
-    },
-    "io.hyperfoil.api.http.StatusHandler$Builder" : {
+    "io.hyperfoil.api.http.RawBytesHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "minProperties" : 1,
       "maxProperties" : 1,
       "properties" : {
-        "counter" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.StatusToCounterHandler$Builder"
-        },
-        "range" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RangeStatusValidator$Builder"
-          }, {
-            "type" : "string"
-          } ]
+        "transferSizeRecorder" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.TransferSizeRecorder$Builder"
         }
       }
+    },
+    "io.hyperfoil.core.generators.StringGeneratorImplBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$BodyBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "form" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormBuilder"
+            }
+          } ]
+        },
+        "fromFile" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        },
+        "text" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$FormBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.api.config.SLABuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "blockedRatio" : {
+          "type" : "number"
+        },
+        "errorRatio" : {
+          "type" : "number"
+        },
+        "invalidRatio" : {
+          "type" : "number"
+        },
+        "limits" : {
+          "oneOf" : [ {
+            "type" : "object",
+            "patternProperties" : {
+              ".*" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "type" : "object",
+              "minProperties" : 1,
+              "maxProperties" : 1,
+              "patternProperties" : {
+                ".*" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.SLABuilder$LimitsBuilder"
+            }
+          } ]
+        },
+        "meanResponseTime" : {
+          "type" : "string"
+        },
+        "window" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.api.config.SLABuilder$LimitsBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.api.config.SLABuilder$ListBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$PartialHeadersBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.HttpRequestStep$HeadersBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
     },
     "io.hyperfoil.core.steps.NextSequenceStep$Builder" : {
       "type" : "object",
