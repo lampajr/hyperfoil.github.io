@@ -1,6 +1,10 @@
 # Release notes
 
-## 0.8
+## 0.9 (2020-05-28)
+
+This is a bugfix-release.
+
+## 0.8 (2020-04-24)
 
 * Renamed phase types:
     * `constantPerSec` &rarr; `constantRate`
@@ -15,10 +19,12 @@
 * Each agent can have different number of threads, using the `threads` property.
 * Report schema changed, now using schema `http://hyperfoil.io/run-schema/v2.0`
 
-## 0.7.1
+## 0.7.1 (2020-02-26)
 
 Bugfix-only release.
 
 * Fixed threading model when using `wrk` command
 * Fixed HTTP parsing for `rawBytesHandlers`
 * Fixed `stop` used either as step or in a handler
+
+Please see `git log` for info about older releases.
