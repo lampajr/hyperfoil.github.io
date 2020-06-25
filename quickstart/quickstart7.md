@@ -14,12 +14,12 @@ The load the benchmark generates is evenly split among the agents, so if you wan
 
 Open three terminals; in the first start the controller using `bin/controller.sh`, in second one open the CLI with `bin/cli.sh` and in the third one start the mock server:
 
-```
+```shell
 > docker run -v $(pwd)/examples/two-agents.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 
 Connect, upload, start and check out the benchmark using CLI exactly the same way as we did in the previous quickstart:
-```
+```shell
 [hyperfoil@localhost]$ connect
 Connected!
 [hyperfoil@localhost]$ upload examples/two-agents.hf.yaml

@@ -13,7 +13,7 @@ Also note that it is possible to [run Hyperfoil in Openshift]({{ "/userguide/ins
 
 Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the {% include example_link.md src='single-request.hf.yaml' %} benchmark:
 
-```
+```shell
 > bin/cli.sh
 [hyperfoil@localhost]$ connect
 Connected! Server has these agents connected:
@@ -27,14 +27,14 @@ Started run 0001
 
 When you switch to the second terminal, you can see in the logs that the benchmark definition was stored on the server, the benchmark has been executed and its results have been stored to disk. Hyperfoil by default stores benchmarks in directory `/tmp/hyperfoil/benchmark` and data about runs in `/tmp/hyperfoil/run`; check it out:
 
-```
+```shell
 > column -t -s , /tmp/hyperfoil/run/0001/stats/total.csv
 Phase    Name  Requests  Responses  Mean       Min        p50.0      p90.0      p99.0      p99.9      p99.99     Max        MeanSendTime  ConnFailure  Reset  Timeouts  2xx  3xx  4xx  5xx  Other  Invalid  BlockedCount  BlockedTime  MinSessions  MaxSessions
 example  test  1         1          267911168  267386880  268435455  268435455  268435455  268435455  268435455  268435455  2655879       0            0      0         0    1    0    0    0      0        0             0
 ```
 
 Reading CSV files directly is not too comfortable; you can check the details through CLI as well:
-```
+```shell
 [hyperfoil@localhost]$ stats
 Total stats from run 002D
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
@@ -44,11 +44,11 @@ example:
 
 By the time you type the `stats` command into CLI the benchmark is already completed and the CLI shows stats for the whole run. Let's try running the {% include example_link.md src='eshop-scale.hf.yaml' %} we've seen in previous quickstart; this will give us some time to observe on-line statistics as the benchmark is progressing:
 
-```
+```shell
 > docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 
-```
+```shell
 [hyperfoil@localhost]$ upload examples/eshop-scale.hf.yaml
 Loaded benchmark eshop-scale, uploading...
 ... done.
@@ -60,7 +60,7 @@ Run 0002, benchmark eshop-scale
 
 Here the console would automatically jump into the `status` command, displaying the progress of the benchmark online. Press Ctrl+C to cancel that (it won't stop the benchmark run) and run the `stats` command:
 
-```
+```shell
 [hyperfoil@localhost]$ stats
 Recent stats from run 0002
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
@@ -74,7 +74,7 @@ Press Ctr+C to stop watching...
 
 You can go back to the run progress using the `status` command (hint: use `status --all` to display all phases, including those not started or already terminated):
 
-```
+```shell
 [hyperfoil@localhost]$ status
 Run 0002, benchmark eshop-scale
 Agents: localhost[INITIALIZED]
@@ -89,7 +89,7 @@ Since we are showing this quickstart running the controller and CLI on the same 
 
 When you find out that the benchmark is not going well, you can terminate it prematurely:
 
-```
+```shell
 [hyperfoil@localhost]$ kill
 Kill run 0002, benchmark eshop-scale(phases: 2 running, 0 finished, 40 terminated) [y/N]: y
 Killed.

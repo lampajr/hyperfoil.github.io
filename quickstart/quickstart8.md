@@ -41,13 +41,13 @@ There are several other integration points but `Step`:
 
 There is quite some boilerplate code in the process of creating a new component; that's why you can use Hyperfoil Codegen Maven plugin to scaffold the basic outline for you. Go to the module where you want the component generated and run:
 
-```
+```shell
 mvn io.hyperfoil:hyperfoil-codegen-maven-plugin:skeleton
 ```
 
 The plugin will ask you for the package name, component name and type and write down the source code skeleton. You can provide the parameters right on commandline like
 
-```
+```shell
 mvn io.hyperfoil:hyperfoil-codegen-maven-plugin:skeleton \
     -Dskeleton.package=foo.bar -Dskeleton.name=myComponent -Dskeleton.type=step
 ```
@@ -67,7 +67,7 @@ If you add `io.hyperfoil` as a plugin group to your `$HOME/.m2/settings.xml` lik
 
 you can use the short syntax for the generator:
 
-```
+```shell
 mvn hyperfoil-codegen:skeleton -Dskeleton.name=....
 ```
 

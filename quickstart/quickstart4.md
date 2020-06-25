@@ -9,7 +9,7 @@ In Hyperfoil, this all is expressed through *phases*. We've already seen phases 
 {% include codesample.html src='distribution/src/main/resources/examples/eshop.hf.yaml' %}
 
 There's a matching mock server to run this scenario:
-```
+```shell
 > docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 

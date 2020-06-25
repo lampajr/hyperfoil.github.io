@@ -8,7 +8,7 @@ Of course, the results were not suffering from the [coordinated omission problem
 
 Start the server and fire the scenario the usual way:
 
-```
+```shell
 > docker run -v $(pwd)/examples/choose-movie.server:/config:z -p 8080:8083 jordimartin/mmock
 > bin/cli.sh
 [hyperfoil]$ start-local

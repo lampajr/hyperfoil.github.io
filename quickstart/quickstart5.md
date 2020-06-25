@@ -14,7 +14,7 @@ Let's take a look into the example, where we'll slowly (over 5 seconds) increase
 {% include codesample.html src='distribution/src/main/resources/examples/eshop-scale.hf.yaml' %}
 
 Don't forget to start the mock server as we've used in the previous quickstart.
-```
+```shell
 > docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 

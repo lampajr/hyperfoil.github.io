@@ -7,7 +7,7 @@ redirect_from:
 
 <span>1.</span> Download [latest release](https://github.com/Hyperfoil/Hyperfoil/releases/latest) and unpack it
 
-```
+```shell
 > wget {{ site.last_release.url }}
     && unzip {{ site.last_release.zip }}
     && cd {{ site.last_release.dir }}
@@ -16,13 +16,13 @@ redirect_from:
 
 <span>2.</span> Start Hyperfoil in interactive mode (CLI)
 
-```
+```shell
 > bin/cli.sh
 ```
 
 For our first benchmark we'll start an embedded server (controller) within the CLI:
 
-```
+```shell
 [hyperfoil]$ start-local
 Starting controller in default directory (/tmp/hyperfoil)
 Controller started, listening on 127.0.0.1:41621
@@ -33,7 +33,7 @@ Connected!
 <span>3.</span> Upload the minimalistic benchmark, doing only single request to `http://hyperfoil.io`, and run it:
 
 
-```
+```shell
 [hyperfoil@in-vm]$ upload examples/single-request.hf.yaml
 Loaded benchmark single-request, uploading...
 ... done.
@@ -48,7 +48,7 @@ example  TERMINATED  16:11:43.725             16:11:43.899  174 ms (exceeded by 
 
 <span>4.</span> Check out performance results:
 
-```
+```shell
 [hyperfoil@in-vm]$ stats
 Total stats from run 000A
 PHASE    METRIC  REQUESTS  MEAN       p50        p90        p99        p99.9      p99.99     2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED

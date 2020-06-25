@@ -4,12 +4,12 @@ In [previous quickstart]({{ "/quickstart/quickstart1.html" | absolute_url }}) yo
 that fires only one HTTP request. Our next example {% include example_link.md src='random-urls.hf.yaml' %} is going to hit random URLs at this server with 10 requests per second. We'll see how to generate random data and collect statistics for different URLs.
 
 First start a mocking server:
-```
+```shell
 > go get github.com/jmartin82/mmock
 > mmock -server-ip localhost -server-port 8080 -config-path examples/random-urls.server
 ```
 If you prefer running that as Docker container, use
-```
+```shell
 > docker run -v $(pwd)/examples/random-urls.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 
@@ -18,7 +18,7 @@ Here is the benchmark we're going to run:
 {% include codesample.html src='distribution/src/main/resources/examples/random-urls.hf.yaml' %}
 
 So let's run this through CLI:
-```
+```shell
 [hyperfoil]$ start-local
 ...
 [hyperfoil@in-vm]$ upload examples/random-urls.hf.yaml
