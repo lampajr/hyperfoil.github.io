@@ -42,7 +42,6 @@ plugins:
   - jekyll-redirect-from
 
 # We use highlight.js explicitly
-highlighter: none
 kramdown:
    syntax_highlighter_opts:
       disable : true
