@@ -17,7 +17,7 @@ Hyperfoil is licensed under [Apache License 2.0](http://www.apache.org/licenses/
 
 Generating load with single node stops scaling at certain point and you need to orchestrate the benchmark across a cluster of nodes. Simple command-line tools usually ignore this completely (you're supposed to start them, gather and merge the data in a bash scripts). Other tools use open-core model with the clustering part being a paid/proprietary option. There are frameworks that have clustering built in as well.
 
-Hyperfoil uses master-slave model with Vert.x Event bus as the clustering middleware. While running from single VM is possible (and [quite easy]({{ "/quickstart/quickstart1.html" | absolute_url }})) as well, the design is distributed by default.
+Hyperfoil uses leader-follower model with Vert.x Event bus as the clustering middleware. While running from single VM is possible (and [quite easy]({{ "/quickstart/quickstart1.html" | absolute_url }})) as well, the design is distributed by default.
 
 ## Accuracy
 
