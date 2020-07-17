@@ -1,6 +1,6 @@
 # Reference
 
-Before exploring this reference you should be familiar with the [basic structure of a benchmark]({{ "/docs/benchmark.html" | absolute_url }}). If you're not sure what is the difference between the phase, scenario and sequence check out the [concepts in user guide]({{ "/docs/concepts.md" | absolute_url }}).
+Before exploring this reference you should be familiar with the [basic structure of a benchmark]({{ "/userguide/benchmark.html" | absolute_url }}). If you're not sure what is the difference between the phase, scenario and sequence check out the [concepts in user guide]({{ "/docs/concepts.html" | absolute_url }}).
 
 This reference lists all the steps and handlers used in a scenario. The lists below are not finite; you can also easily [develop and use your own components]({{ "/quickstart/quickstart8.md" | absolute_url }}), but Hyperfoil provides generic components for the most common tasks out of the box.
 
