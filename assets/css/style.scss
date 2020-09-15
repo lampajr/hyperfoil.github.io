@@ -3,19 +3,85 @@
 
 @import "jekyll-theme-slate";
 
-html, body { height: 100%; }
+:root {
+	--theme-color-base: #3075b1;
+	--theme-color-dark: #0f2f46;
+	--theme-color-light: #75abcf;
+	--theme-color-very-light: #d0e2ee;
+	--theme-color-super-light: #e0f1f7;
+}
+
+@font-face {
+	font-family: "ChangaOne";
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/ChangaOne-Regular.ttf');
+}
+@font-face {
+	font-family: "ChangaOne";
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/ChangaOne-Italic.ttf');
+}
+
+@font-face {
+	font-family: "OpenSans";
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+	font-family: "OpenSans";
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/OpenSans-Bold.ttf');
+}
+@font-face {
+	font-family: "OpenSans";
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/OpenSans-Italic.ttf');
+}
+@font-face {
+	font-family: "OpenSans";
+	font-style: italic;
+	font-weight: 700;
+	src: url('../fonts/OpenSans-BoldItalic.ttf');
+}
+
+
+html, body {
+	height: 100%;
+	font-family: "OpenSans";
+}
 
 .inner { max-width: 800px; }
 
-#project_title { font-size: 28px; }
+h1, h2, h3, h4, h5, h6 { font-family: "OpenSans";}
 
-#project_links { position: absolute; right: 0; top: 14px; display: inline; }
+
+#project_title {
+	font-size: 28px;
+	text-shadow: var(--theme-color-dark) 0px 0px 10px;
+	font-family: "ChangaOne";
+	font-style: italic;
+	text-transform: uppercase;
+	font-weight: 400;
+}
+
+#project_links { position: absolute; right: 0; top: 11px; display: inline; }
 
 #project_links a { color: #fff; font-size: 20px; padding-left: 24px; }
 
+#header_wrap { background: none; background-color: var(--theme-color-base);}
 #header_wrap .inner { padding: 5px; }
 
-#project_description { color: #888; }
+#main_content_wrap { background-color: var(--theme-color-super-light);  border-top: none;}
+
+#project_name { font-family: "ChangaOne"; font-style: italic; text-transform: uppercase; font-size: 48px; font-weight: 400; }
+#project_description { color: #778; }
+
+a { color: var(--theme-color-base); }
 
 #features { clear: both; display: table; }
 

@@ -46,7 +46,7 @@ Music: Aphex Twin / Xtal
 
 .hljs-deletion,
 .hljs-meta {
-  color: #00e;
+  color: var(--theme-color-base);
 }
 
 .hljs-keyword,
@@ -58,7 +58,7 @@ Music: Aphex Twin / Xtal
 .hljs-tag,
 .hljs-name {
   font-weight: bold;
-  color: navy;
+  color: var(--theme-color-dark);
 }
 
 .hljs-emphasis {

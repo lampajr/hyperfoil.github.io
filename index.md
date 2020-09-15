@@ -5,7 +5,7 @@
 layout: default
 menu: false
 ---
-# Hyperfoil
+<h1 id="project_name">Hyperfoil</h1>
 <h3 id="project_description">{{ site.description }}</h3>
 
 <div id="features">
@@ -14,7 +14,7 @@ menu: false
             <div class="feature_icon_box">
                 <img src="assets/images/hierarchy_organization.png" alt="Distributed">
             </div>
-            <h3>Distributed</h3>
+            <h4>Distributed</h4>
         </div>
         Drive the load from many nodes.
     </div>
@@ -24,7 +24,7 @@ menu: false
                 <!-- Fix me if you know CSS -->
                 <img style="position: relative; top: 15px; left: 7px;" src="assets/images/graph_arrow_spike.png" alt="Accurate">
             </div>
-            <h3>Accurate</h3>
+            <h4>Accurate</h4>
         </div>
         All operations are async to avoid the <a href="https://www.azul.com/files/HowNotToMeasureLatency_LLSummit_NYC_12Nov2013.pdf">coordinated-omission fallacy</a>.
     </div>
@@ -33,7 +33,7 @@ menu: false
             <div class="feature_icon_box">
                 <img src="assets/images/puzzle_complete.png" alt="Versatile">
             </div>
-            <h3>Versatile</h3>
+            <h4>Versatile</h4>
         </div>
         You can express complex scenarios either in YAML or through pluggable steps.
     </div>
@@ -42,7 +42,7 @@ menu: false
             <div class="feature_icon_box">
                 <img src="assets/images/recycle_symbol.png" alt="Low-allocation">
             </div>
-            <h3>Low-allocation</h3>
+            <h4>Low-allocation</h4>
         </div>
         Internally we try to allocate as little as possible on the critical code paths to not let garbage-collector disturb the operations.
     </div>

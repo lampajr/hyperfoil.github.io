@@ -13,9 +13,9 @@ Start the server and fire the scenario the usual way:
 > bin/cli.sh
 [hyperfoil]$ start-local
 ...
-[hyperfoil@in-vm] upload examples/choose-movie.hf.yaml
+[hyperfoil@in-vm]$ upload examples/choose-movie.hf.yaml
 ...
-[hyperfoil@in-vm] run
+[hyperfoil@in-vm]$ run
 ...
 ```
 
