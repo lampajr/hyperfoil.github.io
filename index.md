@@ -5,8 +5,11 @@
 layout: default
 menu: false
 ---
-<h1 id="project_name">Hyperfoil</h1>
-<h3 id="project_description">{{ site.description }}</h3>
+<img src="assets/images/hyperfoil.png" style="float: left">
+<div style="clear: none">
+    <h1 id="project_name">Hyperfoil</h1>
+    <h3 id="project_description">{{ site.description }}</h3>
+</div>
 
 <div id="features">
     <div class="feature">
