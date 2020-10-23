@@ -16,7 +16,7 @@ Here is the comprehensive list of all the properties Hyperfoil recognizes:
 
 | Property                             | Default            | Description                           |
 | -------------------------------------|--------------------|---------------------------------------|
-| io.hyperfoil.controller.host         | localhost          | Host for Controller REST server       |
+| io.hyperfoil.controller.host         | 0.0.0.0            | Host for Controller REST server       |
 | io.hyperfoil.controller.port         |              8090  | Port for Controller REST server       |
 | io.hyperfoil.rootdir                 | /tmp/hyperfoil     | Root directory for stored files       |
 | io.hyperfoil.benchmarkdir            | *root*/benchmark   | Benchmark files (YAML and serialized) |
