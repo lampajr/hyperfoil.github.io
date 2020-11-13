@@ -1,6 +1,6 @@
 # awaitVar
 
-Block current sequence until this variable gets set/unset. 
+Block current sequence until this variable gets set/unset.
 
 | Inline definition |
 | -------- |
@@ -9,5 +9,5 @@ Block current sequence until this variable gets set/unset.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| var | String | Variable name or <code>!variable</code> if we are waiting for it to be unset.  |
+| var | String | Variable name or <code>!variable</code> if we are waiting for it to be unset. |
 

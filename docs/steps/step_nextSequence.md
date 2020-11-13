@@ -1,6 +1,6 @@
 # nextSequence
 
-Schedules a new sequence instance to be executed. 
+Schedules a new sequence instance to be executed.
 
 | Inline definition |
 | -------- |
@@ -9,5 +9,5 @@ Schedules a new sequence instance to be executed.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| name | String | Sequence name.  |
+| name | String | Sequence name. |
 

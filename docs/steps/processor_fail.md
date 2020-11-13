@@ -1,15 +1,13 @@
-# breakSequence
+# fail
 
-Prematurely stops execution of this sequence if the condition is satisfied.
+Fail the phase with given message. Used mostly for testing/debugging.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
 | allConditions | [Builder](#allConditions) | Condition combining multiple other conditions with 'AND' logic. |
 | boolCondition | [Builder](#boolCondition) | Condition comparing boolean variables. |
-| condition | [Builder](#condition) | <font color="#606060">&lt;no description&gt;</font> |
-| dependency | String | This step is blocked if this variable does not have set value (none by default). |
 | intCondition | [Builder](#intCondition) | Condition comparing integer variables. |
-| onBreak | [Action.Builder](index.html#actions) | Action performed when the condition is true and the sequence is to be ended. |
+| message | String | Message attached to the failure exception. |
 | stringCondition | [Builder](#stringCondition) | Condition comparing string variables. |
 
 ### <a id="allConditions"></a>allConditions
@@ -22,41 +20,25 @@ Prematurely stops execution of this sequence if the condition is satisfied.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#allConditionslist-of-mappingsallConditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#allConditionslist-of-mappingsboolCondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#allConditionslist-of-mappingsintCondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#allConditionslist-of-mappingsstringCondition) | Condition comparing string variables. |
 
-### <a id="boolCondition"></a>boolCondition
-
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-
-### <a id="condition"></a>condition
-
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringCondition) | Condition comparing string variables. |
-
-### <a id="condition.allConditions"></a>condition.allConditions
+### <a id="allConditions.&lt;list of mappings&gt;.allConditions"></a>allConditions.&lt;list of mappings&gt;.allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
-### <a id="condition.boolCondition"></a>condition.boolCondition
+### <a id="allConditions.&lt;list of mappings&gt;.boolCondition"></a>allConditions.&lt;list of mappings&gt;.boolCondition
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
 | value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
 
-### <a id="condition.intCondition"></a>condition.intCondition
+### <a id="allConditions.&lt;list of mappings&gt;.intCondition"></a>allConditions.&lt;list of mappings&gt;.intCondition
 
 Condition comparing integer in session variable.
 
@@ -71,7 +53,7 @@ Condition comparing integer in session variable.
 | lessThan | int | Compared variable must be lower than this value. |
 | notEqualTo | int | Compared variable must not be equal to this value. |
 
-### <a id="condition.stringCondition"></a>condition.stringCondition
+### <a id="allConditions.&lt;list of mappings&gt;.stringCondition"></a>allConditions.&lt;list of mappings&gt;.stringCondition
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
@@ -86,6 +68,13 @@ Condition comparing integer in session variable.
 | self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
+
+### <a id="boolCondition"></a>boolCondition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="intCondition"></a>intCondition
 

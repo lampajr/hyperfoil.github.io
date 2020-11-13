@@ -1,144 +1,270 @@
 # httpRequest
 
-Issues a HTTP request and registers handlers for the response. 
+Issues a HTTP request and registers handlers for the response.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| authority | String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
-| authority (alternative)| [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section.  |
-| body | String | HTTP request body (specified as string).  |
-| body (alternative)| [Builder](#body) | HTTP request body.  |
-| CONNECT | String | Issue HTTP CONNECT request to given path.  |
-| CONNECT (alternative)| [Builder](#CONNECT) | Issue HTTP CONNECT request to given path.  |
-| DELETE | String | Issue HTTP DELETE request to given path.  |
-| DELETE (alternative)| [Builder](#DELETE) | Issue HTTP DELETE request to given path.  |
-| GET | String | Issue HTTP GET request to given path.  |
-| GET (alternative)| [Builder](#GET) | Issue HTTP GET request to given path.  |
-| handler | [Builder](#handler) | HTTP response handlers.  |
-| HEAD | String | Issue HTTP HEAD request to given path.  |
-| HEAD (alternative)| [Builder](#HEAD) | Issue HTTP HEAD request to given path.  |
-| headers | [Builder](#headers) | HTTP headers sent in the request.  |
-| method | enum | HTTP method used for the request. <br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
-| metric | String | Requests statistics will use this metric name.  |
-| metric (alternative)| [&lt;list of strings&gt;](#metric) | Allows categorizing request statistics into metrics based on the request path.  |
-| OPTIONS | String | Issue HTTP OPTIONS request to given path.  |
-| OPTIONS (alternative)| [Builder](#OPTIONS) | Issue HTTP OPTIONS request to given path.  |
-| PATCH | String | Issue HTTP PATCH request to given path.  |
-| PATCH (alternative)| [Builder](#PATCH) | Issue HTTP PATCH request to given path.  |
-| path | [Builder](#path) | HTTP path (absolute or relative), including query and fragment.  |
-| POST | String | Issue HTTP POST request to given path.  |
-| POST (alternative)| [Builder](#POST) | Issue HTTP POST request to given path.  |
-| PUT | String | Issue HTTP PUT request to given path.  |
-| PUT (alternative)| [Builder](#PUT) | Issue HTTP PUT request to given path.  |
-| sla | [Builder](#sla) | List of SLAs the requests are subject to.  |
-| sync | boolean | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>.  |
-| timeout | String | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section.  |
-| TRACE | String | Issue HTTP TRACE request to given path.  |
-| TRACE (alternative)| [Builder](#TRACE) | Issue HTTP TRACE request to given path.  |
+| authority | String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
+| authority (alternative)| [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
+| body | String | HTTP request body (possibly a pattern). |
+| body (alternative)| [Builder](#body) | HTTP request body. |
+| CONNECT | String | Issue HTTP CONNECT request to given path. |
+| CONNECT (alternative)| [Builder](#CONNECT) | Issue HTTP CONNECT request to given path. |
+| DELETE | String | Issue HTTP DELETE request to given path. |
+| DELETE (alternative)| [Builder](#DELETE) | Issue HTTP DELETE request to given path. |
+| GET | String | Issue HTTP GET request to given path. |
+| GET (alternative)| [Builder](#GET) | Issue HTTP GET request to given path. |
+| handler | [Builder](#handler) | HTTP response handlers. |
+| HEAD | String | Issue HTTP HEAD request to given path. |
+| HEAD (alternative)| [Builder](#HEAD) | Issue HTTP HEAD request to given path. |
+| headers | [Builder](#headers) | HTTP headers sent in the request. |
+| method | enum | HTTP method used for the request.<br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
+| metric | String | Requests statistics will use this metric name. |
+| metric (alternative)| [&lt;list of strings&gt;](#metric) | Allows categorizing request statistics into metrics based on the request path. |
+| OPTIONS | String | Issue HTTP OPTIONS request to given path. |
+| OPTIONS (alternative)| [Builder](#OPTIONS) | Issue HTTP OPTIONS request to given path. |
+| PATCH | String | Issue HTTP PATCH request to given path. |
+| PATCH (alternative)| [Builder](#PATCH) | Issue HTTP PATCH request to given path. |
+| path | [Builder](#path) | HTTP path (absolute or relative), including query and fragment. |
+| POST | String | Issue HTTP POST request to given path. |
+| POST (alternative)| [Builder](#POST) | Issue HTTP POST request to given path. |
+| PUT | String | Issue HTTP PUT request to given path. |
+| PUT (alternative)| [Builder](#PUT) | Issue HTTP PUT request to given path. |
+| sla | [Builder](#sla) | List of SLAs the requests are subject to. |
+| sync | boolean | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>. |
+| timeout | String | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section. |
+| TRACE | String | Issue HTTP TRACE request to given path. |
+| TRACE (alternative)| [Builder](#TRACE) | Issue HTTP TRACE request to given path. |
 
 ### <a id="authority"></a>authority
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="body"></a>body
 
-Allows building HTTP request body from session variables. 
+Allows building HTTP request body from session variables.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| form | [Builder](#bodyform) | Build form as if we were sending the request using HTML form. This option automatically adds <code>Content-Type: application/x-www-form-urlencoded</code> to the request headers.  |
-| fromFile | String | Send contents of the file. Note that this method does NOT set content-type automatically.  |
-| fromVar | String | Use variable content as request body.  |
-| pattern | String | Pattern replacing <code>${sessionvar}</code> with variable contents in a string.  |
-| text | String | String sent as-is.  |
+| form | [Builder](#bodyform) | Build form as if we were sending the request using HTML form. This option automatically adds <code>Content-Type: application/x-www-form-urlencoded</code> to the request headers. |
+| fromFile | String | Send contents of the file. Note that this method does NOT set content-type automatically. |
+| fromVar | String | Use variable content as request body. |
+| pattern | String | Pattern replacing <code>${sessionvar}</code> with variable contents in a string. |
+| text | String | String sent as-is. |
 
 ### <a id="body.form"></a>body.form
 
-Build an URL-encoded HTML form body. 
-
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;any&gt; | String | Add simple name=value input pair.  |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#bodyformlist-of-mappings) | Add input pair described in the mapping.  |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#bodyformlist-of-mappings) | Add input pair described in the mapping. |
 
 ### <a id="body.form.&lt;list of mappings&gt;"></a>body.form.&lt;list of mappings&gt;
 
-Form element (e.g. as if coming from an INPUT field). 
+Form element (e.g. as if coming from an INPUT field).
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Input field value from session variable.  |
-| name | String | Input field name.  |
-| pattern | String | Input field value replacing session variables in a pattern, e.g. <code>foo${myvariable}var</code>  |
-| value | String | Input field value (verbatim).  |
+| fromVar | String | Input field value from session variable. |
+| name | String | Input field name. |
+| pattern | String | Input field value replacing session variables in a pattern, e.g. <code>foo${myvariable}var</code> |
+| value | String | Input field value (verbatim). |
 
 ### <a id="CONNECT"></a>CONNECT
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="DELETE"></a>DELETE
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="GET"></a>GET
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="handler"></a>handler
 
-Manages processing of HTTP responses. 
+Manages processing of HTTP responses.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| body | [Processor.Builder](index.html#processors) | Handle HTTP response body.  |
-| header | [HeaderHandler.Builder](#handlerheader) | Handle HTTP response headers.  |
-| onCompletion | [Action.Builder](index.html#actions) | Action executed when the HTTP response is fully received.  |
-| rawBytes | [RawBytesHandler.Builder](#handlerrawBytes) | Handler processing HTTP response before parsing.  |
-| status | [StatusHandler.Builder](#handlerstatus) | Handle HTTP response status.  |
+| autoRangeCheck | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| body | [Processor.Builder](index.html#processors) | Handle HTTP response body. |
+| followRedirect | enum | <br>Options:{::nomarkdown}<ul><li><code>NEVER</code>: {:/}Do not insert any automatic redirection handling.{::nomarkdown}</li><li><code>LOCATION_ONLY</code>: {:/}Redirect only upon status 3xx accompanied with a 'location' header. Status, headers, body and completions handlers are suppressed in this case (only raw-bytes handlers are still running). This is the default option.{::nomarkdown}</li><li><code>HTML_ONLY</code>: {:/}Handle only HTML response with META refresh header. Status, headers and body handlers are invoked both on the original response and on the response from subsequent requests. Completion handlers are suppressed on this request and invoked after the last response arrives (in case of multiple redirections).{::nomarkdown}</li><li><code>ALWAYS</code>: {:/}Implement both status 3xx + location and HTML redirects.{::nomarkdown}</li></ul>{:/} |
+| header | [HeaderHandler.Builder](#handlerheader) | Handle HTTP response headers. |
+| onCompletion | [Action.Builder](index.html#actions) | Action executed when the HTTP response is fully received. |
+| rawBytes | [RawBytesHandler.Builder](#handlerrawBytes) | Handler processing HTTP response before parsing. |
+| status | [StatusHandler.Builder](#handlerstatus) | Handle HTTP response status. |
+| stopOnInvalid | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="handler.header"></a>handler.header
 
-Handle HTTP response headers. 
+Handle HTTP response headers.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| countHeaders | CountHeadersHandler.Builder | Stores number of occurences of each header in custom statistics (these can be displayed in CLI using the <code>stats -c</code> command).  |
-| filter | [FilterHeaderHandler.Builder](#handlerheaderfilter) | Compares if the header name matches expression and invokes a processor with the value.  |
-| logInvalid | LogInvalidHandler.HeaderHandlerBuilder | Logs headers from requests marked as invalid.  |
-| recordHeaderTime | [RecordHeaderTimeHandler.Builder](#handlerheaderrecordHeaderTime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time).  |
+| conditional | [ConditionalHeaderHandler.Builder](#handlerheaderconditional) | Passes the headers to nested handler if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested handlers should not change the results of the condition. |
+| countHeaders | CountHeadersHandler.Builder | Stores number of occurences of each header in custom statistics (these can be displayed in CLI using the <code>stats -c</code> command). |
+| filter | [FilterHeaderHandler.Builder](#handlerheaderfilter) | Compares if the header name matches expression and invokes a processor with the value. |
+| logInvalid | LogInvalidHandler.HeaderHandlerBuilder | Logs headers from requests marked as invalid. |
+| recordHeaderTime | [RecordHeaderTimeHandler.Builder](#handlerheaderrecordHeaderTime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time). |
+
+### <a id="handler.header.conditional"></a>handler.header.conditional
+
+Passes the headers to nested handler if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested handlers should not change the results of the condition.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| allConditions | [Builder](#handlerheaderconditionalallConditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalboolCondition) | Condition comparing boolean variables. |
+| condition | [Builder](#handlerheaderconditionalcondition) | <font color="#606060">&lt;no description&gt;</font> |
+| handler | [HeaderHandler.Builder](#handlerheaderconditionalhandler) | <font color="#606060">&lt;no description&gt;</font> |
+| intCondition | [Builder](#handlerheaderconditionalintCondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalstringCondition) | Condition comparing string variables. |
+
+### <a id="handler.header.conditional.allConditions"></a>handler.header.conditional.allConditions
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+
+### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| allConditions | [Builder](#handlerheaderconditionalconditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalconditionboolCondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#handlerheaderconditionalconditionintCondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalconditionstringCondition) | Condition comparing string variables. |
+
+### <a id="handler.header.conditional.boolCondition"></a>handler.header.conditional.boolCondition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+
+### <a id="handler.header.conditional.condition"></a>handler.header.conditional.condition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| allConditions | [Builder](#handlerheaderconditionalconditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalconditionboolCondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#handlerheaderconditionalconditionintCondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalconditionstringCondition) | Condition comparing string variables. |
+
+### <a id="handler.header.conditional.condition.allConditions"></a>handler.header.conditional.condition.allConditions
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+
+### <a id="handler.header.conditional.condition.boolCondition"></a>handler.header.conditional.condition.boolCondition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+
+### <a id="handler.header.conditional.condition.intCondition"></a>handler.header.conditional.condition.intCondition
+
+Condition comparing integer in session variable.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| equalTo | int | Compared variable must be equal to this value. |
+| fromVar | Object | Variable name. |
+| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
+| greaterThan | int | Compared variable must be greater than this value. |
+| isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
+| lessThan | int | Compared variable must be lower than this value. |
+| notEqualTo | int | Compared variable must not be equal to this value. |
+
+### <a id="handler.header.conditional.condition.stringCondition"></a>handler.header.conditional.condition.stringCondition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
+| endsWith | CharSequence | Suffix for the string. |
+| equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
+| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| matchVar | String | Fetch the value from a variable. |
+| negate | boolean | Invert the logic of this condition. Defaults to false. |
+| notEqualTo | CharSequence | Value that the string must not match. |
+| self | &lt;none&gt; | <br>Note: property does not have any value |
+| startsWith | CharSequence | Prefix for the string. |
+| value | CharSequence | Literal value the string should match. |
+
+### <a id="handler.header.conditional.handler"></a>handler.header.conditional.handler
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| filter | [FilterHeaderHandler.Builder](#handlerheaderfilter) | Compares if the header name matches expression and invokes a processor with the value. |
+
+### <a id="handler.header.conditional.intCondition"></a>handler.header.conditional.intCondition
+
+Condition comparing integer in session variable.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| equalTo | int | Compared variable must be equal to this value. |
+| fromVar | Object | Variable name. |
+| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
+| greaterThan | int | Compared variable must be greater than this value. |
+| isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
+| lessThan | int | Compared variable must be lower than this value. |
+| notEqualTo | int | Compared variable must not be equal to this value. |
+
+### <a id="handler.header.conditional.stringCondition"></a>handler.header.conditional.stringCondition
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
+| endsWith | CharSequence | Suffix for the string. |
+| equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
+| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| matchVar | String | Fetch the value from a variable. |
+| negate | boolean | Invert the logic of this condition. Defaults to false. |
+| notEqualTo | CharSequence | Value that the string must not match. |
+| self | &lt;none&gt; | <br>Note: property does not have any value |
+| startsWith | CharSequence | Prefix for the string. |
+| value | CharSequence | Literal value the string should match. |
 
 ### <a id="handler.header.filter"></a>handler.header.filter
 
-Compares if the header name matches expression and invokes a processor with the value. 
+Compares if the header name matches expression and invokes a processor with the value.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| header | [Builder](#handlerheaderfilterheader) | Condition on the header name.  |
-| processor | [Processor.Builder](index.html#processors) | Processor that will be invoked with the value (converted to ByteBuf).  |
+| header | [Builder](#handlerheaderfilterheader) | Condition on the header name. |
+| processor | [Processor.Builder](index.html#processors) | Processor that will be invoked with the value (converted to ByteBuf). |
 
 ### <a id="handler.header.filter.header"></a>handler.header.filter.header
 
@@ -149,63 +275,70 @@ Compares if the header name matches expression and invokes a processor with the 
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| caseSensitive | boolean | True if the case must match, false if the check is case-insensitive.  |
-| endsWith | CharSequence | Suffix for the string.  |
-| matchVar | String | Fetch the value from a variable.  |
-| startsWith | CharSequence | Prefix for the string.  |
-| value | CharSequence | Literal value the condition should match.  |
+| caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
+| endsWith | CharSequence | Suffix for the string. |
+| equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
+| matchVar | String | Fetch the value from a variable. |
+| negate | boolean | Invert the logic of this condition. Defaults to false. |
+| notEqualTo | CharSequence | Value that the string must not match. |
+| self | &lt;none&gt; | <br>Note: property does not have any value |
+| startsWith | CharSequence | Prefix for the string. |
+| value | CharSequence | Literal value the string should match. |
 
 ### <a id="handler.header.recordHeaderTime"></a>handler.header.recordHeaderTime
 
-Records alternative metric based on values from a header (e.g. when a proxy reports processing time). 
+Records alternative metric based on values from a header (e.g. when a proxy reports processing time).
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| header | String | Header carrying the time.  |
-| metric | String | Name of the created metric.  |
-| unit | String | Time unit in the header; use either `ms` or `ns`.  |
+| header | String | Header carrying the time. |
+| metric | String | Name of the created metric. |
+| unit | String | Time unit in the header; use either `ms` or `ns`. |
 
 ### <a id="handler.rawBytes"></a>handler.rawBytes
 
-Handler processing HTTP response before parsing. 
+Handler processing HTTP response before parsing.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| transferSizeRecorder | [TransferSizeRecorder.Builder](#handlerrawBytestransferSizeRecorder) | Accumulates request and response sizes into custom metrics.  |
+| transferSizeRecorder | [TransferSizeRecorder.Builder](#handlerrawBytestransferSizeRecorder) | Accumulates request and response sizes into custom metrics. |
 
 ### <a id="handler.rawBytes.transferSizeRecorder"></a>handler.rawBytes.transferSizeRecorder
 
-Accumulates request and response sizes into custom metrics. 
+Accumulates request and response sizes into custom metrics.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| requestMetric | String | Name of the custom metric for collecting sent request bytes.  |
-| responseMetric | String | Name of the custom metric for collecting response bytes.  |
+| requestMetric | String | Name of the custom metric for collecting sent request bytes. |
+| responseMetric | String | Name of the custom metric for collecting response bytes. |
 
 ### <a id="handler.status"></a>handler.status
 
-Handle HTTP response status. 
+Handle HTTP response status.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| counter | [StatusToCounterHandler.Builder](#handlerstatuscounter) | Counts how many times given status is received.  |
-| range | [RangeStatusValidator.Builder](#handlerstatusrange) | Marks requests that don't fall into the desired range as invalid.  |
+| action | ActionStatusHandler.Builder | Perform certain actions when the status falls into a range. |
+| counter | [StatusToCounterHandler.Builder](#handlerstatuscounter) | Counts how many times given status is received. |
+| multiplex | MultiplexStatusHandler.Builder | Multiplexes the status based on range into different status handlers. |
+| range | [RangeStatusValidator.Builder](#handlerstatusrange) | Marks requests that don't fall into the desired range as invalid. |
+| store | [StoreStatusHandler.Builder](#handlerstatusstore) | Stores the status into session variable. |
 
 ### <a id="handler.status.counter"></a>handler.status.counter
 
-Counts how many times given status is received. 
+Counts how many times given status is received.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| add | int | Number to be added to the session variable.  |
-| expectStatus | int | Expected status (others are ignored). All status codes match by default.  |
-| init | int | Initial value for the session variable.  |
-| set | int | Do not accumulate (add), just set the variable to this value.  |
-| var | String | Variable name.  |
+| add | int | Number to be added to the session variable. |
+| expectStatus | int | Expected status (others are ignored). All status codes match by default. |
+| init | int | Initial value for the session variable. |
+| set | int | Do not accumulate (add), just set the variable to this value. |
+| var | String | Variable name. |
 
 ### <a id="handler.status.range"></a>handler.status.range
 
-Marks requests that don't fall into the desired range as invalid. 
+Marks requests that don't fall into the desired range as invalid.
 
 
 | Inline definition |
@@ -214,96 +347,109 @@ Marks requests that don't fall into the desired range as invalid.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| max | int | Highest accepted status code.  |
-| min | int | Lowest accepted status code.  |
+| max | int | Highest accepted status code. |
+| min | int | Lowest accepted status code. |
 
-### <a id="HEAD"></a>HEAD
+### <a id="handler.status.store"></a>handler.status.store
 
-Generic builder for generating a string. 
+Stores the status into session variable.
+
+
+| Inline definition |
+| -------- |
+| Variable name. |
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| toVar | Object | Variable name. |
+
+### <a id="HEAD"></a>HEAD
+
+Generic builder for generating a string.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="headers"></a>headers
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;any&gt; | String | Use header name (e.g. <code>Content-Type</code>) as key and value verbatim.  |
-| &lt;any&gt; (alternative)| [Builder](#headersany) | Use header name (e.g. <code>Content-Type</code>) as key and specify value in the mapping.  |
+| &lt;any&gt; | String | Use header name (e.g. <code>Content-Type</code>) as key and value (possibly a pattern). |
+| &lt;any&gt; (alternative)| [Builder](#headersany) | Use header name (e.g. <code>Content-Type</code>) as key and specify value in the mapping. |
 
 ### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
 
-Specifies value that should be sent in headers. 
+Specifies value that should be sent in headers.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load header value from session variable.  |
-| pattern | String | Load header value using a pattern.  |
+| fromVar | String | Load header value from session variable. |
+| pattern | String | Load header value using a pattern. |
 
 ### <a id="metric"></a>metric
 
-Allows categorizing request statistics into metrics based on the request path. 
+Allows categorizing request statistics into metrics based on the request path.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of strings&gt; | &lt;list of strings&gt; | {::nomarkdown}Allows categorizing request statistics into metrics based on the request path. The expressions are evaluated in the order as provided in the list. Use one of: <ul> <li><code>regexp -&gt; replacement</code>, e.g. <code>([^?]*)(\?.*)? -&gt; $1</code> to drop the query part. <li><code>regexp</code> (don't do any replaces and use the full path), e.g. <code>.*.jpg</code> <li><code>-&gt; name</code> (metric applied if none of the previous expressions match). </ul> {:/} |
+| &lt;list of strings&gt; | &lt;list of strings&gt; | {::nomarkdown}Allows categorizing request statistics into metrics based on the request path. The expressions are evaluated in the order as provided in the list. Use one of: <ul> <li><code>regexp -&gt; replacement</code>, e.g. <code>([^?]*)(\?.*)? -&gt; $1</code> to drop the query part. <li><code>regexp</code> (don't do any replaces and use the full path), e.g. <code>.*.jpg</code> <li><code>-&gt; name</code> (metric applied if none of the previous expressions match). </ul>{:/} |
 
 ### <a id="OPTIONS"></a>OPTIONS
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="PATCH"></a>PATCH
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="path"></a>path
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="POST"></a>POST
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="PUT"></a>PUT
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 
 ### <a id="sla"></a>sla
 
-Defines a list of Service Level Agreements (SLAs) - conditions that must hold for benchmark to be deemed successful. 
+Defines a list of Service Level Agreements (SLAs) - conditions that must hold for benchmark to be deemed successful.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
@@ -311,32 +457,32 @@ Defines a list of Service Level Agreements (SLAs) - conditions that must hold fo
 
 ### <a id="sla.&lt;list of mappings&gt;"></a>sla.&lt;list of mappings&gt;
 
-Defines a Service Level Agreement (SLA) - conditions that must hold for benchmark to be deemed successful. 
+Defines a Service Level Agreement (SLA) - conditions that must hold for benchmark to be deemed successful.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| blockedRatio | double | Maximum allowed ratio of time spent waiting for usable connection to sum of response latencies and blocked time. Default is 0 - client must not be blocked. Set to 1 if the client can block without limits.  |
-| errorRatio | double | Maximum allowed ratio of errors. Valid values are 0.0 - 1.0 (inclusive).  |
-| invalidRatio | double | Maximum allowed ratio of responses marked as invalid. Valid values are 0.0 - 1.0 (inclusive).  |
-| limits | [Builder](#slalist-of-mappingslimits) | Percentile limits.  |
-| meanResponseTime | String | Maximum allowed mean (average) response time. Use suffix `ns`, `us`, `ms` or `s` to specify units.  |
-| window | String | Period over which the stats should be collected. By default the SLA applies to stats from whole phase.  |
+| blockedRatio | double | Maximum allowed ratio of time spent waiting for usable connection to sum of response latencies and blocked time. Default is 0 - client must not be blocked. Set to 1 if the client can block without limits. |
+| errorRatio | double | Maximum allowed ratio of errors. Valid values are 0.0 - 1.0 (inclusive). |
+| invalidRatio | double | Maximum allowed ratio of responses marked as invalid. Valid values are 0.0 - 1.0 (inclusive). |
+| limits | [Builder](#slalist-of-mappingslimits) | Percentile limits. |
+| meanResponseTime | String | Maximum allowed mean (average) response time. Use suffix `ns`, `us`, `ms` or `s` to specify units. |
+| window | String | Period over which the stats should be collected. By default the SLA applies to stats from whole phase. |
 
 ### <a id="sla.&lt;list of mappings&gt;.limits"></a>sla.&lt;list of mappings&gt;.limits
 
-Percentile limits. 
+Percentile limits.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;any&gt; | String | Use percentile (value between 0.0 and 1.0) as key and response time with unit (e.g. `ms`) in suffix as value.  |
+| &lt;any&gt; | String | Use percentile (value between 0.0 and 1.0) as key and response time with unit (e.g. `ms`) in suffix as value. |
 
 ### <a id="TRACE"></a>TRACE
 
-Generic builder for generating a string. 
+Generic builder for generating a string.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | String | Load the string from session variable.  |
-| pattern | String | Use pattern replacing session variables.  |
-| value | String | String value used verbatim.  |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use pattern replacing session variables. |
+| value | String | String value used verbatim. |
 

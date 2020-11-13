@@ -1,15 +1,17 @@
 # pushSharedMap
 
-Store values from session variables into a map shared across all sessions using the same executor into session variables. <p> The executor can host multiple shared maps, each holding an entry with several variables. This step creates one entry in the map, copying values from session variables into the entry. 
+Store values from session variables into a map shared across all sessions using the same executor into session variables. 
+
+ The executor can host multiple shared maps, each holding an entry with several variables. This step creates one entry in the map, copying values from session variables into the entry.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| key | String | Key identifying the shared map.  |
-| vars | [&lt;list of strings&gt;](#vars) | List of variable names that should be stored in the entry.  |
+| key | String | Key identifying the shared map. |
+| vars | [&lt;list of strings&gt;](#vars) | List of variable names that should be stored in the entry. |
 
 ### <a id="vars"></a>vars
 
-List of variable names that should be stored in the entry. 
+List of variable names that should be stored in the entry.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |

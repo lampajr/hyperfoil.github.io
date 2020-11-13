@@ -1,15 +1,14 @@
-# breakSequence
+# conditional
 
-Prematurely stops execution of this sequence if the condition is satisfied.
+Passes the data to nested processor if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
 | allConditions | [Builder](#allConditions) | Condition combining multiple other conditions with 'AND' logic. |
 | boolCondition | [Builder](#boolCondition) | Condition comparing boolean variables. |
 | condition | [Builder](#condition) | <font color="#606060">&lt;no description&gt;</font> |
-| dependency | String | This step is blocked if this variable does not have set value (none by default). |
 | intCondition | [Builder](#intCondition) | Condition comparing integer variables. |
-| onBreak | [Action.Builder](index.html#actions) | Action performed when the condition is true and the sequence is to be ended. |
+| processor | [Processor.Builder](index.html#processors) | <font color="#606060">&lt;no description&gt;</font> |
 | stringCondition | [Builder](#stringCondition) | Condition comparing string variables. |
 
 ### <a id="allConditions"></a>allConditions

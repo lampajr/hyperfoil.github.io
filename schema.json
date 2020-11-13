@@ -540,12 +540,18 @@ redirect_from: /schema
           "clearHttpCache" : {
             "$ref" : "#/definitions/io.hyperfoil.core.steps.ClearHttpCacheAction$Builder"
           },
+          "conditional" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.ConditionalAction$Builder"
+          },
           "divide" : {
             "oneOf" : [ {
               "$ref" : "#/definitions/io.hyperfoil.example.DivideStep$Builder"
             }, {
               "type" : "string"
             } ]
+          },
+          "fail" : {
+            "$ref" : "#/definitions/io.hyperfoil.core.steps.FailAction$Builder"
           },
           "foreach" : {
             "$ref" : "#/definitions/io.hyperfoil.core.steps.ForeachStep$Builder"
@@ -773,145 +779,66 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.steps.LogStep$Builder" : {
+    "io.hyperfoil.core.handlers.ConditionalAction$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "addVar" : {
-          "type" : "string"
-        },
-        "message" : {
-          "type" : "string"
-        },
-        "vars" : {
+        "actions" : {
           "oneOf" : [ {
-            "type" : "array",
-            "additionalItems" : false,
-            "items" : {
-              "type" : "string"
-            }
-          }, {
-            "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+            "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
             }
           } ]
-        }
-      }
-    },
-    "io.hyperfoil.api.config.ListBuilder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.steps.UnsetAction$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "var" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.AwaitDelayStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "key" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.ForeachStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "counterVar" : {
-          "type" : "string"
         },
-        "dependency" : {
-          "type" : "string"
+        "allConditions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
         },
-        "fromVar" : {
-          "type" : "string"
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
         },
-        "sequence" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.NoopStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.steps.ScheduleDelayStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "duration" : {
-          "type" : "string"
-        },
-        "fromLast" : {
-          "type" : "null"
-        },
-        "fromNow" : {
-          "type" : "null"
-        },
-        "key" : {
-          "type" : "string"
-        },
-        "max" : {
-          "type" : "string"
-        },
-        "min" : {
-          "type" : "string"
-        },
-        "random" : {
-          "enum" : [ "CONSTANT", "LINEAR", "NEGATIVE_EXPONENTIAL" ]
-        },
-        "type" : {
-          "enum" : [ "FROM_LAST", "FROM_NOW" ]
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.PullSharedMapStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "key" : {
-          "type" : "string"
-        },
-        "match" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.LoopStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "counterVar" : {
-          "type" : "string"
-        },
-        "repeats" : {
-          "type" : "integer"
-        },
-        "sequence" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.BreakSequenceStep$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "dependency" : {
-          "type" : "string"
+        "condition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          } ]
         },
         "intCondition" : {
           "oneOf" : [ {
@@ -925,17 +852,166 @@ redirect_from: /schema
             }
           } ]
         },
-        "onBreak" : {
+        "stringCondition" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
             }
           } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.builders.Condition$TypesBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "allConditions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
+        },
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
+        },
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "stringCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.builders.StringCondition$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "caseSensitive" : {
+          "type" : "boolean"
+        },
+        "endsWith" : {
+          "type" : "string"
+        },
+        "equalTo" : {
+          "type" : "string"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "isSet" : {
+          "type" : "boolean"
+        },
+        "matchVar" : {
+          "type" : "string"
+        },
+        "negate" : {
+          "type" : "boolean"
+        },
+        "notEqualTo" : {
+          "type" : "string"
+        },
+        "self" : {
+          "type" : "null"
+        },
+        "startsWith" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.builders.BoolCondition$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "fromVar" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "io.hyperfoil.core.builders.AllConditions$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.builders.IntCondition$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "equalTo" : {
+          "type" : "integer"
+        },
+        "fromVar" : {
+          "type" : "string"
+        },
+        "greaterOrEqualTo" : {
+          "type" : "integer"
+        },
+        "greaterThan" : {
+          "type" : "integer"
+        },
+        "isSet" : {
+          "type" : "boolean"
+        },
+        "lessOrEqualTo" : {
+          "type" : "integer"
+        },
+        "lessThan" : {
+          "type" : "integer"
+        },
+        "notEqualTo" : {
+          "type" : "integer"
         }
       }
     },
@@ -958,6 +1034,72 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : { }
+    },
+    "io.hyperfoil.core.steps.FailAction$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "allConditions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
+        },
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
+        },
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "stringCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+            }
+          } ]
+        }
+      }
     },
     "io.hyperfoil.core.steps.SetAction$Builder" : {
       "type" : "object",
@@ -1076,6 +1218,15 @@ redirect_from: /schema
         }
       }
     },
+    "io.hyperfoil.core.steps.UnsetAction$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
     "io.hyperfoil.api.session.Action$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
@@ -1091,6 +1242,12 @@ redirect_from: /schema
         },
         "clearHttpCache" : {
           "$ref" : "#/definitions/io.hyperfoil.core.steps.ClearHttpCacheAction$Builder"
+        },
+        "conditional" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.ConditionalAction$Builder"
+        },
+        "fail" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.steps.FailAction$Builder"
         },
         "set" : {
           "oneOf" : [ {
@@ -1122,30 +1279,221 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.builders.IntCondition$Builder" : {
+    "io.hyperfoil.core.steps.LogStep$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "equalTo" : {
-          "type" : "integer"
+        "addVar" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "vars" : {
+          "oneOf" : [ {
+            "type" : "array",
+            "additionalItems" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.config.ListBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.api.config.ListBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.AwaitDelayStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.ForeachStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "counterVar" : {
+          "type" : "string"
+        },
+        "dependency" : {
+          "type" : "string"
         },
         "fromVar" : {
           "type" : "string"
         },
-        "greaterOrEqualTo" : {
+        "sequence" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.NoopStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.ScheduleDelayStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "duration" : {
+          "type" : "string"
+        },
+        "fromLast" : {
+          "type" : "null"
+        },
+        "fromNow" : {
+          "type" : "null"
+        },
+        "key" : {
+          "type" : "string"
+        },
+        "max" : {
+          "type" : "string"
+        },
+        "min" : {
+          "type" : "string"
+        },
+        "random" : {
+          "enum" : [ "CONSTANT", "LINEAR", "NEGATIVE_EXPONENTIAL" ]
+        },
+        "type" : {
+          "enum" : [ "FROM_LAST", "FROM_NOW" ]
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.PullSharedMapStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "match" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.LoopStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "counterVar" : {
+          "type" : "string"
+        },
+        "repeats" : {
           "type" : "integer"
         },
-        "greaterThan" : {
-          "type" : "integer"
+        "steps" : {
+          "type" : "array",
+          "additionalItems" : false,
+          "items" : {
+            "$ref" : "#/definitions/step"
+          }
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.BreakSequenceStep$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "allConditions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
         },
-        "lessOrEqualTo" : {
-          "type" : "integer"
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
         },
-        "lessThan" : {
-          "type" : "integer"
+        "condition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          } ]
         },
-        "notEqualTo" : {
-          "type" : "integer"
+        "dependency" : {
+          "type" : "string"
+        },
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "onBreak" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.session.Action$Builder"
+            }
+          } ]
+        },
+        "stringCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+            }
+          } ]
         }
       }
     },
@@ -1291,18 +1639,16 @@ redirect_from: /schema
         },
         "HEAD" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "OPTIONS" : {
@@ -1349,50 +1695,44 @@ redirect_from: /schema
         },
         "PUT" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "TRACE" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "authority" : {
           "oneOf" : [ {
-            "type" : "string"
+            "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
           }, {
-            "oneOf" : [ {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-            }, {
-              "type" : "array",
-              "minLength" : 1,
-              "additionalItems" : false,
-              "items" : {
-                "$ref" : "#/definitions/io.hyperfoil.core.generators.StringGeneratorImplBuilder"
-              }
-            } ]
+            }
+          }, {
+            "type" : "string"
           } ]
         },
         "body" : {
@@ -1523,6 +1863,9 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "autoRangeCheck" : {
+          "type" : "boolean"
+        },
         "body" : {
           "oneOf" : [ {
             "$ref" : "#/definitions/io.hyperfoil.api.processor.HttpRequestProcessorBuilder"
@@ -1534,6 +1877,9 @@ redirect_from: /schema
               "$ref" : "#/definitions/io.hyperfoil.api.processor.HttpRequestProcessorBuilder"
             }
           } ]
+        },
+        "followRedirect" : {
+          "enum" : [ "NEVER", "LOCATION_ONLY", "HTML_ONLY", "ALWAYS" ]
         },
         "header" : {
           "oneOf" : [ {
@@ -1582,10 +1928,18 @@ redirect_from: /schema
               "$ref" : "#/definitions/io.hyperfoil.api.http.StatusHandler$Builder"
             }
           } ]
+        },
+        "stopOnInvalid" : {
+          "type" : "boolean"
         }
       }
     },
-    "io.hyperfoil.core.handlers.StatusToCounterHandler$Builder" : {
+    "io.hyperfoil.core.handlers.http.ActionStatusHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.http.StatusToCounterHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -1606,7 +1960,12 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.RangeStatusValidator$Builder" : {
+    "io.hyperfoil.core.handlers.http.MultiplexStatusHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.http.RangeStatusValidator$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -1618,18 +1977,40 @@ redirect_from: /schema
         }
       }
     },
+    "io.hyperfoil.core.handlers.http.StoreStatusHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "toVar" : {
+          "type" : "string"
+        }
+      }
+    },
     "io.hyperfoil.api.http.StatusHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "minProperties" : 1,
       "maxProperties" : 1,
       "properties" : {
+        "action" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.ActionStatusHandler$Builder"
+        },
         "counter" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.StatusToCounterHandler$Builder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.StatusToCounterHandler$Builder"
+        },
+        "multiplex" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.MultiplexStatusHandler$Builder"
         },
         "range" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RangeStatusValidator$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.RangeStatusValidator$Builder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "store" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.StoreStatusHandler$Builder"
           }, {
             "type" : "string"
           } ]
@@ -1656,7 +2037,94 @@ redirect_from: /schema
       "additionalProperties" : false,
       "properties" : { }
     },
-    "io.hyperfoil.core.handlers.JsonHandler$Builder" : {
+    "io.hyperfoil.core.handlers.ConditionalProcessor$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "allConditions" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
+        },
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
+        },
+        "condition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          } ]
+        },
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "processor" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.processor.RequestProcessorBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.processor.RequestProcessorBuilder"
+            }
+          } ]
+        },
+        "stringCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.json.JsonHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -1710,11 +2178,11 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "counterVar" : {
-          "type" : "string"
+        "concurrencyPolicy" : {
+          "enum" : [ "FAIL", "WARN" ]
         },
-        "maxSequences" : {
-          "type" : "integer"
+        "forceSameIndex" : {
+          "type" : "boolean"
         },
         "sequence" : {
           "type" : "string"
@@ -1754,7 +2222,19 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.SimpleRecorder$Builder" : {
+    "io.hyperfoil.core.handlers.StoreProcessor$LegacyBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "toVar" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.StoreProcessor$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -1792,15 +2272,25 @@ redirect_from: /schema
         "closeConnection" : {
           "$ref" : "#/definitions/io.hyperfoil.core.http.CloseConnectionHandler$Builder"
         },
+        "conditional" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.ConditionalProcessor$Builder"
+        },
+        "fail" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.steps.FailAction$Builder"
+        },
         "json" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.JsonHandler$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.json.JsonHandler$Builder"
           }, {
             "type" : "string"
           } ]
         },
         "newSequence" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+          }, {
+            "type" : "string"
+          } ]
         },
         "queue" : {
           "$ref" : "#/definitions/io.hyperfoil.core.handlers.QueueProcessor$Builder"
@@ -1821,7 +2311,14 @@ redirect_from: /schema
         },
         "simple" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.SimpleRecorder$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.StoreProcessor$LegacyBuilder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "store" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.StoreProcessor$Builder"
           }, {
             "type" : "string"
           } ]
@@ -1842,42 +2339,42 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.LogInvalidHandler$BodyHandlerBuilder" : {
+    "io.hyperfoil.core.handlers.http.LogInvalidHandler$BodyHandlerBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : { }
     },
-    "io.hyperfoil.core.handlers.HtmlHandler$Builder" : {
+    "io.hyperfoil.core.handlers.html.HtmlHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
         "onEmbeddedResource" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.EmbeddedResourceHandlerBuilder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder"
+              "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.EmbeddedResourceHandlerBuilder"
             }
           } ]
         }
       }
     },
-    "io.hyperfoil.core.handlers.HtmlHandler$EmbeddedResourceHandlerBuilder" : {
+    "io.hyperfoil.core.handlers.html.EmbeddedResourceHandlerBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
         "fetchResource" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceBuilder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder"
+              "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceBuilder"
             }
           } ]
         },
@@ -1924,21 +2421,31 @@ redirect_from: /schema
         "closeConnection" : {
           "$ref" : "#/definitions/io.hyperfoil.core.http.CloseConnectionHandler$Builder"
         },
+        "conditional" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.ConditionalProcessor$Builder"
+        },
+        "fail" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.steps.FailAction$Builder"
+        },
         "json" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.JsonHandler$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.json.JsonHandler$Builder"
           }, {
             "type" : "string"
           } ]
         },
         "logInvalid" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.LogInvalidHandler$BodyHandlerBuilder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.LogInvalidHandler$BodyHandlerBuilder"
         },
         "newSequence" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.NewSequenceProcessor$Builder"
+          }, {
+            "type" : "string"
+          } ]
         },
         "parseHtml" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.HtmlHandler$Builder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.HtmlHandler$Builder"
         },
         "queue" : {
           "$ref" : "#/definitions/io.hyperfoil.core.handlers.QueueProcessor$Builder"
@@ -1959,7 +2466,14 @@ redirect_from: /schema
         },
         "simple" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.SimpleRecorder$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.StoreProcessor$LegacyBuilder"
+          }, {
+            "type" : "string"
+          } ]
+        },
+        "store" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.StoreProcessor$Builder"
           }, {
             "type" : "string"
           } ]
@@ -1980,10 +2494,13 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.HtmlHandler$FetchResourceBuilder" : {
+    "io.hyperfoil.core.handlers.html.FetchResourceBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "concurrency" : {
+          "type" : "integer"
+        },
         "maxResources" : {
           "type" : "integer"
         },
@@ -2008,24 +2525,111 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.CountHeadersHandler$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.handlers.FilterHeaderHandler$Builder" : {
+    "io.hyperfoil.core.handlers.http.ConditionalHeaderHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "header" : {
+        "allConditions" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.builders.CharSequenceCondition$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.builders.CharSequenceCondition$Builder"
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          }, {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.AllConditions$Builder"
+            }
+          } ]
+        },
+        "boolCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
+            }
+          } ]
+        },
+        "condition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
+            }
+          } ]
+        },
+        "handler" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.http.HeaderHandler$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.http.HeaderHandler$Builder"
+            }
+          } ]
+        },
+        "intCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
+            }
+          } ]
+        },
+        "stringCondition" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.core.handlers.http.CountHeadersHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.handlers.http.FilterHeaderHandler$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "header" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.core.builders.StringConditionBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.core.builders.StringConditionBuilder"
             }
           } ]
         },
@@ -2043,7 +2647,7 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.builders.CharSequenceCondition$Builder" : {
+    "io.hyperfoil.core.builders.StringConditionBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -2053,8 +2657,20 @@ redirect_from: /schema
         "endsWith" : {
           "type" : "string"
         },
+        "equalTo" : {
+          "type" : "string"
+        },
         "matchVar" : {
           "type" : "string"
+        },
+        "negate" : {
+          "type" : "boolean"
+        },
+        "notEqualTo" : {
+          "type" : "string"
+        },
+        "self" : {
+          "type" : "null"
         },
         "startsWith" : {
           "type" : "string"
@@ -2064,12 +2680,12 @@ redirect_from: /schema
         }
       }
     },
-    "io.hyperfoil.core.handlers.LogInvalidHandler$HeaderHandlerBuilder" : {
+    "io.hyperfoil.core.handlers.http.LogInvalidHandler$HeaderHandlerBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : { }
     },
-    "io.hyperfoil.core.handlers.RecordHeaderTimeHandler$Builder" : {
+    "io.hyperfoil.core.handlers.http.RecordHeaderTimeHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -2090,18 +2706,21 @@ redirect_from: /schema
       "minProperties" : 1,
       "maxProperties" : 1,
       "properties" : {
+        "conditional" : {
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.ConditionalHeaderHandler$Builder"
+        },
         "countHeaders" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.CountHeadersHandler$Builder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.CountHeadersHandler$Builder"
         },
         "filter" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.FilterHeaderHandler$Builder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.FilterHeaderHandler$Builder"
         },
         "logInvalid" : {
-          "$ref" : "#/definitions/io.hyperfoil.core.handlers.LogInvalidHandler$HeaderHandlerBuilder"
+          "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.LogInvalidHandler$HeaderHandlerBuilder"
         },
         "recordHeaderTime" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.RecordHeaderTimeHandler$Builder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.http.RecordHeaderTimeHandler$Builder"
           }, {
             "type" : "string"
           } ]
@@ -2152,27 +2771,6 @@ redirect_from: /schema
       "properties" : {
         "form" : {
           "oneOf" : [ {
-            "type" : "object",
-            "patternProperties" : {
-              ".*" : {
-                "type" : "string"
-              }
-            }
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "type" : "object",
-              "minProperties" : 1,
-              "maxProperties" : 1,
-              "patternProperties" : {
-                ".*" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }, {
             "$ref" : "#/definitions/io.hyperfoil.core.steps.HttpRequestStep$FormInputBuilder"
           }, {
             "type" : "array",

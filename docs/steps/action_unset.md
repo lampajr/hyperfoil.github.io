@@ -1,6 +1,6 @@
 # unset
 
-Undefine variable name. 
+Undefine variable name.
 
 | Inline definition |
 | -------- |
@@ -9,5 +9,5 @@ Undefine variable name.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| var | String | Variable name.  |
+| var | Object | Variable name. |
 

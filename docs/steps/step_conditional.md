@@ -1,15 +1,14 @@
-# breakSequence
+# conditional
 
-Prematurely stops execution of this sequence if the condition is satisfied.
+Perform an action or sequence of actions conditionally.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
+| actions | [Action.Builder](index.html#actions) | Actions that should be executed should the condition hold. |
 | allConditions | [Builder](#allConditions) | Condition combining multiple other conditions with 'AND' logic. |
 | boolCondition | [Builder](#boolCondition) | Condition comparing boolean variables. |
 | condition | [Builder](#condition) | <font color="#606060">&lt;no description&gt;</font> |
-| dependency | String | This step is blocked if this variable does not have set value (none by default). |
 | intCondition | [Builder](#intCondition) | Condition comparing integer variables. |
-| onBreak | [Action.Builder](index.html#actions) | Action performed when the condition is true and the sequence is to be ended. |
 | stringCondition | [Builder](#stringCondition) | Condition comparing string variables. |
 
 ### <a id="allConditions"></a>allConditions

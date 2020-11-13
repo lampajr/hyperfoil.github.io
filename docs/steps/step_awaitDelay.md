@@ -1,6 +1,6 @@
 # awaitDelay
 
-Block this sequence until referenced delay point. 
+Block this sequence until referenced delay point.
 
 | Inline definition |
 | -------- |
@@ -9,5 +9,5 @@ Block this sequence until referenced delay point.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| key | String | Delay point created in <code>scheduleDelay.key</code>.  |
+| key | String | Delay point created in <code>scheduleDelay.key</code>. |
 

@@ -1,5 +1,18 @@
 # Release notes
 
+## 0.10 (2020-11-13)
+
+* Explicit concurrency limits on sequences, e.g `mySequence[6]`.
+    * `maxSequences` on scenario is not used anymore.
+* Concurrent sequences have its own copy of each resource by default.
+* Reworked `loop` step.
+* Renamed `simple` recorder (processor) to `store`.
+* Step `httpRequest` now implements `handler.followRedirect`, automatically sending another request(s) upon 3xx status or &lt;meta http-equiv="refresh" ...&gt; in HTML.
+* HTTP 1.1 is now implemented without relying on Netty's parser - saving allocations (HTTP 2.0 is still TODO).
+* Reworked ways to modify other parts of the benchmark from withing the builder (Locator).
+* Reduced need for boilerplate code in builders.
+* Many bugfixes and small improvements.
+
 ## 0.9 (2020-05-28)
 
 This is a bugfix-release.
