@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.11 (2020-11-18)
+
+* Fix a critical memory leak in the use of Netty's direct buffers.
+* Fix problems in HTML redirect.
+
 ## 0.10 (2020-11-13)
 
 * Explicit concurrency limits on sequences, e.g `mySequence[6]`.
