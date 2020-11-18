@@ -9,8 +9,8 @@ Set variable in session to certain value.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| intArray | [Builder](#intArray) | Set variable to an (unset) integer array. |
-| objectArray | [Builder](#objectArray) | Set variable to an (unset) object array. |
+| intArray | [Builder](#intarray) | Set variable to an (unset) integer array. |
+| objectArray | [Builder](#objectarray) | Set variable to an (unset) object array. |
 | value | String | String value. |
 | var | String | Variable name. |
 

@@ -4,28 +4,28 @@ Prematurely stops execution of this sequence if the condition is satisfied.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| allConditions | [Builder](#allConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#boolCondition) | Condition comparing boolean variables. |
+| allConditions | [Builder](#allconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#boolcondition) | Condition comparing boolean variables. |
 | condition | [Builder](#condition) | <font color="#606060">&lt;no description&gt;</font> |
 | dependency | String | This step is blocked if this variable does not have set value (none by default). |
-| intCondition | [Builder](#intCondition) | Condition comparing integer variables. |
+| intCondition | [Builder](#intcondition) | Condition comparing integer variables. |
 | onBreak | [Action.Builder](index.html#actions) | Action performed when the condition is true and the sequence is to be ended. |
-| stringCondition | [Builder](#stringCondition) | Condition comparing string variables. |
+| stringCondition | [Builder](#stringcondition) | Condition comparing string variables. |
 
 ### <a id="allConditions"></a>allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="allConditions.&lt;list of mappings&gt;"></a>allConditions.&lt;list of mappings&gt;
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#conditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#conditionboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#conditionintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#conditionstringcondition) | Condition comparing string variables. |
 
 ### <a id="boolCondition"></a>boolCondition
 
@@ -38,16 +38,16 @@ Prematurely stops execution of this sequence if the condition is satisfied.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#conditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#conditionboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#conditionintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#conditionstringcondition) | Condition comparing string variables. |
 
 ### <a id="condition.allConditions"></a>condition.allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="condition.boolCondition"></a>condition.boolCondition
 

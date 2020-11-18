@@ -77,7 +77,11 @@ h1, h2, h3, h4, h5, h6 { font-family: "OpenSans";}
 #header_wrap { background: none; background-color: var(--theme-color-base);}
 #header_wrap .inner { padding: 5px; }
 
-#main_content_wrap { background-color: var(--theme-color-super-light);  border-top: none;}
+#footer_wrap { background: none; background-color: var(--theme-color-base);}
+#footer_wrap a { text-decoration: none; font-weight: bold;}
+#footer_wrap a:hover { text-decoration: underline; }
+
+#main_content_wrap { background-color: var(--theme-color-super-light); border: none;}
 
 #project_name { font-family: "ChangaOne"; font-style: italic; text-transform: uppercase; font-size: 48px; font-weight: 400; color: var(--theme-color-base) }
 #project_description { color: #778; }
@@ -90,6 +94,7 @@ a { color: var(--theme-color-base); }
 .feature { width: 20%; padding: 20px; float: left; }
 .feature div { text-align: center; }
 .feature_icon_box { height: 110px; }
+.feature_icon_box:hover { transform: scale(1.05); }
 .feature img { width: 100px; border: 0px; vertical-align: bottom; display: table-cell; }
 
 .anchor { visibility: hidden ;}

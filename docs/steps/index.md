@@ -54,7 +54,9 @@
 * [conditional](./processor_conditional.html): Passes the data to nested processor if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.
 * [fail](./processor_fail.html): Fail the phase with given message. Used mostly for testing/debugging.
 * [json](./processor_json.html): Parses JSON responses using simple queries.
+* [logInvalid](./processor_logInvalid.html): Logs body chunks from requests marked as invalid.
 * [newSequence](./processor_newSequence.html): Instantiates a sequence for each invocation. The sequences will have increasing sequence ID.
+* [parseHtml](./processor_parseHtml.html): Parses HTML tags and invokes handlers based on criteria.
 * [queue](./processor_queue.html)
 * [set](./processor_set.html): Set variable in session to certain value.
 * [setInt](./processor_setInt.html): Set session variable to an integral value.

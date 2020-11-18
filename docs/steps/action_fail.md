@@ -4,32 +4,32 @@ Fail the phase with given message. Used mostly for testing/debugging.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| allConditions | [Builder](#allConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#boolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#intCondition) | Condition comparing integer variables. |
+| allConditions | [Builder](#allconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#boolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#intcondition) | Condition comparing integer variables. |
 | message | String | Message attached to the failure exception. |
-| stringCondition | [Builder](#stringCondition) | Condition comparing string variables. |
+| stringCondition | [Builder](#stringcondition) | Condition comparing string variables. |
 
 ### <a id="allConditions"></a>allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="allConditions.&lt;list of mappings&gt;"></a>allConditions.&lt;list of mappings&gt;
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#allConditionslist-of-mappingsallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#allConditionslist-of-mappingsboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#allConditionslist-of-mappingsintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#allConditionslist-of-mappingsstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#allconditionslist-of-mappingsallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#allconditionslist-of-mappingsboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#allconditionslist-of-mappingsintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#allconditionslist-of-mappingsstringcondition) | Condition comparing string variables. |
 
 ### <a id="allConditions.&lt;list of mappings&gt;.allConditions"></a>allConditions.&lt;list of mappings&gt;.allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="allConditions.&lt;list of mappings&gt;.boolCondition"></a>allConditions.&lt;list of mappings&gt;.boolCondition
 

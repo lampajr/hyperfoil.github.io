@@ -9,7 +9,7 @@ Set session variable to an integral value.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| intCondition | [Builder](#intCondition) | Set variable only if the current value satisfies certain condition. |
+| intCondition | [Builder](#intcondition) | Set variable only if the current value satisfies certain condition. |
 | onlyIfNotSet | boolean | Set variable to the value only if it is not already set. |
 | value | int | Value (integer). |
 | var | String | Variable name. |

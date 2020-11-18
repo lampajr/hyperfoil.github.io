@@ -9,32 +9,32 @@ Issues a HTTP request and registers handlers for the response.
 | body | String | HTTP request body (possibly a pattern). |
 | body (alternative)| [Builder](#body) | HTTP request body. |
 | CONNECT | String | Issue HTTP CONNECT request to given path. |
-| CONNECT (alternative)| [Builder](#CONNECT) | Issue HTTP CONNECT request to given path. |
+| CONNECT (alternative)| [Builder](#connect) | Issue HTTP CONNECT request to given path. |
 | DELETE | String | Issue HTTP DELETE request to given path. |
-| DELETE (alternative)| [Builder](#DELETE) | Issue HTTP DELETE request to given path. |
+| DELETE (alternative)| [Builder](#delete) | Issue HTTP DELETE request to given path. |
 | GET | String | Issue HTTP GET request to given path. |
-| GET (alternative)| [Builder](#GET) | Issue HTTP GET request to given path. |
+| GET (alternative)| [Builder](#get) | Issue HTTP GET request to given path. |
 | handler | [Builder](#handler) | HTTP response handlers. |
 | HEAD | String | Issue HTTP HEAD request to given path. |
-| HEAD (alternative)| [Builder](#HEAD) | Issue HTTP HEAD request to given path. |
+| HEAD (alternative)| [Builder](#head) | Issue HTTP HEAD request to given path. |
 | headers | [Builder](#headers) | HTTP headers sent in the request. |
 | method | enum | HTTP method used for the request.<br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
 | metric | String | Requests statistics will use this metric name. |
 | metric (alternative)| [&lt;list of strings&gt;](#metric) | Allows categorizing request statistics into metrics based on the request path. |
 | OPTIONS | String | Issue HTTP OPTIONS request to given path. |
-| OPTIONS (alternative)| [Builder](#OPTIONS) | Issue HTTP OPTIONS request to given path. |
+| OPTIONS (alternative)| [Builder](#options) | Issue HTTP OPTIONS request to given path. |
 | PATCH | String | Issue HTTP PATCH request to given path. |
-| PATCH (alternative)| [Builder](#PATCH) | Issue HTTP PATCH request to given path. |
+| PATCH (alternative)| [Builder](#patch) | Issue HTTP PATCH request to given path. |
 | path | [Builder](#path) | HTTP path (absolute or relative), including query and fragment. |
 | POST | String | Issue HTTP POST request to given path. |
-| POST (alternative)| [Builder](#POST) | Issue HTTP POST request to given path. |
+| POST (alternative)| [Builder](#post) | Issue HTTP POST request to given path. |
 | PUT | String | Issue HTTP PUT request to given path. |
-| PUT (alternative)| [Builder](#PUT) | Issue HTTP PUT request to given path. |
+| PUT (alternative)| [Builder](#put) | Issue HTTP PUT request to given path. |
 | sla | [Builder](#sla) | List of SLAs the requests are subject to. |
 | sync | boolean | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>. |
 | timeout | String | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section. |
 | TRACE | String | Issue HTTP TRACE request to given path. |
-| TRACE (alternative)| [Builder](#TRACE) | Issue HTTP TRACE request to given path. |
+| TRACE (alternative)| [Builder](#trace) | Issue HTTP TRACE request to given path. |
 
 ### <a id="authority"></a>authority
 
@@ -116,7 +116,7 @@ Manages processing of HTTP responses.
 | followRedirect | enum | <br>Options:{::nomarkdown}<ul><li><code>NEVER</code>: {:/}Do not insert any automatic redirection handling.{::nomarkdown}</li><li><code>LOCATION_ONLY</code>: {:/}Redirect only upon status 3xx accompanied with a 'location' header. Status, headers, body and completions handlers are suppressed in this case (only raw-bytes handlers are still running). This is the default option.{::nomarkdown}</li><li><code>HTML_ONLY</code>: {:/}Handle only HTML response with META refresh header. Status, headers and body handlers are invoked both on the original response and on the response from subsequent requests. Completion handlers are suppressed on this request and invoked after the last response arrives (in case of multiple redirections).{::nomarkdown}</li><li><code>ALWAYS</code>: {:/}Implement both status 3xx + location and HTML redirects.{::nomarkdown}</li></ul>{:/} |
 | header | [HeaderHandler.Builder](#handlerheader) | Handle HTTP response headers. |
 | onCompletion | [Action.Builder](index.html#actions) | Action executed when the HTTP response is fully received. |
-| rawBytes | [RawBytesHandler.Builder](#handlerrawBytes) | Handler processing HTTP response before parsing. |
+| rawBytes | [RawBytesHandler.Builder](#handlerrawbytes) | Handler processing HTTP response before parsing. |
 | status | [StatusHandler.Builder](#handlerstatus) | Handle HTTP response status. |
 | stopOnInvalid | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
 
@@ -130,7 +130,7 @@ Handle HTTP response headers.
 | countHeaders | CountHeadersHandler.Builder | Stores number of occurences of each header in custom statistics (these can be displayed in CLI using the <code>stats -c</code> command). |
 | filter | [FilterHeaderHandler.Builder](#handlerheaderfilter) | Compares if the header name matches expression and invokes a processor with the value. |
 | logInvalid | LogInvalidHandler.HeaderHandlerBuilder | Logs headers from requests marked as invalid. |
-| recordHeaderTime | [RecordHeaderTimeHandler.Builder](#handlerheaderrecordHeaderTime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time). |
+| recordHeaderTime | [RecordHeaderTimeHandler.Builder](#handlerheaderrecordheadertime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time). |
 
 ### <a id="handler.header.conditional"></a>handler.header.conditional
 
@@ -138,27 +138,27 @@ Passes the headers to nested handler if the condition holds. Note that the condi
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#handlerheaderconditionalallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#handlerheaderconditionalboolCondition) | Condition comparing boolean variables. |
+| allConditions | [Builder](#handlerheaderconditionalallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalboolcondition) | Condition comparing boolean variables. |
 | condition | [Builder](#handlerheaderconditionalcondition) | <font color="#606060">&lt;no description&gt;</font> |
 | handler | [HeaderHandler.Builder](#handlerheaderconditionalhandler) | <font color="#606060">&lt;no description&gt;</font> |
-| intCondition | [Builder](#handlerheaderconditionalintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#handlerheaderconditionalstringCondition) | Condition comparing string variables. |
+| intCondition | [Builder](#handlerheaderconditionalintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalstringcondition) | Condition comparing string variables. |
 
 ### <a id="handler.header.conditional.allConditions"></a>handler.header.conditional.allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#handlerheaderconditionalconditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#handlerheaderconditionalconditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#handlerheaderconditionalconditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#handlerheaderconditionalconditionstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#handlerheaderconditionalconditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalconditionboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#handlerheaderconditionalconditionintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalconditionstringcondition) | Condition comparing string variables. |
 
 ### <a id="handler.header.conditional.boolCondition"></a>handler.header.conditional.boolCondition
 
@@ -171,16 +171,16 @@ Passes the headers to nested handler if the condition holds. Note that the condi
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| allConditions | [Builder](#handlerheaderconditionalconditionallConditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#handlerheaderconditionalconditionboolCondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#handlerheaderconditionalconditionintCondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#handlerheaderconditionalconditionstringCondition) | Condition comparing string variables. |
+| allConditions | [Builder](#handlerheaderconditionalconditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalconditionboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#handlerheaderconditionalconditionintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalconditionstringcondition) | Condition comparing string variables. |
 
 ### <a id="handler.header.conditional.condition.allConditions"></a>handler.header.conditional.condition.allConditions
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallConditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
 
 ### <a id="handler.header.conditional.condition.boolCondition"></a>handler.header.conditional.condition.boolCondition
 
@@ -301,7 +301,7 @@ Handler processing HTTP response before parsing.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| transferSizeRecorder | [TransferSizeRecorder.Builder](#handlerrawBytestransferSizeRecorder) | Accumulates request and response sizes into custom metrics. |
+| transferSizeRecorder | [TransferSizeRecorder.Builder](#handlerrawbytestransfersizerecorder) | Accumulates request and response sizes into custom metrics. |
 
 ### <a id="handler.rawBytes.transferSizeRecorder"></a>handler.rawBytes.transferSizeRecorder
 

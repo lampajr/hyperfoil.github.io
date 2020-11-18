@@ -1,9 +1,7 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: default
 menu: false
+show_posts: true
+main_wrap_full_height: false
 ---
 <img src="assets/images/hyperfoil.png" style="float: left">
 <div style="clear: none">
@@ -50,7 +48,3 @@ menu: false
         Internally we try to allocate as little as possible on the critical code paths to not let garbage-collector disturb the operations.
     </div>
 </div>
-
-Hyperfoil is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-You can reach us on [Zulip](https://hyperfoil.zulipchat.com/)
