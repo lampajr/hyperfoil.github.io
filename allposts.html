@@ -4,6 +4,9 @@ menu: false
 ---
 
 {% for post in site.posts %}
-    <a href="{{ post.url }}"><h4>{{ post.date | date: "%Y-%m-%d" }} {{ post.title }}</h4></a>
+<div style="margin-bottom: 30px">
+    <div class="postdate">{{ post.date | date: "%Y-%m-%d" }}</div>
+    <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
     <div>{{ post.excerpt | strip_html }} <a href="{{ post.url }}">Read more</a></div>
+</div>
 {% endfor %}

@@ -97,6 +97,54 @@ a { color: var(--theme-color-base); }
 .feature_icon_box:hover { transform: scale(1.05); }
 .feature img { width: 100px; border: 0px; vertical-align: bottom; display: table-cell; }
 
+#blogcontainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.blogbox {
+	padding: 20px 20px 75px 20px;
+	margin: 10px;
+	flex-basis: 800px;
+	flex-grow: 1;
+	flex-shrink: 1;
+	background-color: var(--theme-color-very-light);
+	position: relative;
+}
+.readmore {
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin-bottom: 20px;
+}
+.readmore a {
+	display: inline-block;
+	width: 180px;
+	background-color: var(--theme-color-light);
+	padding: 5px;
+	color: white;
+}
+#showolder {
+	margin-top: 16px;
+	text-align: center;
+}
+#showolder a {
+	display: inline-block;
+	width: 250px;
+	background-color: var(--theme-color-very-light);
+	color: var(--theme-color-dark);
+	padding: 5px;
+}
+
+.postdate {
+	font-style: italic;
+	text-align: right;
+	position: absolute;
+	right: 0
+}
+
 .anchor { visibility: hidden ;}
 .anchor:hover { color: #C00000; }
 .anchor::before { content: '\00A7'; position: absolute; margin-left: -1.5ex; display: block; width: 1.5ex; font-size: 0.85em; padding-top: 0.15em; }
