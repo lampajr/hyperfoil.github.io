@@ -4,37 +4,40 @@ Issues a HTTP request and registers handlers for the response.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| authority | String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
-| authority (alternative)| [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
-| body | String | HTTP request body (possibly a pattern). |
-| body (alternative)| [Builder](#body) | HTTP request body. |
-| CONNECT | String | Issue HTTP CONNECT request to given path. |
-| CONNECT (alternative)| [Builder](#connect) | Issue HTTP CONNECT request to given path. |
-| DELETE | String | Issue HTTP DELETE request to given path. |
-| DELETE (alternative)| [Builder](#delete) | Issue HTTP DELETE request to given path. |
-| GET | String | Issue HTTP GET request to given path. |
-| GET (alternative)| [Builder](#get) | Issue HTTP GET request to given path. |
+| authority | [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
+| authority (alternative)| String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
+| body | [Builder](#body) | HTTP request body. |
+| body (alternative)| String | HTTP request body (possibly a pattern). |
+| compensation | [Builder](#compensation) | Configures additional metric compensated for coordinated omission. |
+| compression | [Builder](#compression) | Configure response compression. |
+| compression (alternative)| String | Request server to respond with compressed entity using specified content encoding. |
+| CONNECT | [Builder](#connect) | Issue HTTP CONNECT request to given path. |
+| CONNECT (alternative)| String | Issue HTTP CONNECT request to given path. |
+| DELETE | [Builder](#delete) | Issue HTTP DELETE request to given path. |
+| DELETE (alternative)| String | Issue HTTP DELETE request to given path. |
+| GET | [Builder](#get) | Issue HTTP GET request to given path. |
+| GET (alternative)| String | Issue HTTP GET request to given path. |
 | handler | [Builder](#handler) | HTTP response handlers. |
-| HEAD | String | Issue HTTP HEAD request to given path. |
-| HEAD (alternative)| [Builder](#head) | Issue HTTP HEAD request to given path. |
+| HEAD | [Builder](#head) | Issue HTTP HEAD request to given path. |
+| HEAD (alternative)| String | Issue HTTP HEAD request to given path. |
 | headers | [Builder](#headers) | HTTP headers sent in the request. |
 | method | enum | HTTP method used for the request.<br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
 | metric | String | Requests statistics will use this metric name. |
 | metric (alternative)| [&lt;list of strings&gt;](#metric) | Allows categorizing request statistics into metrics based on the request path. |
-| OPTIONS | String | Issue HTTP OPTIONS request to given path. |
-| OPTIONS (alternative)| [Builder](#options) | Issue HTTP OPTIONS request to given path. |
-| PATCH | String | Issue HTTP PATCH request to given path. |
-| PATCH (alternative)| [Builder](#patch) | Issue HTTP PATCH request to given path. |
+| OPTIONS | [Builder](#options) | Issue HTTP OPTIONS request to given path. |
+| OPTIONS (alternative)| String | Issue HTTP OPTIONS request to given path. |
+| PATCH | [Builder](#patch) | Issue HTTP PATCH request to given path. |
+| PATCH (alternative)| String | Issue HTTP PATCH request to given path. |
 | path | [Builder](#path) | HTTP path (absolute or relative), including query and fragment. |
-| POST | String | Issue HTTP POST request to given path. |
-| POST (alternative)| [Builder](#post) | Issue HTTP POST request to given path. |
-| PUT | String | Issue HTTP PUT request to given path. |
-| PUT (alternative)| [Builder](#put) | Issue HTTP PUT request to given path. |
+| POST | [Builder](#post) | Issue HTTP POST request to given path. |
+| POST (alternative)| String | Issue HTTP POST request to given path. |
+| PUT | [Builder](#put) | Issue HTTP PUT request to given path. |
+| PUT (alternative)| String | Issue HTTP PUT request to given path. |
 | sla | [Builder](#sla) | List of SLAs the requests are subject to. |
 | sync | boolean | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>. |
 | timeout | String | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section. |
-| TRACE | String | Issue HTTP TRACE request to given path. |
-| TRACE (alternative)| [Builder](#trace) | Issue HTTP TRACE request to given path. |
+| TRACE | [Builder](#trace) | Issue HTTP TRACE request to given path. |
+| TRACE (alternative)| String | Issue HTTP TRACE request to given path. |
 
 ### <a id="authority"></a>authority
 
@@ -75,6 +78,37 @@ Form element (e.g. as if coming from an INPUT field).
 | pattern | String | Input field value replacing session variables in a pattern, e.g. <code>foo${myvariable}var</code> |
 | value | String | Input field value (verbatim). |
 
+### <a id="compensation"></a>compensation
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| metric | String | Metric name for the compensated results. |
+| metric (alternative)| [&lt;list of strings&gt;](#compensationmetric) | Configure a custom metric for the compensated results. |
+| targetRate | double | Desired rate of new virtual users per second. This is similar to <code>constantRate.usersPerSec</code> phase settings but works closer to legacy benchmark drivers by fixing the concurrency. |
+| targetRate (alternative)| [Builder](#compensationtargetrate) | Desired rate of new virtual users per second. This is similar to <code>constantRate.usersPerSec</code> phase settings but works closer to legacy benchmark drivers by fixing the concurrency. |
+
+### <a id="compensation.metric"></a>compensation.metric
+
+Configure a custom metric for the compensated results.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| &lt;list of strings&gt; | &lt;list of strings&gt; | {::nomarkdown}Allows categorizing request statistics into metrics based on the request path. The expressions are evaluated in the order as provided in the list. Use one of: <ul> <li><code>regexp -&gt; replacement</code>, e.g. <code>([^?]*)(\?.*)? -&gt; $1</code> to drop the query part. <li><code>regexp</code> (don't do any replaces and use the full path), e.g. <code>.*.jpg</code> <li><code>-&gt; name</code> (metric applied if none of the previous expressions match). </ul>{:/} |
+
+### <a id="compensation.targetRate"></a>compensation.targetRate
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| base | double | Base value used for first iteration. |
+| increment | double | Value by which the base value is incremented for each (but the very first) iteration. |
+
+### <a id="compression"></a>compression
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| encoding | String | Encoding used for <code>Accept-Encoding</code>/<code>TE</code> header. The only currently supported is <code>gzip</code>. |
+| type | enum | Type of compression (resource vs. transfer based).<br>Options:{::nomarkdown}<ul><li><code>CONTENT_ENCODING</code>: {:/}Use <code>Accept-Encoding</code> in request and expect <code>Content-Encoding</code> in response.{::nomarkdown}</li><li><code>TRANSFER_ENCODING</code>: {:/}Use <code>TE</code> in request and expect <code>Transfer-Encoding</code> in response.{::nomarkdown}</li></ul>{:/} |
+
 ### <a id="CONNECT"></a>CONNECT
 
 Generic builder for generating a string.
@@ -111,14 +145,14 @@ Manages processing of HTTP responses.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| autoRangeCheck | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| autoRangeCheck | boolean | Inject status handler that marks the request as invalid on status 4xx or 5xx. Default value depends on <code>ergonomics.autoRangeCheck</code> (see <a href="https://hyperfoil.io/userguide/benchmark/ergonomics.html">User Guide</a>). |
 | body | [Processor.Builder](index.html#processors) | Handle HTTP response body. |
-| followRedirect | enum | <br>Options:{::nomarkdown}<ul><li><code>NEVER</code>: {:/}Do not insert any automatic redirection handling.{::nomarkdown}</li><li><code>LOCATION_ONLY</code>: {:/}Redirect only upon status 3xx accompanied with a 'location' header. Status, headers, body and completions handlers are suppressed in this case (only raw-bytes handlers are still running). This is the default option.{::nomarkdown}</li><li><code>HTML_ONLY</code>: {:/}Handle only HTML response with META refresh header. Status, headers and body handlers are invoked both on the original response and on the response from subsequent requests. Completion handlers are suppressed on this request and invoked after the last response arrives (in case of multiple redirections).{::nomarkdown}</li><li><code>ALWAYS</code>: {:/}Implement both status 3xx + location and HTML redirects.{::nomarkdown}</li></ul>{:/} |
+| followRedirect | enum | Automatically fire requests when the server responds with redirection. Default value depends on <code>ergonomics.followRedirect</code> (see <a href="https://hyperfoil.io/userguide/benchmark/ergonomics.html">User Guide</a>).<br>Options:{::nomarkdown}<ul><li><code>NEVER</code>: {:/}Do not insert any automatic redirection handling.{::nomarkdown}</li><li><code>LOCATION_ONLY</code>: {:/}Redirect only upon status 3xx accompanied with a 'location' header. Status, headers, body and completions handlers are suppressed in this case (only raw-bytes handlers are still running). This is the default option.{::nomarkdown}</li><li><code>HTML_ONLY</code>: {:/}Handle only HTML response with META refresh header. Status, headers and body handlers are invoked both on the original response and on the response from subsequent requests. Completion handlers are suppressed on this request and invoked after the last response arrives (in case of multiple redirections).{::nomarkdown}</li><li><code>ALWAYS</code>: {:/}Implement both status 3xx + location and HTML redirects.{::nomarkdown}</li></ul>{:/} |
 | header | [HeaderHandler.Builder](#handlerheader) | Handle HTTP response headers. |
 | onCompletion | [Action.Builder](index.html#actions) | Action executed when the HTTP response is fully received. |
 | rawBytes | [RawBytesHandler.Builder](#handlerrawbytes) | Handler processing HTTP response before parsing. |
 | status | [StatusHandler.Builder](#handlerstatus) | Handle HTTP response status. |
-| stopOnInvalid | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| stopOnInvalid | boolean | Inject completion handler that will stop the session if the request has been marked as invalid. Default value depends on <code>ergonomics.stopOnInvalid</code> (see <a href="https://hyperfoil.io/userguide/benchmark/ergonomics.html">User Guide</a>). |
 
 ### <a id="handler.header"></a>handler.header
 
@@ -140,56 +174,47 @@ Passes the headers to nested handler if the condition holds. Note that the condi
 | ------- | ------- | ------- |
 | allConditions | [Builder](#handlerheaderconditionalallconditions) | Condition combining multiple other conditions with 'AND' logic. |
 | boolCondition | [Builder](#handlerheaderconditionalboolcondition) | Condition comparing boolean variables. |
-| condition | [Builder](#handlerheaderconditionalcondition) | <font color="#606060">&lt;no description&gt;</font> |
-| handler | [HeaderHandler.Builder](#handlerheaderconditionalhandler) | <font color="#606060">&lt;no description&gt;</font> |
+| handler | [HeaderHandler.Builder](#handlerheaderconditionalhandler) | One or more header handlers that should be invoked. |
 | intCondition | [Builder](#handlerheaderconditionalintcondition) | Condition comparing integer variables. |
 | stringCondition | [Builder](#handlerheaderconditionalstringcondition) | Condition comparing string variables. |
 
 ### <a id="handler.header.conditional.allConditions"></a>handler.header.conditional.allConditions
 
+Test more conditions and combine the results using AND logic.
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | List of conditions. |
 
 ### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;
 
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| allConditions | [Builder](#handlerheaderconditionalconditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#handlerheaderconditionalconditionboolcondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#handlerheaderconditionalconditionintcondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#handlerheaderconditionalconditionstringcondition) | Condition comparing string variables. |
-
-### <a id="handler.header.conditional.boolCondition"></a>handler.header.conditional.boolCondition
+Selector for condition type.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| allConditions | [Builder](#handlerheaderconditionalallconditionslist-of-mappingsallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#handlerheaderconditionalallconditionslist-of-mappingsboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#handlerheaderconditionalallconditionslist-of-mappingsintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#handlerheaderconditionalallconditionslist-of-mappingsstringcondition) | Condition comparing string variables. |
 
-### <a id="handler.header.conditional.condition"></a>handler.header.conditional.condition
+### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;.allConditions"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;.allConditions
 
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| allConditions | [Builder](#handlerheaderconditionalconditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#handlerheaderconditionalconditionboolcondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#handlerheaderconditionalconditionintcondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#handlerheaderconditionalconditionstringcondition) | Condition comparing string variables. |
-
-### <a id="handler.header.conditional.condition.allConditions"></a>handler.header.conditional.condition.allConditions
+Test more conditions and combine the results using AND logic.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#handlerheaderconditionalallconditionslist-of-mappings) | List of conditions. |
 
-### <a id="handler.header.conditional.condition.boolCondition"></a>handler.header.conditional.condition.boolCondition
+### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;.boolCondition"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;.boolCondition
+
+Tests session variable containing boolean value.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | String | Variable name. |
+| value | boolean | Expected value. |
 
-### <a id="handler.header.conditional.condition.intCondition"></a>handler.header.conditional.condition.intCondition
+### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;.intCondition"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;.intCondition
 
 Condition comparing integer in session variable.
 
@@ -204,27 +229,45 @@ Condition comparing integer in session variable.
 | lessThan | int | Compared variable must be lower than this value. |
 | notEqualTo | int | Compared variable must not be equal to this value. |
 
-### <a id="handler.header.conditional.condition.stringCondition"></a>handler.header.conditional.condition.stringCondition
+### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;.stringCondition"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;.stringCondition
+
+Condition comparing string in session variable.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
 | endsWith | CharSequence | Suffix for the string. |
 | equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | Object | Variable name. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| length | int | Check the length of the string. |
+| length (alternative)| [Builder](#handlerheaderconditionalstringconditionlength) | Check the length of the string. |
 | matchVar | String | Fetch the value from a variable. |
 | negate | boolean | Invert the logic of this condition. Defaults to false. |
 | notEqualTo | CharSequence | Value that the string must not match. |
-| self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
 
-### <a id="handler.header.conditional.handler"></a>handler.header.conditional.handler
+### <a id="handler.header.conditional.boolCondition"></a>handler.header.conditional.boolCondition
+
+Tests session variable containing boolean value.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
+| fromVar | String | Variable name. |
+| value | boolean | Expected value. |
+
+### <a id="handler.header.conditional.handler"></a>handler.header.conditional.handler
+
+One or more header handlers that should be invoked.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| conditional | [ConditionalHeaderHandler.Builder](#handlerheaderconditional) | Passes the headers to nested handler if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested handlers should not change the results of the condition. |
+| countHeaders | CountHeadersHandler.Builder | Stores number of occurences of each header in custom statistics (these can be displayed in CLI using the <code>stats -c</code> command). |
 | filter | [FilterHeaderHandler.Builder](#handlerheaderfilter) | Compares if the header name matches expression and invokes a processor with the value. |
+| logInvalid | LogInvalidHandler.HeaderHandlerBuilder | Logs headers from requests marked as invalid. |
+| recordHeaderTime | [RecordHeaderTimeHandler.Builder](#handlerheaderrecordheadertime) | Records alternative metric based on values from a header (e.g. when a proxy reports processing time). |
 
 ### <a id="handler.header.conditional.intCondition"></a>handler.header.conditional.intCondition
 
@@ -243,19 +286,33 @@ Condition comparing integer in session variable.
 
 ### <a id="handler.header.conditional.stringCondition"></a>handler.header.conditional.stringCondition
 
+Condition comparing string in session variable.
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
 | endsWith | CharSequence | Suffix for the string. |
 | equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | Object | Variable name. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| length | int | Check the length of the string. |
+| length (alternative)| [Builder](#handlerheaderconditionalstringconditionlength) | Check the length of the string. |
 | matchVar | String | Fetch the value from a variable. |
 | negate | boolean | Invert the logic of this condition. Defaults to false. |
 | notEqualTo | CharSequence | Value that the string must not match. |
-| self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
+
+### <a id="handler.header.conditional.stringCondition.length"></a>handler.header.conditional.stringCondition.length
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| equalTo | int | Compared variable must be equal to this value. |
+| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
+| greaterThan | int | Compared variable must be greater than this value. |
+| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
+| lessThan | int | Compared variable must be lower than this value. |
+| notEqualTo | int | Compared variable must not be equal to this value. |
 
 ### <a id="handler.header.filter"></a>handler.header.filter
 
@@ -278,12 +335,24 @@ Compares if the header name matches expression and invokes a processor with the 
 | caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
 | endsWith | CharSequence | Suffix for the string. |
 | equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
+| length | int | Check the length of the string. |
+| length (alternative)| [Builder](#handlerheaderfilterheaderlength) | Check the length of the string. |
 | matchVar | String | Fetch the value from a variable. |
 | negate | boolean | Invert the logic of this condition. Defaults to false. |
 | notEqualTo | CharSequence | Value that the string must not match. |
-| self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
+
+### <a id="handler.header.filter.header.length"></a>handler.header.filter.header.length
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| equalTo | int | Compared variable must be equal to this value. |
+| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
+| greaterThan | int | Compared variable must be greater than this value. |
+| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
+| lessThan | int | Compared variable must be lower than this value. |
+| notEqualTo | int | Compared variable must not be equal to this value. |
 
 ### <a id="handler.header.recordHeaderTime"></a>handler.header.recordHeaderTime
 
@@ -322,6 +391,7 @@ Handle HTTP response status.
 | counter | [StatusToCounterHandler.Builder](#handlerstatuscounter) | Counts how many times given status is received. |
 | multiplex | MultiplexStatusHandler.Builder | Multiplexes the status based on range into different status handlers. |
 | range | [RangeStatusValidator.Builder](#handlerstatusrange) | Marks requests that don't fall into the desired range as invalid. |
+| stats | StatusToStatsHandler.Builder | Records number of occurrences of each status counts into custom statistics (these can be displayed in CLI using <code>stats -c</code>). |
 | store | [StoreStatusHandler.Builder](#handlerstatusstore) | Stores the status into session variable. |
 
 ### <a id="handler.status.counter"></a>handler.status.counter
@@ -453,7 +523,7 @@ Defines a list of Service Level Agreements (SLAs) - conditions that must hold fo
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#slalist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#slalist-of-mappings) | One or more SLA configurations. |
 
 ### <a id="sla.&lt;list of mappings&gt;"></a>sla.&lt;list of mappings&gt;
 
@@ -462,8 +532,8 @@ Defines a Service Level Agreement (SLA) - conditions that must hold for benchmar
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | blockedRatio | double | Maximum allowed ratio of time spent waiting for usable connection to sum of response latencies and blocked time. Default is 0 - client must not be blocked. Set to 1 if the client can block without limits. |
-| errorRatio | double | Maximum allowed ratio of errors. Valid values are 0.0 - 1.0 (inclusive). |
-| invalidRatio | double | Maximum allowed ratio of responses marked as invalid. Valid values are 0.0 - 1.0 (inclusive). |
+| errorRatio | double | Maximum allowed ratio of errors: connection failures or resets, timeouts and internal errors. Valid values are 0.0 - 1.0 (inclusive). Note: 4xx and 5xx statuses are NOT considered errors for this SLA parameter. Use <code>invalidRatio</code> for that. |
+| invalidRatio | double | Maximum allowed ratio of responses marked as invalid. Valid values are 0.0 - 1.0 (inclusive). Note: With default settings 4xx and 5xx statuses are considered invalid. Check out <code>ergonomics.autoRangeCheck</code> or <code>httpRequest.handler.autoRangeCheck</code> to change this. |
 | limits | [Builder](#slalist-of-mappingslimits) | Percentile limits. |
 | meanResponseTime | String | Maximum allowed mean (average) response time. Use suffix `ns`, `us`, `ms` or `s` to specify units. |
 | window | String | Period over which the stats should be collected. By default the SLA applies to stats from whole phase. |

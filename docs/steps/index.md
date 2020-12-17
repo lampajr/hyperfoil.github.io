@@ -22,6 +22,7 @@
 * [pullSharedMap](./step_pullSharedMap.html): Move values from a map shared across all sessions using the same executor into session variables. 
 * [pushSharedMap](./step_pushSharedMap.html): Store values from session variables into a map shared across all sessions using the same executor into session variables. 
 * [randomCsvRow](./step_randomCsvRow.html): Stores random row from a CSV-formatted file to variables.
+* [randomFile](./step_randomFile.html): Reads bytes from a randomly chosen file into a variable. Two formats are supported: Example 1 - without weights: 
 * [randomInt](./step_randomInt.html): Stores random (linearly distributed) integer into session variable.
 * [randomItem](./step_randomItem.html): Stores random item from a list or array into session variable.
 * [scheduleDelay](./step_scheduleDelay.html): Define a point in future until which we should wait. Does not cause waiting.
@@ -53,11 +54,12 @@
 * [closeConnection](./processor_closeConnection.html)
 * [conditional](./processor_conditional.html): Passes the data to nested processor if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.
 * [fail](./processor_fail.html): Fail the phase with given message. Used mostly for testing/debugging.
+* [gzipInflator](./processor_gzipInflator.html): Decompresses a GZIP data and pipes the output to delegated processors. If the data contains multiple concatenated GZIP streams it will pipe multiple decompressed objects with <code>isLastPart</code> set to true at the end of each stream.
 * [json](./processor_json.html): Parses JSON responses using simple queries.
 * [logInvalid](./processor_logInvalid.html): Logs body chunks from requests marked as invalid.
 * [newSequence](./processor_newSequence.html): Instantiates a sequence for each invocation. The sequences will have increasing sequence ID.
 * [parseHtml](./processor_parseHtml.html): Parses HTML tags and invokes handlers based on criteria.
-* [queue](./processor_queue.html)
+* [queue](./processor_queue.html): Stores defragmented data in a queue. For each item in the queue a new sequence instance will be started (subject the concurrency constraints) with sequence index that allows it to read an object from an array using sequence-scoped access.
 * [set](./processor_set.html): Set variable in session to certain value.
 * [setInt](./processor_setInt.html): Set session variable to an integral value.
 * [simple](./processor_simple.html): DEPRECATED: Use <code>store</code> processor instead.

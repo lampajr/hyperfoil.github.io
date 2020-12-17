@@ -26,7 +26,7 @@ scenario:
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| counterVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| repeats | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| steps | [&lt;list of steps&gt;](index.html#steps) | <font color="#606060">&lt;no description&gt;</font> |
+| counterVar | String | Variable holding number of iterations. |
+| repeats | int | Number of iterations that should be executed. |
+| steps | [&lt;list of steps&gt;](index.html#steps) | List of steps that should be looped. |
 

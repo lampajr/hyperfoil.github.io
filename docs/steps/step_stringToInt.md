@@ -1,8 +1,13 @@
 # stringToInt
 
 
+| Inline definition |
+| -------- |
+| Use `fromVar -&gt; toVar` |
+
+
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| toVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | String | Source variable name. |
+| toVar | String | Target variable name. |
 

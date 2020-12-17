@@ -63,4 +63,5 @@ agents:
 | log       |         | Name of config map (e.g. `my-config-map`) or config map and its entry (e.g. `my-config-map/log4j2.xml`) that contains the Log4j2 configuration file. Default entry from the config map is `log4j2.xml`. Hyperfoil will mount this configmap as a volume to this agent. |
 | extras    |         | Anything in this property will be passed to the agent JVM. |
 | image     | quay.io/hyperfoil/hyperfoil:*controller-version* | Different version of Hyperfoil in the agents |
+| imagePullPolicy | Always | Image pull policy for agents |
 | fetchLogs | true    | Automatically watch agents' logs and store them in the run directory. |

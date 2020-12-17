@@ -1,5 +1,20 @@
 # Release notes
 
+## 0.12 (2020-12-16)
+
+* Hyperfoil now requires JDK 11
+* BREAKING CHANGE: extra files are now loaded relative to benchmark YAML file, not working directory
+* CLI improvements:
+    * Upload benchmarks in text-mode (lower chance of serialization issues)
+    * Ask for re-upload of extra files
+    * `inspect` command to reveal detailed structure of the benchmark
+* Status 4xx and 5xx is not counted as error for purposes of `SLA.errorRatio` (use `SLA.invalidRatio`)
+* Hyperfoil controller can be exposed using HTTPS and offers Basic authentication scheme.
+* Mode with coordinated-omission compensation: see [httpRequest.compensation]({{ "/docs/steps/step_httpRequest.html#compensation" | absolute_url }}).
+* Support for GZIP compression of responses: see [httpRequest.compression]({{ "/docs/steps/step_httpRequest.html#compression" | absolute_url }}).
+* New generator step: `randomFile`
+* Image build now can be done using `podman`
+
 ## 0.11 (2020-11-18)
 
 * Fix a critical memory leak in the use of Netty's direct buffers.

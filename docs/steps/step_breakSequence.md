@@ -6,7 +6,6 @@ Prematurely stops execution of this sequence if the condition is satisfied.
 | ------- | ------- | -------- |
 | allConditions | [Builder](#allconditions) | Condition combining multiple other conditions with 'AND' logic. |
 | boolCondition | [Builder](#boolcondition) | Condition comparing boolean variables. |
-| condition | [Builder](#condition) | <font color="#606060">&lt;no description&gt;</font> |
 | dependency | String | This step is blocked if this variable does not have set value (none by default). |
 | intCondition | [Builder](#intcondition) | Condition comparing integer variables. |
 | onBreak | [Action.Builder](index.html#actions) | Action performed when the condition is true and the sequence is to be ended. |
@@ -14,49 +13,41 @@ Prematurely stops execution of this sequence if the condition is satisfied.
 
 ### <a id="allConditions"></a>allConditions
 
+Test more conditions and combine the results using AND logic.
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | List of conditions. |
 
 ### <a id="allConditions.&lt;list of mappings&gt;"></a>allConditions.&lt;list of mappings&gt;
 
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolcondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintcondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringcondition) | Condition comparing string variables. |
-
-### <a id="boolCondition"></a>boolCondition
+Selector for condition type.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| allConditions | [Builder](#allconditionslist-of-mappingsallconditions) | Condition combining multiple other conditions with 'AND' logic. |
+| boolCondition | [Builder](#allconditionslist-of-mappingsboolcondition) | Condition comparing boolean variables. |
+| intCondition | [Builder](#allconditionslist-of-mappingsintcondition) | Condition comparing integer variables. |
+| stringCondition | [Builder](#allconditionslist-of-mappingsstringcondition) | Condition comparing string variables. |
 
-### <a id="condition"></a>condition
+### <a id="allConditions.&lt;list of mappings&gt;.allConditions"></a>allConditions.&lt;list of mappings&gt;.allConditions
 
-| Property | Type | Description |
-| ------- | ------- | ------- |
-| allConditions | [Builder](#conditionallconditions) | Condition combining multiple other conditions with 'AND' logic. |
-| boolCondition | [Builder](#conditionboolcondition) | Condition comparing boolean variables. |
-| intCondition | [Builder](#conditionintcondition) | Condition comparing integer variables. |
-| stringCondition | [Builder](#conditionstringcondition) | Condition comparing string variables. |
-
-### <a id="condition.allConditions"></a>condition.allConditions
+Test more conditions and combine the results using AND logic.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | <font color="#606060">&lt;no description&gt;</font> |
+| &lt;list of mappings&gt; | [&lt;list of builders&gt;](#allconditionslist-of-mappings) | List of conditions. |
 
-### <a id="condition.boolCondition"></a>condition.boolCondition
+### <a id="allConditions.&lt;list of mappings&gt;.boolCondition"></a>allConditions.&lt;list of mappings&gt;.boolCondition
+
+Tests session variable containing boolean value.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
-| value | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | String | Variable name. |
+| value | boolean | Expected value. |
 
-### <a id="condition.intCondition"></a>condition.intCondition
+### <a id="allConditions.&lt;list of mappings&gt;.intCondition"></a>allConditions.&lt;list of mappings&gt;.intCondition
 
 Condition comparing integer in session variable.
 
@@ -71,21 +62,33 @@ Condition comparing integer in session variable.
 | lessThan | int | Compared variable must be lower than this value. |
 | notEqualTo | int | Compared variable must not be equal to this value. |
 
-### <a id="condition.stringCondition"></a>condition.stringCondition
+### <a id="allConditions.&lt;list of mappings&gt;.stringCondition"></a>allConditions.&lt;list of mappings&gt;.stringCondition
+
+Condition comparing string in session variable.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
 | endsWith | CharSequence | Suffix for the string. |
 | equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | Object | Variable name. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| length | int | Check the length of the string. |
+| length (alternative)| [Builder](#stringconditionlength) | Check the length of the string. |
 | matchVar | String | Fetch the value from a variable. |
 | negate | boolean | Invert the logic of this condition. Defaults to false. |
 | notEqualTo | CharSequence | Value that the string must not match. |
-| self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
+
+### <a id="boolCondition"></a>boolCondition
+
+Tests session variable containing boolean value.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Variable name. |
+| value | boolean | Expected value. |
 
 ### <a id="intCondition"></a>intCondition
 
@@ -104,17 +107,31 @@ Condition comparing integer in session variable.
 
 ### <a id="stringCondition"></a>stringCondition
 
+Condition comparing string in session variable.
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | caseSensitive | boolean | True if the case must match, false if the check is case-insensitive. |
 | endsWith | CharSequence | Suffix for the string. |
 | equalTo | CharSequence | Literal value the string should match (the same as {@link #value}). |
-| fromVar | &lt;unknown&gt; | <font color="#606060">&lt;no description&gt;</font> |
+| fromVar | Object | Variable name. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
+| length | int | Check the length of the string. |
+| length (alternative)| [Builder](#stringconditionlength) | Check the length of the string. |
 | matchVar | String | Fetch the value from a variable. |
 | negate | boolean | Invert the logic of this condition. Defaults to false. |
 | notEqualTo | CharSequence | Value that the string must not match. |
-| self | &lt;none&gt; | <br>Note: property does not have any value |
 | startsWith | CharSequence | Prefix for the string. |
 | value | CharSequence | Literal value the string should match. |
+
+### <a id="stringCondition.length"></a>stringCondition.length
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| equalTo | int | Compared variable must be equal to this value. |
+| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
+| greaterThan | int | Compared variable must be greater than this value. |
+| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
+| lessThan | int | Compared variable must be lower than this value. |
+| notEqualTo | int | Compared variable must not be equal to this value. |
 
