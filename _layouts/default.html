@@ -99,7 +99,7 @@
       <section id="posts" class="inner">
         <h3 style="color: white; text-shadow: var(--theme-color-dark) 0px 0px 10px;">News</h3>
         <div id="blogcontainer">
-        {% for post in site.posts limit:5 %}
+        {% for post in site.posts limit:3 %}
             <div class="blogbox">
               <a href="{{ post.url }}"><h4>{{ post.title }}</h4></a>
               <div>{{ post.excerpt | strip_html | truncatewords: 35 }}</div>

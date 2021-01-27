@@ -22,19 +22,18 @@ Below is an example of a configuration fetching embedded resources:
 ```yaml
 - fetching:
   - httpRequest:
-    GET: /foobar/index.html
-    handler:
-      body:
-        parseHtml:
-          onEmbeddedResource:
-            fetchResource:
-
-              maxResources: 16
-              metric:
-              # Drop the query part
-              - ([^?]*)(\?.*)? -> $1
-              onCompletion:
-                set: allFetched <- true
+      GET: /foobar/index.html
+      handler:
+        body:
+          parseHtml:
+            onEmbeddedResource:
+              fetchResource:
+                maxResources: 16
+                metric:
+                # Drop the query part
+                - ([^?]*)(\?.*)? -> $1
+                onCompletion:
+                  set: allFetched <- true
 ```
 
 For details please [see the reference]({{ "/docs/steps/processor_parseHtml.html" | absolute_url }}).
