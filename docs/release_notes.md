@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.13 (2021-01-28)
+
+This is mostly a bugfix release with minor convenience improvements.
+
+* Run CLI in container simply using `docker/podman run -it --rm --network=host quay.io/hyperfoil/hyperfoil cli`
+
 ## 0.12 (2020-12-16)
 
 * Hyperfoil now requires JDK 11

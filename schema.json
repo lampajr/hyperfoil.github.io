@@ -1,6 +1,6 @@
-----
--redirect_from: /schema
-----
+---
+redirect_from: /schema
+---
 {
   "$schema" : "http://json-schema.org/draft-07/schema",
   "$id" : "http://hyperfoil.io/schema",
@@ -887,18 +887,6 @@
             }
           } ]
         },
-        "condition" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-            }
-          } ]
-        },
         "intCondition" : {
           "oneOf" : [ {
             "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
@@ -925,7 +913,27 @@
         }
       }
     },
-    "io.hyperfoil.core.builders.Condition$TypesBuilder" : {
+    "io.hyperfoil.core.steps.AddToIntAction$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "orElseSetTo" : {
+          "type" : "integer"
+        },
+        "value" : {
+          "type" : "integer"
+        },
+        "var" : {
+          "type" : "string"
+        }
+      }
+    },
+    "io.hyperfoil.core.steps.ClearHttpCacheAction$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
+    },
+    "io.hyperfoil.core.steps.FailAction$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -973,6 +981,9 @@
               "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
             }
           } ]
+        },
+        "message" : {
+          "type" : "string"
         },
         "stringCondition" : {
           "oneOf" : [ {
@@ -1060,9 +1071,6 @@
         "notEqualTo" : {
           "type" : "string"
         },
-        "self" : {
-          "type" : "null"
-        },
         "startsWith" : {
           "type" : "string"
         },
@@ -1107,32 +1115,7 @@
         }
       }
     },
-    "io.hyperfoil.core.builders.AllConditions$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.steps.AddToIntAction$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : {
-        "orElseSetTo" : {
-          "type" : "integer"
-        },
-        "value" : {
-          "type" : "integer"
-        },
-        "var" : {
-          "type" : "string"
-        }
-      }
-    },
-    "io.hyperfoil.core.steps.ClearHttpCacheAction$Builder" : {
-      "type" : "object",
-      "additionalProperties" : false,
-      "properties" : { }
-    },
-    "io.hyperfoil.core.steps.FailAction$Builder" : {
+    "io.hyperfoil.core.builders.Condition$TypesBuilder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -1181,9 +1164,6 @@
             }
           } ]
         },
-        "message" : {
-          "type" : "string"
-        },
         "stringCondition" : {
           "oneOf" : [ {
             "$ref" : "#/definitions/io.hyperfoil.core.builders.StringCondition$Builder"
@@ -1197,6 +1177,11 @@
           } ]
         }
       }
+    },
+    "io.hyperfoil.core.builders.AllConditions$Builder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : { }
     },
     "io.hyperfoil.core.steps.SetAction$Builder" : {
       "type" : "object",
@@ -1380,9 +1365,6 @@
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
-        "addVar" : {
-          "type" : "string"
-        },
         "message" : {
           "type" : "string"
         },
@@ -1538,18 +1520,6 @@
             "additionalItems" : false,
             "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
-            }
-          } ]
-        },
-        "condition" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
             }
           } ]
         },
@@ -2205,18 +2175,6 @@
             }
           } ]
         },
-        "condition" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-            }
-          } ]
-        },
         "intCondition" : {
           "oneOf" : [ {
             "$ref" : "#/definitions/io.hyperfoil.core.builders.IntCondition$Builder"
@@ -2520,13 +2478,13 @@
       "properties" : {
         "fetchResource" : {
           "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceBuilder"
+            "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceHandler$Builder"
           }, {
             "type" : "array",
             "minLength" : 1,
             "additionalItems" : false,
             "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceBuilder"
+              "$ref" : "#/definitions/io.hyperfoil.core.handlers.html.FetchResourceHandler$Builder"
             }
           } ]
         },
@@ -2649,7 +2607,7 @@
         }
       }
     },
-    "io.hyperfoil.core.handlers.html.FetchResourceBuilder" : {
+    "io.hyperfoil.core.handlers.html.FetchResourceHandler$Builder" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
@@ -2714,18 +2672,6 @@
             "additionalItems" : false,
             "items" : {
               "$ref" : "#/definitions/io.hyperfoil.core.builders.BoolCondition$Builder"
-            }
-          } ]
-        },
-        "condition" : {
-          "oneOf" : [ {
-            "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
-          }, {
-            "type" : "array",
-            "minLength" : 1,
-            "additionalItems" : false,
-            "items" : {
-              "$ref" : "#/definitions/io.hyperfoil.core.builders.Condition$TypesBuilder"
             }
           } ]
         },
@@ -2837,9 +2783,6 @@
         },
         "notEqualTo" : {
           "type" : "string"
-        },
-        "self" : {
-          "type" : "null"
         },
         "startsWith" : {
           "type" : "string"
