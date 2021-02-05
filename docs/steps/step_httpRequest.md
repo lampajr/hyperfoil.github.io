@@ -387,12 +387,20 @@ Handle HTTP response status.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| action | ActionStatusHandler.Builder | Perform certain actions when the status falls into a range. |
+| action | [ActionStatusHandler.Builder](#handlerstatusaction) | Perform certain actions when the status falls into a range. |
 | counter | [StatusToCounterHandler.Builder](#handlerstatuscounter) | Counts how many times given status is received. |
-| multiplex | MultiplexStatusHandler.Builder | Multiplexes the status based on range into different status handlers. |
+| multiplex | [MultiplexStatusHandler.Builder](#handlerstatusmultiplex) | Multiplexes the status based on range into different status handlers. |
 | range | [RangeStatusValidator.Builder](#handlerstatusrange) | Marks requests that don't fall into the desired range as invalid. |
 | stats | StatusToStatsHandler.Builder | Records number of occurrences of each status counts into custom statistics (these can be displayed in CLI using <code>stats -c</code>). |
 | store | [StoreStatusHandler.Builder](#handlerstatusstore) | Stores the status into session variable. |
+
+### <a id="handler.status.action"></a>handler.status.action
+
+Perform certain actions when the status falls into a range.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| &lt;any&gt; | [Builder](index.html#actions) | Perform a sequence of actions if the range matches. Use range as the key and action in the mapping. Possible values of the status should be separated by commas (,). Ranges can be set using low-high (inclusive) (e.g. 200-299), or replacing lower digits with 'x' (e.g. 2xx). |
 
 ### <a id="handler.status.counter"></a>handler.status.counter
 
@@ -405,6 +413,27 @@ Counts how many times given status is received.
 | init | int | Initial value for the session variable. |
 | set | int | Do not accumulate (add), just set the variable to this value. |
 | var | String | Variable name. |
+
+### <a id="handler.status.multiplex"></a>handler.status.multiplex
+
+Multiplexes the status based on range into different status handlers.
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| &lt;any&gt; | [Builder](#handlerstatusmultiplexany) | Run another handler if the range matches. Use range as the key and another status handler in the mapping. Possible values of the status should be separated by commas (,). Ranges can be set using low-high (inclusive) (e.g. 200-299), or replacing lower digits with 'x' (e.g. 2xx). |
+
+### <a id="handler.status.multiplex.&lt;any&gt;"></a>handler.status.multiplex.&lt;any&gt;
+
+Run another handler if the range matches. Use range as the key and another status handler in the mapping. Possible values of the status should be separated by commas (,). Ranges can be set using low-high (inclusive) (e.g. 200-299), or replacing lower digits with 'x' (e.g. 2xx).
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| action | [ActionStatusHandler.Builder](#handlerstatusaction) | Perform certain actions when the status falls into a range. |
+| counter | [StatusToCounterHandler.Builder](#handlerstatuscounter) | Counts how many times given status is received. |
+| multiplex | [MultiplexStatusHandler.Builder](#handlerstatusmultiplex) | Multiplexes the status based on range into different status handlers. |
+| range | [RangeStatusValidator.Builder](#handlerstatusrange) | Marks requests that don't fall into the desired range as invalid. |
+| stats | StatusToStatsHandler.Builder | Records number of occurrences of each status counts into custom statistics (these can be displayed in CLI using <code>stats -c</code>). |
+| store | [StoreStatusHandler.Builder](#handlerstatusstore) | Stores the status into session variable. |
 
 ### <a id="handler.status.range"></a>handler.status.range
 
