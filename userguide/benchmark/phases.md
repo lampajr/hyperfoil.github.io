@@ -34,14 +34,14 @@ phases:
       initialUsersPerSec: 1
       targetUsersPerSec: 100
       # We expect at most 200 users being active at one moment - see below
-      maxSessionsEstimate: 200
+      maxSessions: 200
       duration: 1m
       scenario: ...
 # After rampUp is finished, run for 5 minutes and start 100 new users each second
 - steadyState:
     constantRate:
       usersPerSec: 100
-      maxSessionsEstimate: 200
+      maxSessions: 200
       startAfter: rampUp
       duration: 5m
       # If some users get stuck, forcefully terminate them after 6 minutes from the phase start
@@ -87,12 +87,12 @@ Below are properties specific for different phase types:
 * `constantRate`:
   * `usersPerSec`: Number of users started each second.
   * `variance`: Randomize delays between starting users following the [exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution). That way the starting users behave as the [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process). If this is set to `false` users will be started with uniform delays. Default is `true`.
-  * `maxSessionsEstimate`: Number of preallocated sessions. This number is split between all agents/executors evenly.
+  * `maxSessions`: Number of preallocated sessions. This number is split between all agents/executors evenly.
 * `increasingRate` / `decreasingRate`:
   * `initialUsersPerSec`: Rate of started users at the beginning of the phase.
   * `targetUsersPerSec`: Rate of started users at the end of the phase.
   * `variance`: Same as in `constantRate
-  * `maxSessionsEstimate`: Same as in `constantRate`.
+  * `maxSessions`: Same as in `constantRate`.
 
 Hyperfoil initializes all phases before the benchmark starts, pre-allocating memory for sessions.
 In the open-model phases it's not possible to know how many users will be active at the same moment
@@ -181,7 +181,7 @@ The `startAfter` property in this example uses a relative reference to iteration
 
 Iterations can be combined with forks as well - the result name would be e.g. `steadyState/000/sellShares`.
 
-Note that the `maxSessionsEstimate` parameter is not scaling in iterations: all iterations execute the same
+Note that the `maxSessions` parameter is not scaling in iterations: all iterations execute the same
 scenario, the execution does not overlap and therefore it is possible to share the pool of sessions.
 Therefore you should provide an estimate for the iteration spawning the highest load.
 
