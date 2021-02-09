@@ -8,8 +8,8 @@ redirect_from:
 <span>1.</span> Download [latest release](https://github.com/Hyperfoil/Hyperfoil/releases/latest) and unpack it
 
 ```shell
-> wget {{ site.last_release.url }}
-    && unzip {{ site.last_release.zip }}
+> wget {{ site.last_release.url }} \
+    && unzip {{ site.last_release.zip }} \
     && cd {{ site.last_release.dir }}
 ```
 
