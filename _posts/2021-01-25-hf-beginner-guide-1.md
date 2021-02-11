@@ -40,6 +40,8 @@ In this first post we'll create a simple benchmark that does not simulate the us
 export VMB=$HOME/vehicle-market/benchmarks
 mkdir -p $VMB
 cd $VMB
+# Temporary directory for the reports
+mkdir /tmp/reports
 ```
 
 Open a new file in your favourite editor (Visual Studio Code [would be a good choice](/docs/editor.html)) and create your first benchmark, saving it as `first-benchmark.hf.yaml`:
@@ -68,10 +70,10 @@ We haven't commented yet on line 8: `fetchIndex`. The scenario consists of one o
 When we have our benchmark written down we need to get Hyperfoil up. In future parts we'll show how to run Hyperfoil truly distributed on Openshift (it's possible to run it distributed on bare metal, too) but for now we'll just open the CLI in a container and start it all in-process:
 
 ```bash
-podman run -it --rm -v $VMB:/benchmarks:Z --network=host quay.io/hyperfoil/hyperfoil cli
+podman run -it --rm -v $VMB:/benchmarks:Z -v /tmp/reports:/tmp/reports:Z --network=host quay.io/hyperfoil/hyperfoil cli
 ```
 
-In the command above we are mounting the benchmarks directory into `/benchmarks` in the container, and using *host network* - by default the container would have its own network and `localhost:8080` could not reach Vehicle Market.
+In the command above we are mounting the benchmarks directory into `/benchmarks` in the container and writable `/tmp/reports` to the same path for a report later on. We are also using *host network* - by default the container would have its own network and `localhost:8080` could not reach Vehicle Market.
 
 In the CLI type `start-local` (tab completion works) to start Hyperfoil controller in the same VM, and then we can upload the benchmark (using `upload`) and get it running with `run`:
 
@@ -101,6 +103,17 @@ main   fetchIndex  10.60 req/s       106  5.23 ms  5.08 ms  6.91 ms  9.96 ms  10
 </code></pre>
 
 You might be alerted at first by seeing 106 requests instead of 100 here; that's by design, though. Hyperfoil does not execute the requests every 100 ms on the dot because that's not what the users would do; the incoming users are randomized using [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process).
+
+Exploring the JSON from `export` might not be the most convenient way, but there's a third option: `report` command creates a fancy HTML report. Were you not running in a container a browser window with this report would be opened, too.
+
+```nohighlight
+[hyperfoil@in-vm]$ report --destination=/tmp/reports
+Written to /tmp/reports/0000.html
+```
+
+The front page shows only one rather wide column as we've used only one phase, but when you switch to details in the top navbar you can see the progression of requests:
+
+<img src="/assets/posts_images/hf-beginner-guide-1-report-details.png" alt="Report details example">
 
 ## Set phasers to kill
 
