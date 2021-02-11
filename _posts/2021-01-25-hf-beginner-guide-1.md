@@ -1,5 +1,6 @@
 ---
 title: "Beginner's Guide to Hyperfoil: part 1"
+excerpt: "Meet Hyperfoil, a swiss-army knife of web benchmark driver. You'll learn how to write a simple benchmark and run it straight from the CLI."
 ---
 
 ## TLDR
@@ -74,32 +75,30 @@ In the command above we are mounting the benchmarks directory into `/benchmarks`
 
 In the CLI type `start-local` (tab completion works) to start Hyperfoil controller in the same VM, and then we can upload the benchmark (using `upload`) and get it running with `run`:
 
-```nohighlight
-[hyperfoil]$ start-local
+<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil]$</span> start-local
 Starting controller in default directory (/tmp/hyperfoil)
 Controller started, listening on 127.0.0.1:45295
 Connecting to the controller...
 Connected!
-[hyperfoil@in-vm] upload /benchmarks/first-benchmark.hf.yaml
+<span class="hfterminal">[hyperfoil@in-vm]$</span> upload /benchmarks/first-benchmark.hf.yaml
 Loaded benchmark first-benchmark, uploading...
 ... done.
-[hyperfoil@in-vm]$ run first-benchmark
+<span class="hfterminal">[hyperfoil@in-vm]$</span> run first-benchmark
 Started run 0000
 Run 0000, benchmark first-benchmark
 Agents: in-vm[STOPPED]
 Started: 2021/01/25 17:00:31.869    Terminated: 2021/01/25 17:00:41.881$
 NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION                DESCRIPTION
 main  TERMINATED  17:00:31.869             17:00:41.880  10011 ms (exceeded by 11 ms)  10.00 users per second
-```
+</code></pre>
 
 The benchmark was successfully finished, it's time to check on the results. CLI lets you display a simplified table of results using command `stats`; you can get all the gory details in a JSON-formatted file using `export`.
 
-```nohighlight
-[hyperfoil@in-vm]$ stats
+<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil@in-vm]$</span> stats
 Total stats from run 0000
 PHASE  METRIC       THROUGHPUT   REQUESTS  MEAN     p50      p90      p99      p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
 main   fetchIndex  10.60 req/s       106  5.23 ms  5.08 ms  6.91 ms  9.96 ms  10.62 ms  10.62 ms  106    0    0    0      0         0       0     0 ns
-```
+</code></pre>
 
 You might be alerted at first by seeing 106 requests instead of 100 here; that's by design, though. Hyperfoil does not execute the requests every 100 ms on the dot because that's not what the users would do; the incoming users are randomized using [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process).
 

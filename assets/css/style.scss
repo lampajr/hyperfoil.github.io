@@ -168,3 +168,8 @@ h2:hover .anchor, h3:hover .anchor { visibility: visible; }
 	from { color: red; }
 	to { color: inherit; }
 }
+
+.prewrap { white-space: pre-wrap; }
+.hfterminal { color: #060; }
+.errorlog { color: #600; }
+.warnlog { color: #860; }
