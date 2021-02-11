@@ -2,7 +2,13 @@
 title: "Beginner's Guide to Hyperfoil: part 1"
 ---
 
+## TLDR
+
+You'll learn how to write a simple Hyperfoil benchmark and run it straight from the CLI.
+
 > This article is intended to be published on other sites, too - therefore it contains introduction to concepts this blog's readers are probably familiar with.
+
+## Introduction
 
 Meet Hyperfoil, a swiss-army knife of web benchmark driver. This is an opensource (ASL2.0) tool that sports a set of properties that we could not find in any of the existing load drivers:
 
@@ -10,6 +16,8 @@ Meet Hyperfoil, a swiss-army knife of web benchmark driver. This is an opensourc
 * Drive the load **as far up as you need**: Production systems often span whole clusters and you can't get them utilized by a single load generator. With Hyperfoil you don't need to hack bash scripts to start the benchmark concurrently on several machines and then combine the results in a spreadsheet - Hyperfoil is distributed by design.
 * Don't oversimplify: In order to anticipate the behaviour when your users come the benchmark should do what do users would do. Hyperfoil is not limited to hitting a fixed set of URLs; you can describe complex logic in a YAML syntax, and if this is insufficient or too cumbersome you can extend it in good ol' Java.
 * Opensource: There are lies, damned lies, and benchmarks. When we publish results we want everyone to be able to reproduce them, or prove us wrong. Having the tool publicly available is certainly a step towards that goal.
+
+## Demo workload
 
 In this series of blogposts we'll use [Vehicle Market](https://github.com/Hyperfoil/vehicle-market), a demo application using several microservices to run a used-car bazaar. You'll need either [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) or [podman](https://podman.io/getting-started/installation) and [podman-compose](https://github.com/containers/podman-compose#installation) installed to get it running.
 
@@ -21,6 +29,8 @@ podman-compose -f /tmp/vehicle-market.yaml -p vehicle-market up -d
 ```
 
 Now you can go to [http://localhost:8080](http://localhost:8080) and browse through the application for a bit.
+
+## First benchmark
 
 In this first post we'll create a simple benchmark that does not simulate the user too well, hitting different pages independently. Let's create a new directory, e.g. `$HOME/vehicle-market/benchmarks` to host our benchmarks there.
 
@@ -51,6 +61,8 @@ This benchmark is going create 10 connections (line 4) to `http://localhost:8080
 Hyperfoil does not operate with the notion of requests per second but with (virtual) users per second. Our scenario is the most trivial one, only firing single GET request to the root path (`/` - lines 9 and 10) and therefore the number of requests equals to number of virtual users (also called user sessions).
 
 We haven't commented yet on line 8: `fetchIndex`. The scenario consists of one or more reusable *sequences*, each comprised of one or more *steps*. In our example `fetchIndex` is the name of the sequence, and there's a single step: [httpRequest](/docs/steps/step_httpRequest.html) (this can have many properties, `GET` selecting both the method and path being one of them).
+
+## Get it running
 
 When we have our benchmark written down we need to get Hyperfoil up. In future parts we'll show how to run Hyperfoil truly distributed on Openshift (it's possible to run it distributed on bare metal, too) but for now we'll just open the CLI in a container and start it all in-process:
 
@@ -90,6 +102,8 @@ main   fetchIndex  10.60 req/s       106  5.23 ms  5.08 ms  6.91 ms  9.96 ms  10
 ```
 
 You might be alerted at first by seeing 106 requests instead of 100 here; that's by design, though. Hyperfoil does not execute the requests every 100 ms on the dot because that's not what the users would do; the incoming users are randomized using [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process).
+
+## Set phasers to kill
 
 Allright, you could easily run a similar benchmark using other tools. Let's add a different type of request into the mix. For that we will need to introduce you to the concept of *phases*. In Hyperfoil, phases are (by default) independent workloads. We've already seen phase `main` being reported in the statistics listing; the previous benchmark used a simplified single-constant-rate-phase syntax. When adding second phase we need to use the 'full' syntax:
 
@@ -136,6 +150,8 @@ seeDetails    TERMINATED  10:10:22.652             10:10:32.654  10002 ms (excee
 ```
 
 Note that `edit` does not modify the file in `/benchmarks/`; Hyperfoil controller stores benchmark definitions and you are updating the benchmark there (CLI automatically downloads it and re-uploads when the editor is closed).
+
+## Forks
 
 The benchmark above was somewhat too verbose as the two phases (running in parallel) used the same setup. For those that don't like to repeat themselves there's an alternative way to execute two different scenarios: forks.
 
@@ -212,6 +228,8 @@ phases:
 
 We have marked each fork with an unique identifier (the anchor matches to the fork name but that's not a requirement) using `&` anchor. Then we have added the `rampup` phase that gradually increases the load from 3 to 30 users per second and reused the definitions using alias `*`. This is a standard YAML feature and your editor should understand it; Hyperfoil interprets it by cloning the definition of the fork. You can use this at multiple levels: for forks, scenarios or sequences.
 
+## Building the scenario
+
 There's more to phases and we suggest going through [the quickstarts](/quickstart/quickstart4.html) but let's move to another topic: the scenarios themselves. So far we've been hitting only two static resources, the root and one offering. Let's get back to the very first example and add some randomization:
 
 ```yaml
@@ -281,4 +299,5 @@ main//static/js/main.656b4a9d.chunk.js: Progress was blocked waiting for a free 
 
 When running this in CLI you'd see that four of these metrics would be printed in red color and have a non-zero number in the BLOCKED column. This is happening because with more requests it's quite likely that one user starts before previous one has received all the responses. With HTTP 1.1 (pipelining disabled by default) and only 10 connections there would not be enough available connections and the virtual user couldn't send the request right away. This wouldn't happen to a real user - that one is not limited by other users. Had we allowed a feedback from the server (taking few moments to respond) our latency readings could be dramatically skewed. This is why Hyperfoil warns us that the benchmark wasn't 100% correct and hints us to increase number of connections. Alternatively we could switch to HTTP 2 that supports multiplexing several requests over single connection.
 
+## To be continued...
 Comparing the requests to a browser's network monitor we've omitted the call to `http://localhost:8082/offering/${offering}` (executed from script) and loading images from `http://localhost:8080/images/car?...`. We will cover that in the next part (TODO link when published).
