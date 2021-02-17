@@ -277,24 +277,23 @@ scenario:
 
 After uploading and running this you can check out `stats`:
 
-```nohighlight
-[hyperfoil@in-vm]$ stats
+<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil@in-vm]$</span> stats
 Total stats from run 0024
 PHASE  METRIC                               THROUGHPUT   REQUESTS  MEAN      p50       p90       p99       p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
 main   /config                              12.20 req/s       122  14.64 ms  12.19 ms  34.08 ms  41.68 ms  50.07 ms  50.07 ms  122    0    0    0      0         0       0       0 ns
 main   /favicon.ico                         12.20 req/s       122   9.70 ms   5.21 ms  19.53 ms  29.75 ms  37.75 ms  37.75 ms  122    0    0    0      0         0       0       0 ns
 main   /manifest.json                       12.20 req/s       122   7.39 ms   4.39 ms  15.73 ms  27.39 ms  34.87 ms  34.87 ms  122    0    0    0      0         0       0       0 ns
-main   /static/css/2.0720d3cf.chunk.css     12.20 req/s       122  18.27 ms  12.32 ms  33.82 ms  40.37 ms  41.42 ms  41.42 ms  122    0    0    0      0         0       0  139.48 ms
-main   /static/css/main.7fcb1519.chunk.css  12.20 req/s       122  17.04 ms  11.99 ms  33.82 ms  38.54 ms  40.11 ms  40.11 ms  122    0    0    0      0         0       0  149.66 ms
-main   /static/js/2.256a11d3.chunk.js       12.20 req/s       122  25.66 ms  19.66 ms  43.25 ms  50.07 ms  67.11 ms  67.11 ms  122    0    0    0      0         0       0  148.54 ms
-main   /static/js/main.656b4a9d.chunk.js    12.20 req/s       122  24.93 ms  20.05 ms  42.99 ms  51.64 ms  66.85 ms  66.85 ms  122    0    0    0      0         0       0  121.88 ms
+<span class="errorlog">main   /static/css/2.0720d3cf.chunk.css     12.20 req/s       122  18.27 ms  12.32 ms  33.82 ms  40.37 ms  41.42 ms  41.42 ms  122    0    0    0      0         0       0  139.48 ms</span>
+<span class="errorlog">main   /static/css/main.7fcb1519.chunk.css  12.20 req/s       122  17.04 ms  11.99 ms  33.82 ms  38.54 ms  40.11 ms  40.11 ms  122    0    0    0      0         0       0  149.66 ms</span>
+<span class="errorlog">main   /static/js/2.256a11d3.chunk.js       12.20 req/s       122  25.66 ms  19.66 ms  43.25 ms  50.07 ms  67.11 ms  67.11 ms  122    0    0    0      0         0       0  148.54 ms</span>
+<span class="errorlog">main   /static/js/main.656b4a9d.chunk.js    12.20 req/s       122  24.93 ms  20.05 ms  42.99 ms  51.64 ms  66.85 ms  66.85 ms  122    0    0    0      0         0       0  121.88 ms</span>
 main   fetchDetails                         12.20 req/s       122   5.41 ms   2.06 ms  10.68 ms  41.68 ms  41.68 ms  41.68 ms  122    0    0    0      0         0       0       0 ns
 
-main//static/css/2.0720d3cf.chunk.css: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.
+<span class="errorlog">main//static/css/2.0720d3cf.chunk.css: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.
 main//static/css/main.7fcb1519.chunk.css: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.
 main//static/js/2.256a11d3.chunk.js: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.
-main//static/js/main.656b4a9d.chunk.js: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.
-```
+main//static/js/main.656b4a9d.chunk.js: Progress was blocked waiting for a free connection. Hint: increase http.sharedConnections.</span>
+</code></pre>
 
 When running this in CLI you'd see that four of these metrics would be printed in red color and have a non-zero number in the BLOCKED column. This is happening because with more requests it's quite likely that one user starts before previous one has received all the responses. With HTTP 1.1 (pipelining disabled by default) and only 10 connections there would not be enough available connections and the virtual user couldn't send the request right away. This wouldn't happen to a real user - that one is not limited by other users. Had we allowed a feedback from the server (taking few moments to respond) our latency readings could be dramatically skewed. This is why Hyperfoil warns us that the benchmark wasn't 100% correct and hints us to increase number of connections. Alternatively we could switch to HTTP 2 that supports multiplexing several requests over single connection.
 
