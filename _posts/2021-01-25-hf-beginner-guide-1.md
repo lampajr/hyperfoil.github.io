@@ -143,7 +143,7 @@ phases:
             GET: /offering/1
 ```
 
-When you `run` the benchmark you can see that both phases are running in parallel. Now try to schedule them one after another: In CLI, type `edit first-benchmark` and in the editor (vim) go to the `seeDetails` phase and add `startAfter: listVehicles` property to the phase. Save the file and quit the editor using the usual `:wq`.
+When you `upload` and `run` the benchmark you can see that both phases are running in parallel. Now try to schedule them one after another: In CLI, type `edit first-benchmark` and in the editor (vim) go to the `seeDetails` phase and add `startAfter: listVehicles` property to the phase. Save the file and quit the editor using the usual `:wq`.
 
 ```yaml
 - seeDetails:
