@@ -1,5 +1,6 @@
 ---
 title: "Beginner's Guide to Hyperfoil: part 3"
+excerpt: In this article we'll show how to run Hyperfoil inside an Openshift cluster, benchmarking workload within the same cluster.
 ---
 
 In this article we'll show how to run Hyperfoil inside an Openshift cluster, benchmarking workload within the same cluster. This assumes that you have sufficient privileges to install operators and create new namespaces (projects).
