@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.14 (2021-02-22)
+
+* Significant refactoring of HTTP-related code into its own module
+    * Programmatic configuration requires some changes but there were no changes for YAML definitions
+* Hyperfoil Controller now serves WebCLI at root path
+    * OpenAPI definition moved to `/openapi`
+
 ## 0.13 (2021-01-28)
 
 This is mostly a bugfix release with minor convenience improvements.

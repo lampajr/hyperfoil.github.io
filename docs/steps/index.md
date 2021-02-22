@@ -17,6 +17,7 @@
 * [json](./step_json.html): Parse JSON in variable into another variable.
 * [log](./step_log.html): Log a message and variable values.
 * [loop](./step_loop.html): Repeats a set of steps fixed number of times. 
+* [newSequence](./step_newSequence.html): Instantiates a sequence for each invocation.
 * [nextSequence](./step_nextSequence.html): Schedules a new sequence instance to be executed.
 * [noop](./step_noop.html): Does nothing. Only for demonstration purposes.
 * [pullSharedMap](./step_pullSharedMap.html): Move values from a map shared across all sessions using the same executor into session variables. 
@@ -41,6 +42,7 @@
 * [clearHttpCache](./action_clearHttpCache.html): Drops all entries from HTTP cache in the session.
 * [conditional](./action_conditional.html): Perform an action or sequence of actions conditionally.
 * [fail](./action_fail.html): Fail the phase with given message. Used mostly for testing/debugging.
+* [newSequence](./action_newSequence.html): Instantiates a sequence for each invocation.
 * [set](./action_set.html): Set variable in session to certain value.
 * [setInt](./action_setInt.html): Set session variable to an integral value.
 * [stringToInt](./action_stringToInt.html)
@@ -57,7 +59,7 @@
 * [gzipInflator](./processor_gzipInflator.html): Decompresses a GZIP data and pipes the output to delegated processors. If the data contains multiple concatenated GZIP streams it will pipe multiple decompressed objects with <code>isLastPart</code> set to true at the end of each stream.
 * [json](./processor_json.html): Parses JSON responses using simple queries.
 * [logInvalid](./processor_logInvalid.html): Logs body chunks from requests marked as invalid.
-* [newSequence](./processor_newSequence.html): Instantiates a sequence for each invocation. The sequences will have increasing sequence ID.
+* [newSequence](./processor_newSequence.html): Instantiates a sequence for each invocation.
 * [parseHtml](./processor_parseHtml.html): Parses HTML tags and invokes handlers based on criteria.
 * [queue](./processor_queue.html): Stores defragmented data in a queue. For each item in the queue a new sequence instance will be started (subject the concurrency constraints) with sequence index that allows it to read an object from an array using sequence-scoped access.
 * [set](./processor_set.html): Set variable in session to certain value.
