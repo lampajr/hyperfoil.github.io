@@ -45,6 +45,33 @@
           return $(this).html().replace(/^(\[hyperfoil[^\]]*]\$)/gm, '<span class="hfterminal">$1</span>').trim()
         })
       })
+      $(function() {
+        $("pre > code").each(function() {
+          let code = $(this)
+          var counter = 1;
+          var list = document.createElement("ul")
+          list.classList.add("annotation-comments")
+          $(this).find("q").each(function() {
+            const num = counter++;
+            if ($(this).text() !== "") {
+              $(list).append(`<li><span class="annotation" data-value="${num}"></span> ` + $(this).text() + "</li>")
+            }
+            const id = $(this).attr("id")
+            const idAttr = id ? `id=${id}` : ""
+            const lines = $(this).attr("data-lines")
+            const height = lines ? `style="height: ${21 * lines}px"` : ""
+            const annotation = $(this).replaceWith(`<span class="annotation" ${height} ${idAttr} data-value="${num}"></span>`)
+          })
+          if (counter > 1) code.parent().after(list)
+        })
+      })
+      $(function() {
+        $("q[data-ref]").replaceWith(function() {
+          const ref = document.getElementById($(this).attr("data-ref"))
+          const value = $(ref).attr("data-value")
+          return `<span class="annotation" data-value="${value}"></span>`
+        })
+      })
     </script>
 
 {% seo %}

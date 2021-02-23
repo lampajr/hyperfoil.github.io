@@ -174,3 +174,40 @@ h2:hover .anchor, h3:hover .anchor { visibility: visible; }
 .hfcaption { font-weight: bold; }
 .errorlog { color: #600; }
 .warnlog { color: #860; }
+
+.annotation[data-value]::after {
+	content: attr(data-value);
+}
+
+pre code .annotation[data-value]::after {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.annotation {
+	background: linear-gradient(0deg, var(--theme-color-base), var(--theme-color-light));
+	color: white;
+	border-radius: 100px;
+	width: 1.5em;
+	height: 1.5em;
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+
+pre code .annotation {
+	position: absolute;
+}
+
+ul.annotation-comments {
+	list-style: none;
+	padding-left: 0;
+}
+
+.annotation-comments li {
+	margin-top: 10px;
+}

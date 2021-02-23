@@ -46,24 +46,24 @@ mkdir /tmp/reports
 
 Open a new file in your favourite editor (Visual Studio Code [would be a good choice](/docs/editor.html)) and create your first benchmark, saving it as `first-benchmark.hf.yaml`:
 
-```yaml
+<pre class="langauge-yaml hljs"><code>
 name: first-benchmark
 http:
-  host: http://localhost:8080
-  sharedConnections: 10
-duration: 10s
-usersPerSec: 10
+  host: http://localhost:8080 <q id="http-host"></q>
+  sharedConnections: 10 <q id="connections"></q>
+duration: 10s <q id="duration"></q>
+usersPerSec: 10 <q id="users-per-sec"></q>
 scenario:
-- fetchIndex:
-  - httpRequest:
+- fetchIndex: <q id="seq-name"></q>
+  - httpRequest: <q id="http-request" data-lines="2"></q>
       GET: /
-```
+</code></pre>
 
-This benchmark is going create 10 connections (line 4) to `http://localhost:8080` (line 3) and during 10 seconds (line 5) run the scenario 10 times per second in average (line 6). By default the in-VM agent (load generator) is single-threaded; the property on line 4 is called *shared connections* because if you increase the thread count or run the benchmark in a distributed setup using multiple agents there will be still 10 connections to the tested system, evenly distributed among agents and threads.
+This benchmark is going create 10 connections <q data-ref="connections"></q> to `http://localhost:8080` <q data-ref="http-host"></q> and during 10 seconds <q data-ref="duration"></q> run the scenario 10 times per second in average <q data-ref="users-per-sec"></q>. By default the in-VM agent (load generator) is single-threaded; the property <q data-ref="connections"></q> is called *shared connections* because if you increase the thread count or run the benchmark in a distributed setup using multiple agents there will be still 10 connections to the tested system, evenly distributed among agents and threads.
 
-Hyperfoil does not operate with the notion of requests per second but with (virtual) users per second. Our scenario is the most trivial one, only firing single GET request to the root path (`/` - lines 9 and 10) and therefore the number of requests equals to number of virtual users (also called user sessions).
+Hyperfoil does not operate with the notion of requests per second but with (virtual) users per second. Our scenario is the most trivial one, only firing single GET request to the root path (`/`) <q data-ref="http-request"></q> and therefore the number of requests equals to number of virtual users (also called user sessions).
 
-We haven't commented yet on line 8: `fetchIndex`. The scenario consists of one or more reusable *sequences*, each comprised of one or more *steps*. In our example `fetchIndex` is the name of the sequence, and there's a single step: [httpRequest](/docs/steps/step_httpRequest.html) (this can have many properties, `GET` selecting both the method and path being one of them).
+We haven't commented yet on `fetchIndex` <q data-ref="seq-name"></q>. The scenario consists of one or more reusable *sequences*, each comprised of one or more *steps*. In our example `fetchIndex` is the name of the sequence, and there's a single step: [httpRequest](/docs/steps/step_httpRequest.html) (this can have many properties, `GET` selecting both the method and path being one of them).
 
 ## Get it running
 
@@ -169,7 +169,7 @@ Note that `edit` does not modify the file in `/benchmarks/`; Hyperfoil controlle
 
 The benchmark above was somewhat too verbose as the two phases (running in parallel) used the same setup. For those that don't like to repeat themselves there's an alternative way to execute two different scenarios: forks.
 
-```yaml
+<pre class="language-yaml hljs"><code>
 name: first-benchmark
 http:
   host: http://localhost:8080
@@ -177,24 +177,24 @@ http:
 phases:
 - main:
     constantRate:
-      usersPerSec: 30
+      usersPerSec: 30 <q id="increased-users"></q>
       duration: 10s
       forks:
       - listVehicles:
-          weight: 2
+          weight: 2 <q id="weight-1"></q>
           scenario:
           - fetchIndex:
             - httpRequest:
                 GET: /
       - seeDetails:
-          weight: 1
+          weight: 1 <q id="weight-2"></q>
           scenario:
           - fetchDetails:
             - httpRequest:
                 GET: /offering/1
-```
+</code></pre>
 
-Notice that we've increased the `usersPerSec` rate from 10 to 30. The user arrival rate is then distributed according to the `weight` of the fork, therefore `listVehicles` got 20 users/s and `seeDetails` got 10:
+Notice that we've increased the `usersPerSec` rate from 10 to 30 <q data-ref="increased-users"></q>. The user arrival rate is then distributed according to the `weight` <q data-ref="weight-1"></q><q data-ref="weight-2"></q> of the fork, therefore `listVehicles` got 20 users/s and `seeDetails` got 10:
 
 ```nohighlight
 PHASE              METRIC        THROUGHPUT   REQUESTS  MEAN     p50      p90      p99      p99.9    p99.99   2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
@@ -206,7 +206,7 @@ Internally we've created two phases (actually there's one more, see more about t
 
 The benchmark above does not have any warm-up nor ramp-up. Let's add one, as a phase. However, we don't want to repeat ourselves copypasting the scenarios or forks. Let's use YAML anchors for that:
 
-```yaml
+<pre class="language-yaml hljs"><code>
 name: first-benchmark
 http:
   host: http://localhost:8080
@@ -218,13 +218,13 @@ phases:
       usersPerSec: 30
       duration: 10s
       forks:
-      - listVehicles: &listVehicles
+      - listVehicles: &listVehicles <q id="anchor-1"></q>
           weight: 2
           scenario:
           - fetchIndex:
             - httpRequest:
                 GET: /
-      - seeDetails: &seeDetails
+      - seeDetails: &seeDetails <q id="anchor-2"></q>
           weight: 1
           scenario:
           - fetchDetails:
@@ -236,11 +236,11 @@ phases:
       targetUsersPerSec: 30
       duration: 10s
       forks:
-      - listVehicles: *listVehicles
+      - listVehicles: *listVehicles <q id="alias" data-lines="2"></q>
       - seeDetails: *seeDetails
-```
+</code></pre>
 
-We have marked each fork with an unique identifier (the anchor matches to the fork name but that's not a requirement) using `&` anchor. Then we have added the `rampup` phase that gradually increases the load from 3 to 30 users per second and reused the definitions using alias `*`. This is a standard YAML feature and your editor should understand it; Hyperfoil interprets it by cloning the definition of the fork. You can use this at multiple levels: for forks, scenarios or sequences.
+We have marked each fork with an unique identifier <q data-ref="anchor-1"></q><q data-ref="anchor-2"></q> (the anchor matches to the fork name but that's not a requirement) using `&` anchor. Then we have added the `rampup` phase that gradually increases the load from 3 to 30 users per second and reused the definitions using alias `*` <q data-ref="alias"></q>. This is a standard YAML feature and your editor should understand it; Hyperfoil interprets it by cloning the definition of the fork. You can use this at multiple levels: for forks, scenarios or sequences.
 
 ## Building the scenario
 
