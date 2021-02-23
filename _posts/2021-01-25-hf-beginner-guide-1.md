@@ -75,7 +75,7 @@ podman run -it --rm -v $VMB:/benchmarks:Z -v /tmp/reports:/tmp/reports:Z --netwo
 
 In the command above we are mounting the benchmarks directory into `/benchmarks` in the container and writable `/tmp/reports` to the same path for a report later on. We are also using *host network* - by default the container would have its own network and `localhost:8080` could not reach Vehicle Market.
 
-In the CLI type `start-local` (tab completion works) to start Hyperfoil controller in the same VM, and then we can upload the benchmark (using `upload`) and start it running with `run`:
+In the CLI type `start-local` (tab completion works) to start Hyperfoil controller in the same VM, and then we can upload the benchmark (using `upload`) and start it with `run`:
 
 <pre class="nohighlight hljs"><code>
 [hyperfoil]$ start-local
@@ -104,7 +104,7 @@ Total stats from run 0000
 main   fetchIndex  10.60 req/s       106  5.23 ms  5.08 ms  6.91 ms  9.96 ms  10.62 ms  10.62 ms  106    0    0    0      0         0       0     0 ns
 </code></pre>
 
-You might be concerned at first by seeing 106 requests instead of 100 here; that's by design, though. Hyperfoil does not execute the requests precisly every 100 ms because that's not what the users would do; the incoming users are randomized using [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process).
+You might be concerned at first by seeing 106 requests instead of 100 here; that's by design, though. Hyperfoil does not execute the requests precisely every 100 ms because that's not what the users would do; the incoming users are randomized using [Poisson point process](https://en.wikipedia.org/wiki/Poisson_point_process).
 
 Exploring the JSON from `export` might not be the most convenient way, but there's a third option: `report` command creates a fancy HTML report. Were you not running in a container a browser window with this report would be opened, too.
 
