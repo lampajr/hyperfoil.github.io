@@ -11,12 +11,14 @@ Start the server and fire the scenario the usual way:
 ```shell
 > docker run -v $(pwd)/examples/choose-movie.server:/config:z -p 8080:8083 jordimartin/mmock
 > bin/cli.sh
+```
+<pre class="nohighlight hljs"><code>
 [hyperfoil]$ start-local
 ...
 [hyperfoil@in-vm]$ upload examples/choose-movie.hf.yaml
 ...
 [hyperfoil@in-vm]$ run
 ...
-```
+</code</pre>
 
 Is this scenario too simplistic? Let's [define phases]({{ "/quickstart/quickstart4.html" | absolute_url }})...

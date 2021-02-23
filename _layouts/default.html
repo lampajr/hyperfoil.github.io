@@ -40,6 +40,11 @@
         $('.active').parent().each(openMenu)
         $('.active').children().css("display", "")
       })
+      $(function() {
+        $("pre > code").html(function () {
+          return $(this).html().replace(/^(\[hyperfoil[^\]]*]\$)/gm, '<span class="hfterminal">$1</span>').trim()
+        })
+      })
     </script>
 
 {% seo %}

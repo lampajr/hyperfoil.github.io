@@ -77,28 +77,30 @@ In the command above we are mounting the benchmarks directory into `/benchmarks`
 
 In the CLI type `start-local` (tab completion works) to start Hyperfoil controller in the same VM, and then we can upload the benchmark (using `upload`) and get it running with `run`:
 
-<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil]$</span> start-local
+<pre class="nohighlight hljs"><code>
+[hyperfoil]$ start-local
 Starting controller in default directory (/tmp/hyperfoil)
 Controller started, listening on 127.0.0.1:45295
 Connecting to the controller...
 Connected!
-<span class="hfterminal">[hyperfoil@in-vm]$</span> upload /benchmarks/first-benchmark.hf.yaml
+[hyperfoil@in-vm]$ upload /benchmarks/first-benchmark.hf.yaml
 Loaded benchmark first-benchmark, uploading...
 ... done.
-<span class="hfterminal">[hyperfoil@in-vm]$</span> run first-benchmark
+[hyperfoil@in-vm]$ run first-benchmark
 Started run 0000
 Run 0000, benchmark first-benchmark
 Agents: in-vm[STOPPED]
 Started: 2021/01/25 17:00:31.869    Terminated: 2021/01/25 17:00:41.881$
-NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION                DESCRIPTION
+<span class="hfcaption">NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION                DESCRIPTION</span>
 main  TERMINATED  17:00:31.869             17:00:41.880  10011 ms (exceeded by 11 ms)  10.00 users per second
 </code></pre>
 
 The benchmark was successfully finished, it's time to check on the results. CLI lets you display a simplified table of results using command `stats`; you can get all the gory details in a JSON-formatted file using `export`.
 
-<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil@in-vm]$</span> stats
+<pre class="language-nohighlight hljs"><code>
+[hyperfoil@in-vm]$ stats
 Total stats from run 0000
-PHASE  METRIC       THROUGHPUT   REQUESTS  MEAN     p50      p90      p99      p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
+<span class="hfcaption">PHASE  METRIC       THROUGHPUT   REQUESTS  MEAN     p50      p90      p99      p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED</span>
 main   fetchIndex  10.60 req/s       106  5.23 ms  5.08 ms  6.91 ms  9.96 ms  10.62 ms  10.62 ms  106    0    0    0      0         0       0     0 ns
 </code></pre>
 
@@ -290,9 +292,10 @@ scenario:
 
 After uploading and running this you can check out `stats`:
 
-<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil@in-vm]$</span> stats
+<pre class="language-nohighlight hljs"><code>
+[hyperfoil@in-vm]$ stats
 Total stats from run 0024
-PHASE  METRIC                               THROUGHPUT   REQUESTS  MEAN      p50       p90       p99       p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
+<span class="hfcaption">PHASE  METRIC                               THROUGHPUT   REQUESTS  MEAN      p50       p90       p99       p99.9     p99.99    2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED</span>
 main   /config                              12.20 req/s       122  14.64 ms  12.19 ms  34.08 ms  41.68 ms  50.07 ms  50.07 ms  122    0    0    0      0         0       0       0 ns
 main   /favicon.ico                         12.20 req/s       122   9.70 ms   5.21 ms  19.53 ms  29.75 ms  37.75 ms  37.75 ms  122    0    0    0      0         0       0       0 ns
 main   /manifest.json                       12.20 req/s       122   7.39 ms   4.39 ms  15.73 ms  27.39 ms  34.87 ms  34.87 ms  122    0    0    0      0         0       0       0 ns

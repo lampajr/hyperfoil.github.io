@@ -37,8 +37,9 @@ The operator deploys only the controller; each agent is then started when the ru
 
 When the resource becomes ready (you can check it out through Openshift CLI using `oc get hf`) the controller pod should be up and running. Now you can open Hyperfoil CLI and connect to the controller. While default Hyperfoil port is 8090, default route setting uses TLS (edge) and therefore Openshift router will expose the service on port 443. If your cluster's certificate is not recognized (such as when using self-signed certificates) you need to use `--insecure` (or `-k`) option.
 
-<pre class="nohighlight hljs"><code>&gt; bin/cli.sh
-<span class="hfterminal">[hyperfoil]$</span> connect hyperfoil-hyperfoil.apps.my.cluster.domain:443 --insecure
+<pre class="nohighlight hljs"><code>
+&gt; bin/cli.sh
+[hyperfoil]$ connect hyperfoil-hyperfoil.apps.my.cluster.domain:443 --insecure
 <span class="warnlog">WARNING: Hyperfoil TLS certificate validity is not checked. Your credentials might get compromised.</span>
 Connected!
 <span class="warnlog">WARNING: Server time seems to be off by 12124 ms</span>
@@ -46,17 +47,18 @@ Connected!
 
 Now you can upload & run benchmarks as usual - we're using {% include example_link.md src='k8s-hello-world.hf.yaml' %} in this example. Note that it can take several seconds to spin up containers with agents.
 
-<pre class="nohighlight hljs"><code><span class="hfterminal">[hyperfoil@hyperfoil-hyperfoil]$</span> upload examples/k8s-hello-world.hf.yaml
+<pre class="nohighlight hljs"><code>
+[hyperfoil@hyperfoil-hyperfoil]$ upload examples/k8s-hello-world.hf.yaml
 Loaded benchmark k8s-hello-world, uploading...
 ... done.
-<span class="hfterminal">[hyperfoil@hyperfoil-hyperfoil]$</span> run k8s-hello-world
+[hyperfoil@hyperfoil-hyperfoil]$ run k8s-hello-world
 Started run 0000
 Run 0000, benchmark k8s-hello-world
 Agents: agent-one[STARTING]
 Started: 2019/11/18 19:07:36.752    Terminated: 2019/11/18 19:07:41.778
-<span style="font-weight: bold">NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION</span>
+<span class="hfcaption">NAME  STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION</span>
 main  TERMINATED  19:07:36.753             19:07:41.778  5025 ms (exceeded by 25 ms)  5.00 users per second
-<span class="hfterminal">[hyperfoil@hyperfoil-hyperfoil]$</span>
+[hyperfoil@hyperfoil-hyperfoil]$
 </code></pre>
 
 You can find more details about adjusting the agents in the [benchmark format reference]({{ "/docs/benchmark.html#kubernetesopenshift-deployer" | absolute_url }}).

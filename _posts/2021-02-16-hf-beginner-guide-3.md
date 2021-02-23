@@ -84,7 +84,8 @@ podman run -it --rm -v $VMB:/benchmarks:Z -v /tmp/reports:/tmp/reports:Z \
     --network=host quay.io/hyperfoil/hyperfoil cli
 ```
 <br>
-<pre class="language-nohighlight hljs prewrap"><code><span class="hfterminal">[hyperfoil]$</span> connect hyperfoil.apps.your.domain.com:443
+<pre class="language-nohighlight hljs prewrap"><code>
+[hyperfoil]$ connect hyperfoil.apps.your.domain.com:443
 <span class="errorlog">ERROR: javax.net.ssl.SSLHandshakeException: Failed to create SSL connection: Failed to create SSL connection: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target: unable to find valid certification path to requested target</span>
 Hint: TLS certificate verification might have failed. Use --insecure to disable validation.
 Failed connecting to hyperfoil.apps.your.domain.com:443
@@ -92,13 +93,14 @@ Failed connecting to hyperfoil.apps.your.domain.com:443
 
 We are connecting to the route on port 443 (you could also use `connect https://hyperfoil.apps.your.domain.com` or `connect hyperfoi.apps.your.domain.com -p 443`) but the certificate issued by the router might not be valid if this is not a production cluster. Use `--insecure` (or `-k`) in that case:
 
-<pre class="language-nohighlight hljs prewrap"><code><span class="hfterminal">[hyperfoil]$</span> connect hyperfoil.apps.ocp.scalelab:443 -k
+<pre class="language-nohighlight hljs prewrap"><code>
+[hyperfoil]$ connect hyperfoil.apps.ocp.scalelab:443 -k
 <span class="warnlog">WARNING: Hyperfoil TLS certificate validity is not checked. Your credentials might get compromised.</span>
 Connected!
-<span class="hfterminal">[hyperfoil@hyperfoil]$</span> upload /benchmarks/first-benchmark.hf.yaml
+[hyperfoil@hyperfoil]$ upload /benchmarks/first-benchmark.hf.yaml
 Loaded benchmark first-benchmark, uploading...
 ... done.
-<span class="hfterminal">[hyperfoil@hyperfoil]$</span> run
+[hyperfoil@hyperfoil]$ run
 <span class="errorlog">ERROR: Server responded with unexpected code: 403, Forbidden:
 Server is started in clustered mode; benchmarks must define agents.</span>
 Failed to start benchmark first-benchmark

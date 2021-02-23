@@ -22,18 +22,18 @@ redirect_from:
 
 For our first benchmark we'll start an embedded server (controller) within the CLI:
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil]$ start-local
 Starting controller in default directory (/tmp/hyperfoil)
 Controller started, listening on 127.0.0.1:41621
 Connecting to the controller...
 Connected!
-```
+</code></pre>
 
 <span>3.</span> Upload the minimalistic benchmark, doing only single request to `http://hyperfoil.io`, and run it:
 
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@in-vm]$ upload examples/single-request.hf.yaml
 Loaded benchmark single-request, uploading...
 ... done.
@@ -42,18 +42,18 @@ Started run 0001
 Run 0001, benchmark single-request
 Agents: in-vm[STARTING]
 Started: 2019/11/15 16:11:43.725    Terminated: 2019/11/15 16:11:43.899
-NAME     STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION
+<span class="hfcaption">NAME     STATUS      STARTED       REMAINING  COMPLETED     TOTAL DURATION               DESCRIPTION</span>
 example  TERMINATED  16:11:43.725             16:11:43.899  174 ms (exceeded by 174 ms)  1 users at once
-```
+</code></pre>
 
 <span>4.</span> Check out performance results:
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@in-vm]$ stats
 Total stats from run 000A
-PHASE    METRIC  REQUESTS  MEAN       p50        p90        p99        p99.9      p99.99     2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED
+<span class="hfcaption">PHASE    METRIC  REQUESTS  MEAN       p50        p90        p99        p99.9      p99.99     2xx  3xx  4xx  5xx  CACHE  TIMEOUTS  ERRORS  BLOCKED</span>
 example  test           1  172.49 ms  173.02 ms  173.02 ms  173.02 ms  173.02 ms  173.02 ms    0    1    0    0      0         0       0       0 ns
-```
+</code></pre>
 
 Doing one request is not much of a benchmark and the statistics above are moot, but hey, this is a quickstart.
 

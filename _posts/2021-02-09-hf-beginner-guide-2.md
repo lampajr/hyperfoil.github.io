@@ -336,9 +336,10 @@ There are no errors and the request numbers are as expected. The throughput is s
 
 We can also take a look on number of sessions running concurrently using the `sessions` command:
 
-<pre class="language-nohighlight hljs"><code><span class="hfterminal">[hyperfoil@in-vm]$</span> sessions
+<pre class="language-nohighlight hljs"><code>
+[hyperfoil@in-vm]$ sessions
 Run 003E has terminated.
-PHASE  AGENT  MIN  MAX
+<span class="hfcaption">PHASE  AGENT  MIN  MAX</span>
 main   in-vm    1   53
 </code></pre>
 

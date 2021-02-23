@@ -13,7 +13,7 @@ Also note that it is possible to [run Hyperfoil in Openshift]({{ "/userguide/ins
 
 Open two terminals; in one terminal start the standalone server and in second terminal start the CLI. Let's try to connect to the server (by default running on `http://localhost:8090`) and upload the {% include example_link.md src='single-request.hf.yaml' %} benchmark:
 
-```shell
+<pre class="nohighlight hljs"><code>
 > bin/cli.sh
 [hyperfoil@localhost]$ connect
 Connected! Server has these agents connected:
@@ -23,7 +23,7 @@ Loaded benchmark single-request, uploading...
 ... done.
 [hyperfoil@localhost]$ run single-request
 Started run 0001
-```
+</code></pre>
 
 When you switch to the second terminal, you can see in the logs that the benchmark definition was stored on the server, the benchmark has been executed and its results have been stored to disk. Hyperfoil by default stores benchmarks in directory `/tmp/hyperfoil/benchmark` and data about runs in `/tmp/hyperfoil/run`; check it out:
 
@@ -34,13 +34,13 @@ example  test  1         1          267911168  267386880  268435455  268435455  
 ```
 
 Reading CSV files directly is not too comfortable; you can check the details through CLI as well:
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ stats
 Total stats from run 002D
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
 example:
 	test:            1 267.91 ms 268.44 ms 268.44 ms 268.44 ms 268.44 ms 268.44 ms      0      1      0      0        0      0
-```
+</code></pre>
 
 By the time you type the `stats` command into CLI the benchmark is already completed and the CLI shows stats for the whole run. Let's try running the {% include example_link.md src='eshop-scale.hf.yaml' %} we've seen in previous quickstart; this will give us some time to observe on-line statistics as the benchmark is progressing:
 
@@ -48,7 +48,7 @@ By the time you type the `stats` command into CLI the benchmark is already compl
 > docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
 ```
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ upload examples/eshop-scale.hf.yaml
 Loaded benchmark eshop-scale, uploading...
 ... done.
@@ -56,11 +56,11 @@ Loaded benchmark eshop-scale, uploading...
 Started run 0002
 Run 0002, benchmark eshop-scale
 ...
-```
+</code></pre>
 
 Here the console would automatically jump into the `status` command, displaying the progress of the benchmark online. Press Ctrl+C to cancel that (it won't stop the benchmark run) and run the `stats` command:
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ stats
 Recent stats from run 0002
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
@@ -70,29 +70,29 @@ buyingUserSteady/000:
 browsingUserSteady/000:
         browse:          8   2.74 ms   2.69 ms   2.97 ms   2.97 ms   2.97 ms   2.97 ms      8      0      0      0        0      0
 Press Ctr+C to stop watching...
-```
+</code></pre>
 
 You can go back to the run progress using the `status` command (hint: use `status --all` to display all phases, including those not started or already terminated):
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ status
 Run 0002, benchmark eshop-scale
 Agents: localhost[INITIALIZED]
 Started: 2019/04/15 16:27:24.526
-NAME                    STATUS   STARTED       REMAINING  FINISHED  TOTAL DURATION
+<span class="hfcaption">NAME                    STATUS   STARTED       REMAINING  FINISHED  TOTAL DURATION</span>
 browsingUserRampUp/006  RUNNING  16:28:54.565  2477 ms
 buyingUserRampUp/006    RUNNING  16:28:54.565  2477 ms
 Press Ctrl+C to stop watching...
-```
+</code></pre>
 
 Since we are showing this quickstart running the controller and CLI on the same machine it's easy to fetch results locally from `/tmp/hyperfoil/run/XXXX/...`. To save you SSHing into the controller host and finding the directories in a 'true remote' case there's the `export` command; This fetches statistics to your computer where you're running CLI. You can chose between default JSON format (e.g. `export 0002 -f json -d /path/to/dir`) and CSV format (`export 0002 -f csv -d /path/to/dir`) - the latter packs all CSV files into single ZIP file for your convenience.
 
 When you find out that the benchmark is not going well, you can terminate it prematurely:
 
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ kill
 Kill run 0002, benchmark eshop-scale(phases: 2 running, 0 finished, 40 terminated) [y/N]: y
 Killed.
-```
+</code></pre>
 
 In the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}) we will deal with starting clustered Hyperfoil.

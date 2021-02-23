@@ -19,7 +19,7 @@ Open three terminals; in the first start the controller using `bin/controller.sh
 ```
 
 Connect, upload, start and check out the benchmark using CLI exactly the same way as we did in the previous quickstart:
-```shell
+<pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ connect
 Connected!
 [hyperfoil@localhost]$ upload examples/two-agents.hf.yaml
@@ -31,14 +31,14 @@ Started run 004A
 Run 004A, benchmark two-agents
 Agents: agent-one[STARTING], agent-two[STARTING]
 Started: 2019/04/17 17:08:19.703    Terminated: 2019/04/17 17:08:29.729
-NAME  STATUS      STARTED       REMAINING  FINISHED      TOTAL DURATION
+<span class="hfcaption">NAME  STATUS      STARTED       REMAINING  FINISHED      TOTAL DURATION</span>
 main  TERMINATED  17:08:19.708             17:08:29.729  10021 ms (exceeded by 21 ms)
 [hyperfoil@localhost]$ stats
 Total stats from run 004A
 Phase   Sequence  Requests      Mean       p50       p90       p99     p99.9    p99.99    2xx    3xx    4xx    5xx Timeouts Errors
 main:
 	test:          106   3.12 ms   2.83 ms   3.23 ms  19.53 ms  25.30 ms  25.30 ms    106      0      0      0        0      0
-```
+</code></pre>
 
 You see that we did 106 requests which fits the assumption about running 10 user sessions per second over 10 seconds, while we have used 2 agents.
 
