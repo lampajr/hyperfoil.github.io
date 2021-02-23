@@ -63,6 +63,8 @@
   link: /docs/extensions.html
 - title: Controller API
   link: /docs/restapi.html
+- title: Architecture
+  link: /docs/architecture.html
 - title: Release notes
   link: /docs/release_notes.html
 
