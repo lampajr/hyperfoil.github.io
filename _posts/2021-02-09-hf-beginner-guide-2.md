@@ -345,4 +345,4 @@ main   in-vm    1   53
 
 Our guess that we'll need 60 concurrent sessions was not too far off as at one moment we had 53 sessions running concurrently. You can also run this command when the test is being executed to see actual number of sessions rather than grand total for the whole phase.
 
-This concludes our second blogpost with a deep dive into complex scenarios. In the next article (TODO link) we'll go through setting Hyperfoil up in an Openshift cluster.
+This concludes our second blogpost with a deep dive into complex scenarios. In the [next article]({{ '/2021/02/16/hf-beginner-guide-3.html' | absolute_url }}) we'll go through setting Hyperfoil up in an Openshift cluster.

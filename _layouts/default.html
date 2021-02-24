@@ -111,18 +111,30 @@
       {% endif %}
       <section id="main_content" class="inner">
         {% if page.collection == "posts" %}
+        <div>
+          {% if page.previous %}
+          <a href="{{ page.previous.url }}" style="float: left">Previous: {{ page.previous.title }}</a>
+          {% endif %}
+          {% if page.next %}
+          <a href="{{ page.next.url }}" style="float: right">Next: {{ page.next.title }}</a>
+          {% endif %}
+          <div style="clear: both; height: 1em;"></div>
+        </div>
         <div class="postdate">
           {{ page.date | date: "%Y-%m-%d" }}
         </div>
         <h1>{{ page.title }}</h1>
         {% endif %}
         {{ content }}
-        {% if page.next %}
-        <a href="{{ page.next.url }}">Next: {{ page.next.title }}</a>
-        {% endif %}
-        {% if page.previous %}
-        <a href="{{ page.previous.url }}">Previous: {{ page.previous.title }}</a>
-        {% endif %}
+        <div>
+          {% if page.previous %}
+          <a href="{{ page.previous.url }}" style="float: left">Previous: {{ page.previous.title }}</a>
+          {% endif %}
+          {% if page.next %}
+          <a href="{{ page.next.url }}" style="float: right">Next: {{ page.next.title }}</a>
+          {% endif %}
+          <div style="clear: both"></div>
+        </div>
       </section>
     </div>
 
