@@ -140,6 +140,14 @@ See the [agents section documentation]({{ '/userguide/benchmark/agents.html#kube
 
 Configuration options such as securing the controller with password, persistence, logging, hooks etc. can be found in the [installation guide]({{ '/userguide/installation/k8s.html' | absolute_url }}).
 
+## WebCLI
+
+You are already familiar with Hyperfoil CLI but starting it up in Podman might not be the most convenient way (and neither is keeping Hyperfoil distribution locally). There’s an easy solution for that: just use your browser. Since Hyperfoil 0.14 the controller exposes a CLI — let’s navigate to `https://hyperfoil.apps.your.domain.com:`
+
+<img src="/assets/posts_images/hf-beginner-guide-3-webcli.png">
+
+This CLI is automatically connected to the controller where it is running and cannot connect to any other controller (the command `connect` is missing, as well as `exit` and few other ones). Some commands are altered, e.g. `upload` cannot accept path on your machine while in browser — type just `upload` and then press a button that lets you select the benchmark file. `edit` does not open vi/vim/your favorite editor but displays a Monaco editor inside the browser. `export` and `report` cannot take `--destination`, instead these commands open download dialogue in the browser.
+
 ## Tips and tricks
 
 `http://vehicle-market.apps.your.domain.com` is probably resolved to the load balancer that routes the traffic even before Openshift Ingresses. You might want to bypass this component, hitting the Ingresses directly. You can do that by setting addresses for the endpoints manually:
