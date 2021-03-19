@@ -1,3 +1,5 @@
+---
+---
 # randomInt
 
 Stores random (linearly distributed) integer into session variable.

@@ -1,3 +1,5 @@
+---
+---
 # simple
 
 DEPRECATED: Use <code>store</code> processor instead.

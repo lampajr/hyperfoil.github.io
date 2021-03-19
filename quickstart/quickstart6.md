@@ -1,3 +1,5 @@
+---
+---
 # Getting started: Running the server
 
 Until now we have always started our benchmarks using an embedded *controller* in the CLI, using the `start-local` command. This spawns a server in the CLI JVM. CLI communicates with it using standard REST API, though the server port is randomized and listens on localhost only. All the benchmarks and run results are also stored in `/tmp/hyperfoil/` - you can change the directory as an argument to the `start-local` command.

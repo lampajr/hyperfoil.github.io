@@ -1,3 +1,5 @@
+---
+---
 # HTTP
 
 All servers that Hyperfoil should contact must be declared in this section. Before the benchmark starts Hyperfoil agents will open connections to the target servers; if this connection fails the benchmark is terminated immediatelly.

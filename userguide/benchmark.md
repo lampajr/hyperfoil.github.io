@@ -1,3 +1,5 @@
+---
+---
 # Benchmark definition format
 
 The best authoritative reference will always be the schema; we recommend [using Visual Studio Code with schema support]({{ "/docs/editor.html" | absolute_url }}).

@@ -1,3 +1,5 @@
+---
+---
 # Agents
 
 This section can be omitted in [standalone mode]({{ "/userguide/installation/start_manual.html" | absolute_url }}).

@@ -1,3 +1,5 @@
+---
+---
 # log
 
 Log a message and variable values.

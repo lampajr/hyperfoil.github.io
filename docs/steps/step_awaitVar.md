@@ -1,3 +1,5 @@
+---
+---
 # awaitVar
 
 Block current sequence until this variable gets set/unset.

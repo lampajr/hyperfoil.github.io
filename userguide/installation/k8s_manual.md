@@ -1,3 +1,5 @@
+---
+---
 # Deploying Hyperfoil Controller in Kubernetes/Openshift manually
 
 If you cannot [use the operator]({{ "/userguide/installation/k8s.html" | absolute_url }}) or if you're running vanilla Kubernetes you can define all the resource manually. You deploy only the controller; each agent is then started when the run starts as a `pod` in the same namespace and stopped when the run completes.

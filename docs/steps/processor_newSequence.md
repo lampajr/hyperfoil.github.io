@@ -1,3 +1,5 @@
+---
+---
 # newSequence
 
 Instantiates a sequence for each invocation.

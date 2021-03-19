@@ -1,3 +1,5 @@
+---
+---
 # Getting started: Linking phases
 
 [Previous quickstart]({{ "/quickstart/quickstart4.html" | absolute_url }}) presented a benchmark with three phases that all started at the same moment (when the benchmark was started) and had the same duration - different phases represented different workflows (types of user). In this example we will adjust the benchmark to scale the load gradually up.

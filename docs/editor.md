@@ -1,3 +1,5 @@
+---
+---
 # Schema support in editor
 
 For your convenience we recommend using editor with YAML validation against JSON schema; you can point your editor to `docs/schema.json`. We can recommend [Visual Studio Code](https://code.visualstudio.com/)

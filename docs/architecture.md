@@ -1,3 +1,5 @@
+---
+---
 # Architecture
 
 While we have already explained [basic concepts]({{ "/docs/concepts.html" | absolute_url }}) in the benchmark and [last quickstart]({{ "/quickstart/quickstart1.html" | absolute_url }}) shows how to create a custom steps or handlers here we will show how Hyperfoil internally works and give you better idea how to create non-trivial extensions.

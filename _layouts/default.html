@@ -25,7 +25,7 @@
         $("h3").each(prependHeaders)
       })
       $(function() {
-        $('.nav').navgoco({
+        $('.nav > ul').navgoco({
           accordion: true,
         });
       });
@@ -141,7 +141,7 @@
     {% if page.show_posts == true %}
     <div style="background-color: var(--theme-color-light); border-top: none; ">
       <section id="posts" class="inner">
-        <h3 style="color: white; text-shadow: var(--theme-color-dark) 0px 0px 10px;">News</h3>
+        <h3 class="light_block_title">News</h3>
         <div id="blogcontainer">
         {% for post in site.posts limit:3 %}
             <div class="blogbox">
@@ -163,6 +163,13 @@
       </footer>
     </div>
 
+    <div id="search_results">
+      <a id="close" onclick="document.getElementById('search_results').style.visibility='hidden'">
+        <img src="/assets/images/baseline_clear_white.png" alt="Close" height="32" width="32">
+      </a>
+      <p class="light_block_title">Search results for "<span id="search_term"></span>":</p>
+      <div id="items"></div>
+    </div>
 
     {% if site.google_analytics %}
       <script>

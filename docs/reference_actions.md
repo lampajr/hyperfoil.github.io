@@ -1,3 +1,5 @@
+---
+---
 # Actions reference
 
 Actions are non-blocking handlers for various events.

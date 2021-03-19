@@ -1,3 +1,5 @@
+---
+---
 # Phases
 
 You might want to simulate several types of workloads at once: e.g. in an eshop users would come browsing or buying products, and operators would restock the virtual warehouse. Also, driving constant load may not be the best way to run the benchmark: often you want to slowly ramp the load up to let the system adjust (scale up, perform JIT, fill pools) and push the full load only after that. When trying to find system limits, you do the same repetitevely - ramp up the load, measure latencies and if the system meets SLAs (latencies below limits) continue ramping up the load until it breaks.

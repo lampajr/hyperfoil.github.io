@@ -1,3 +1,5 @@
+---
+---
 # Controller REST API
 
 As a user you'll probably interact with the Controller through CLI. However when you set up e.g. regression runs in CI you'll need to control the test programmatically. Some limited capabilities are already exposed through [Ansible Galaxy scripts]({{ "/userguide/installation/ansible.html" | absolute_url }}) but to get full control you can use the REST API - the same as the CLI or Ansible scripts connect to.

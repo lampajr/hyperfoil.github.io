@@ -1,3 +1,5 @@
+---
+---
 # conditional
 
 Passes the data to nested processor if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.

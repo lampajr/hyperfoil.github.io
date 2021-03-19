@@ -1,3 +1,5 @@
+---
+---
 # template
 
 Format pattern into session variable.

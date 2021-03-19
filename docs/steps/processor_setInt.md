@@ -1,3 +1,5 @@
+---
+---
 # setInt
 
 Set session variable to an integral value.

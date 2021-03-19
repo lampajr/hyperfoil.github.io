@@ -1,3 +1,5 @@
+---
+---
 # Deploying in Kubernetes/Openshift
 
 A convenient alternative to running Hyperfoil on hosts with SSH access is deploying it in Kubernetes or Openshift. The recommended way to install it using an operator in your Openshift console - just go to Operators - OperatorHub and search for 'hyperfoil', and follow the installation wizard. Alternatively you can [deploy the controller manually]({{ "/docs/k8s_manual.html" | absolute_url }})

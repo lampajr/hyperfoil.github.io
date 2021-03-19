@@ -1,3 +1,5 @@
+---
+---
 # Reference
 
 Before exploring this reference you should be familiar with the [basic structure of a benchmark]({{ "/userguide/benchmark.html" | absolute_url }}). If you're not sure what is the difference between the phase, scenario and sequence check out the [concepts in user guide]({{ "/docs/concepts.html" | absolute_url }}).

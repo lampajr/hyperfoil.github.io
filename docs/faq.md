@@ -1,3 +1,5 @@
+---
+---
 # Frequently Asked Questions
 
 ## Why is Hyperfoil written in Java?

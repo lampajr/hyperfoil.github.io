@@ -1,3 +1,5 @@
+---
+---
 # Ergonomics
 
 This section hosts only single property at this moment:

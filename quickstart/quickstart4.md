@@ -1,3 +1,5 @@
+---
+---
 # Getting started: Phases - basics
 
 [So far]({{ "/quickstart/quickstart3.html" | absolute_url }}) the benchmark contained only one type of load; certain number of users hitting the system, doing always the same (though data could be randomized). In practice you might want to simulate several types of workloads at once: in an eshop users would come browsing or buying products, and operators would restock the virtual warehouse.

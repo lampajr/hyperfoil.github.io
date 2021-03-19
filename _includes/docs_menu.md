@@ -1,4 +1,6 @@
-<ul class="nav">
+<div class="nav">
+<iframe width="200" height="30" src="{{ '/zzz_search.html' | absolute_url }}" style="border:none;"></iframe>
+<ul>
 {% assign pageurl = page.url | relative_url %}
 {% for item in site.data.docs %}
    {% include listitem.html link=item.link title=item.title %}
@@ -27,3 +29,4 @@
    </li>
 {% endfor %}
 </ul>
+</div>

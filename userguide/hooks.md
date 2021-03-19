@@ -1,3 +1,5 @@
+---
+---
 # Hooks
 
 It might be useful to run certain scripts before and after the run, e.g. starting some infrastructure, preloading database, gathering CPU stats during the test and so on. That's why Hyperfoil introduces pre- and post-hooks to the run.

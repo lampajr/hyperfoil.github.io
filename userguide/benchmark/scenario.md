@@ -1,3 +1,5 @@
+---
+---
 # Scenario
 
 Scenario is a set of *sequences*. The sequence is a block of sequentially executed *steps*. Contrary to steps in a sequence the sequences within a scenario do not need to be executed sequentially.

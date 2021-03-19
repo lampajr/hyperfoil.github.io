@@ -1,3 +1,5 @@
+---
+---
 # Extensions development
 
 You have probably already read the [Custom steps and handlers quickstart]({{ "/quickstart/quickstart8.html" | absolute_url }}) which shows how to create a simple component. It can get more tricky when the component embeds other components, though.

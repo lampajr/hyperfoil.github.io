@@ -1,3 +1,5 @@
+---
+---
 # Examples
 
 If you haven't checked the [Getting started guide](/quickstart/quickstart1.html) we strongly recommend going there first.

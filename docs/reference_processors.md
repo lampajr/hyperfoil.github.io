@@ -1,3 +1,5 @@
+---
+---
 # Processors reference
 
 Processors can work either as consumers of input bytes (e.g. storing part of the input into session variables), as filters (passing modified version of the input to delegated processors) or combination of the above.
