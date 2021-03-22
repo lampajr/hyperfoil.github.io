@@ -150,6 +150,35 @@ a { color: var(--theme-color-base); }
 	text-shadow: var(--theme-color-dark) 0px 0px 10px;
 }
 
+#search_form {
+	width: 100%; margin-bottom: 5px; padding: 0; background: transparent;
+}
+
+#search_input {
+	box-sizing: border-box; width: 100%; padding-right: 32px;
+}
+
+#search_button {
+	position: absolute;
+	top: 1px;
+	right: 0;
+	height: 28px;
+	width: 32px;
+	margin-left: -32px;
+    border: 0;
+	border-radius: 0px 3px 3px 0px;
+	background: #75abcf
+}
+
+#search_button img {
+	top: 3px;
+	left: -3px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-shadow: none;
+}
+
 #search_results .light_block_title {
 	margin-left: 20px;
 }
