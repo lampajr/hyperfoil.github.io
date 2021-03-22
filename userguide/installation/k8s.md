@@ -9,7 +9,7 @@ In order to start a Hyperfoil Controller instance in your cluster, create a new 
 You should see a YAML definition like this:
 
 ```yaml
-apiVersion: hyperfoil.io/v1alpha1
+apiVersion: hyperfoil.io/v1alpha2
 kind: Hyperfoil
 metadata:
   name: example-hyperfoil
@@ -25,7 +25,7 @@ spec:
 Change the `name` to just `hyperfoil` (or whatever you prefer) and delete all the content from the `spec` section:
 
 ```yaml
-apiVersion: hyperfoil.io/v1alpha1
+apiVersion: hyperfoil.io/v1alpha2
 kind: Hyperfoil
 metadata:
   name: hyperfoil
