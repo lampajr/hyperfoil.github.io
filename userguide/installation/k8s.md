@@ -71,7 +71,7 @@ Running Hyperfoil inside the cluster you are trying to test might skew results d
 
 | Property                   | Description        |
 | -------------------------- | ------------------ |
-| version                    | Tag for controller image. Defaults to version matching the operator version (operator 0.5.x will default to 0.5 ) |
+| version                    | Tag for controller image (e.g. `0.14` for a released version or `0.15-SNAPSHOT` for last build from main (master) branch). Defaults to `latest`. |
 | image                      | Controller image. If 'version' is defined, too, the tag is replaced (or appended). Defaults to 'quay.io/hyperfoil/hyperfoil' |
 | [route](#route)            | Configuration for the route leading to Controller REST endpoint. |
 | [auth](#auth)              | Authorization configuration. |
