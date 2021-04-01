@@ -203,7 +203,7 @@ This is called a *staircase* as the load increases in a shape of tilted stairs. 
 
 Here is a minimalistic example of such configuration:
 
-{% include codesample.html src='core/src/test/resources/scenarios/staircase.hf.yaml' %}
+{% include codesample.html src='test-suite/src/test/resources/scenarios/staircase.hf.yaml' %}
 
 This element uses these properties:
 
