@@ -15,6 +15,7 @@
 * [conditional](./step_conditional.html): Perform an action or sequence of actions conditionally.
 * [fail](./step_fail.html): Fail the phase with given message. Used mostly for testing/debugging.
 * [foreach](./step_foreach.html): Instantiate new sequences based on array variable content.
+* [hotrodRequest](./step_hotrodRequest.html): Issues a HotRod request and registers handlers for the response.
 * [httpRequest](./step_httpRequest.html): Issues a HTTP request and registers handlers for the response.
 * [json](./step_json.html): Parse JSON in variable into another variable.
 * [log](./step_log.html): Log a message and variable values.
@@ -28,14 +29,16 @@
 * [randomFile](./step_randomFile.html): Reads bytes from a randomly chosen file into a variable. Two formats are supported: Example 1 - without weights: 
 * [randomInt](./step_randomInt.html): Stores random (linearly distributed) integer into session variable.
 * [randomItem](./step_randomItem.html): Stores random item from a list or array into session variable.
+* [randomUUID](./step_randomUUID.html): Stores random string into session variable based on the UUID generator.
 * [scheduleDelay](./step_scheduleDelay.html): Define a point in future until which we should wait. Does not cause waiting.
 * [set](./step_set.html): Set variable in session to certain value.
 * [setInt](./step_setInt.html): Set session variable to an integral value.
 * [stop](./step_stop.html): Immediately stop the user session (break all running sequences).
 * [stopwatch](./step_stopwatch.html): Run nested sequence of steps, recording execution time.
 * [stringToInt](./step_stringToInt.html)
-* [template](./step_template.html): Format pattern into session variable.
+* [template](./step_template.html): Format <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> into session variable.
 * [thinkTime](./step_thinkTime.html): Block current sequence for specified duration.
+* [timestamp](./step_timestamp.html)
 * [unset](./step_unset.html): Undefine variable name.
 
 

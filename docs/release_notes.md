@@ -2,6 +2,21 @@
 ---
 # Release notes
 
+## 0.15 (2021-04-09)
+
+* Introduced statistics for connections (#connections by type, active connections and in-flight requests...)
+* New connection strategies: Open connections for each session/request
+    * `ergonomics.privatePools` replaced by `http.connectionStrategy`
+* `http.sharedConnections` can be set using sub-properties `core`, `max`, `buffer` and `keepAliveTime`.
+* Dropped `RequestProcessorBuilder` and `HttpRequestProcessorBuilder` in favor of `Processor.Builder`
+    * If the processor is used in an incompatible context it should cause a runtime error
+* POC support for Hot Rod protocol connecting to Infinispan clusters.
+* k8s deployer: agent labels and tolerations
+* Many improvements to WebCLI, notably automatic reconnect and `plot` command
+* Statistics rework: HTTP-related statistics are separated into extensions, some fields were dropped or renamed
+    * Report schema changed to v3.0 to reflect this (+piggybacked agent address/name changes)
+* Upgrade to Vert.x 4.0
+
 ## 0.14 (2021-02-22)
 
 * Significant refactoring of HTTP-related code into its own module

@@ -1,3 +1,5 @@
+---
+---
 # Session Variables
 
 All but the simplest scenarios will use session variables. Hyperfoil sports steps that generate values into these variables (`randomInt`, `randomItem`, ...), processors that write data from other sources to variables (`store`, `array`) and many places that read variables and use the values to perform some operations (`httpRequest.path` ) or alter control flow.

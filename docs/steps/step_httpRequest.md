@@ -6,49 +6,55 @@ Issues a HTTP request and registers handlers for the response.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |
-| authority | [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
-| authority (alternative)| String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
+| authority | String | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. The string can use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+| authority (alternative)| [Builder](#authority) | HTTP authority (host:port) this request should target. Must match one of the entries in <code>http</code> section. |
 | body | [Builder](#body) | HTTP request body. |
-| body (alternative)| String | HTTP request body (possibly a pattern). |
+| body (alternative)| String | HTTP request body (possibly a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>). |
 | compensation | [Builder](#compensation) | Configures additional metric compensated for coordinated omission. |
 | compression | [Builder](#compression) | Configure response compression. |
 | compression (alternative)| String | Request server to respond with compressed entity using specified content encoding. |
-| CONNECT | [Builder](#connect) | Issue HTTP CONNECT request to given path. |
-| CONNECT (alternative)| String | Issue HTTP CONNECT request to given path. |
-| DELETE | [Builder](#delete) | Issue HTTP DELETE request to given path. |
-| DELETE (alternative)| String | Issue HTTP DELETE request to given path. |
-| GET | [Builder](#get) | Issue HTTP GET request to given path. |
-| GET (alternative)| String | Issue HTTP GET request to given path. |
+| CONNECT | String | Issue HTTP CONNECT request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| CONNECT (alternative)| [Builder](#connect) | Issue HTTP CONNECT request to given path. |
+| DELETE | String | Issue HTTP DELETE request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| DELETE (alternative)| [Builder](#delete) | Issue HTTP DELETE request to given path. |
+| GET | String | Issue HTTP GET request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| GET (alternative)| [Builder](#get) | Issue HTTP GET request to given path. |
 | handler | [Builder](#handler) | HTTP response handlers. |
-| HEAD | [Builder](#head) | Issue HTTP HEAD request to given path. |
-| HEAD (alternative)| String | Issue HTTP HEAD request to given path. |
+| HEAD | String | Issue HTTP HEAD request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| HEAD (alternative)| [Builder](#head) | Issue HTTP HEAD request to given path. |
 | headers | [Builder](#headers) | HTTP headers sent in the request. |
 | method | enum | HTTP method used for the request.<br>Options:{::nomarkdown}<ul><li><code>GET</code></li><li><code>HEAD</code></li><li><code>POST</code></li><li><code>PUT</code></li><li><code>DELETE</code></li><li><code>OPTIONS</code></li><li><code>PATCH</code></li><li><code>TRACE</code></li><li><code>CONNECT</code></li></ul>{:/} |
 | metric | String | Requests statistics will use this metric name. |
 | metric (alternative)| [&lt;list of strings&gt;](#metric) | Allows categorizing request statistics into metrics based on the request path. |
-| OPTIONS | [Builder](#options) | Issue HTTP OPTIONS request to given path. |
-| OPTIONS (alternative)| String | Issue HTTP OPTIONS request to given path. |
-| PATCH | [Builder](#patch) | Issue HTTP PATCH request to given path. |
-| PATCH (alternative)| String | Issue HTTP PATCH request to given path. |
-| path | [Builder](#path) | HTTP path (absolute or relative), including query and fragment. |
-| POST | [Builder](#post) | Issue HTTP POST request to given path. |
-| POST (alternative)| String | Issue HTTP POST request to given path. |
-| PUT | [Builder](#put) | Issue HTTP PUT request to given path. |
-| PUT (alternative)| String | Issue HTTP PUT request to given path. |
+| OPTIONS | String | Issue HTTP OPTIONS request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| OPTIONS (alternative)| [Builder](#options) | Issue HTTP OPTIONS request to given path. |
+| PATCH | String | Issue HTTP PATCH request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| PATCH (alternative)| [Builder](#patch) | Issue HTTP PATCH request to given path. |
+| path | String | HTTP path (absolute or relative), including query and fragment. The string can use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+| path (alternative)| [Builder](#path) | HTTP path (absolute or relative), including query and fragment. |
+| POST | String | Issue HTTP POST request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| POST (alternative)| [Builder](#post) | Issue HTTP POST request to given path. |
+| PUT | String | Issue HTTP PUT request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| PUT (alternative)| [Builder](#put) | Issue HTTP PUT request to given path. |
 | sla | [Builder](#sla) | List of SLAs the requests are subject to. |
 | sync | boolean | This request is synchronous; execution of the sequence does not continue until the full response is received. If this step is executed from multiple parallel instances of this sequence the progress of all sequences is blocked until there is a request in flight without response. <p> Default is <code>true</code>. |
 | timeout | String | Request timeout - after this time the request will be marked as failed and connection will be closed. <p> Defaults to value set globally in <code>http</code> section. |
-| TRACE | [Builder](#trace) | Issue HTTP TRACE request to given path. |
-| TRACE (alternative)| String | Issue HTTP TRACE request to given path. |
+| TRACE | String | Issue HTTP TRACE request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+| TRACE (alternative)| [Builder](#trace) | Issue HTTP TRACE request to given path. |
 
 ### <a id="authority"></a>authority
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="body"></a>body
@@ -60,7 +66,7 @@ Allows building HTTP request body from session variables.
 | form | [Builder](#bodyform) | Build form as if we were sending the request using HTML form. This option automatically adds <code>Content-Type: application/x-www-form-urlencoded</code> to the request headers. |
 | fromFile | String | Send contents of the file. Note that this method does NOT set content-type automatically. |
 | fromVar | String | Use variable content as request body. |
-| pattern | String | Pattern replacing <code>${sessionvar}</code> with variable contents in a string. |
+| pattern | String | <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">Pattern</a> replacing <code>${sessionvar}</code> with variable contents in a string. |
 | text | String | String sent as-is. |
 
 ### <a id="body.form"></a>body.form
@@ -77,7 +83,7 @@ Form element (e.g. as if coming from an INPUT field).
 | ------- | ------- | ------- |
 | fromVar | String | Input field value from session variable. |
 | name | String | Input field name. |
-| pattern | String | Input field value replacing session variables in a pattern, e.g. <code>foo${myvariable}var</code> |
+| pattern | String | Input field value replacing session variables in a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>, e.g. <code>foo${myvariable}var</code> |
 | value | String | Input field value (verbatim). |
 
 ### <a id="compensation"></a>compensation
@@ -115,30 +121,45 @@ Configure a custom metric for the compensated results.
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="DELETE"></a>DELETE
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="GET"></a>GET
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="handler"></a>handler
@@ -323,7 +344,7 @@ Compares if the header name matches expression and invokes a processor with the 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | header | [Builder](#handlerheaderfilterheader) | Condition on the header name. |
-| processor | [Processor.Builder](index.html#processors) | Processor that will be invoked with the value (converted to ByteBuf). |
+| processor | [Processor.Builder](index.html#processors) | Add one or more delegated processors. |
 
 ### <a id="handler.header.filter.header"></a>handler.header.filter.header
 
@@ -380,8 +401,7 @@ Accumulates request and response sizes into custom metrics.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| requestMetric | String | Name of the custom metric for collecting sent request bytes. |
-| responseMetric | String | Name of the custom metric for collecting response bytes. |
+| key | String | Name of the custom metric for collecting request/response bytes. |
 
 ### <a id="handler.status"></a>handler.status
 
@@ -468,27 +488,37 @@ Stores the status into session variable.
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="headers"></a>headers
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| &lt;any&gt; | String | Use header name (e.g. <code>Content-Type</code>) as key and value (possibly a pattern). |
+| &lt;any&gt; | String | Use header name (e.g. <code>Content-Type</code>) as key and value (possibly a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>). |
 | &lt;any&gt; (alternative)| [Builder](#headersany) | Use header name (e.g. <code>Content-Type</code>) as key and specify value in the mapping. |
 
 ### <a id="headers.&lt;any&gt;"></a>headers.&lt;any&gt;
 
 Specifies value that should be sent in headers.
 
+
+| Inline definition |
+| -------- |
+| The value. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | String | Load header value from session variable. |
-| pattern | String | Load header value using a pattern. |
+| pattern | String | Load header value using a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
 
 ### <a id="metric"></a>metric
 
@@ -502,50 +532,75 @@ Allows categorizing request statistics into metrics based on the request path.
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="PATCH"></a>PATCH
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="path"></a>path
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="POST"></a>POST
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="PUT"></a>PUT
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
 ### <a id="sla"></a>sla
@@ -581,9 +636,14 @@ Percentile limits.
 
 Generic builder for generating a string.
 
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | fromVar | Object | Load the string from session variable. |
-| pattern | String | Use pattern replacing session variables. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
