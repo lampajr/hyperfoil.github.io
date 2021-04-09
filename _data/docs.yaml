@@ -52,6 +52,8 @@
       link: /userguide/benchmark/phases.html
     - title: Scenario
       link: /userguide/benchmark/scenario.html
+    - title: Session variables
+      link: /userguide/benchmark/variables.html
   - title: Examples
     link: /userguide/examples.html
   - title: Troubleshooting
