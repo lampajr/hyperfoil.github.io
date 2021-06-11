@@ -21,3 +21,11 @@ There's nothing wrong with this type of test as long as you know what you're doi
 ## Hyperfoil is so hard to set up, I'll just use ...
 
 Some tools can be run from the shell, with everything set just through options and arguments. That is quite handy for a quick test - and if the tool is sufficient for the job, use it. Or you can try runnning the same through Hyperfoil - e.g. for `wrk2` we offer a facade (CLI command `wrk` or `bin/wrk.sh`) that creates a benchmark with the same behaviour but you also get all the detailed results as from any other run. Once that your requirements outgrow what's possible in these simple tools, you can embrace the full power of benchmark composition.
+
+## What does that 'Exceeded session limit' error mean?
+
+With [open-model phase types]({{ "/userguide/benchmark/phases.html" | absolute_url }}) (constantRate, increasingRate, decreasingRate) the concurrency should not be limited. However as Hyperfoil tries not to allocate any memory during the benchmark we need to reserve space ahead for all sessions that could run concurrently - we call this the session limit. By default this limit is equal to number of users per second (assuming that the scenario won't take more than 1 second).
+
+When you get the 'Exceeded session limit' error this means that some of the requests took a long time (or you have delays as part of the scenario) and Hyperfoil ran out of session pool. In that case you can change the limit using `maxSessions` property on the phase to the expected maximum concurrency. E.g. if you expect that the scenario will take 3 seconds and you're running at `usersPerSec: 100` you should set `maxSessions: 300` (or rather more to give it a buffer for unexpected jitter).
+
+If increasing the limit doesn't help it usually means that the load at the tested system is too high and the responses are not arriving as fast as you fire the requests. In that case you should lower the load.
