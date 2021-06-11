@@ -10,6 +10,7 @@
 * [awaitDelay](./step_awaitDelay.html): Block this sequence until referenced delay point.
 * [awaitInt](./step_awaitInt.html): Block current sequence until condition becomes true.
 * [awaitVar](./step_awaitVar.html): Block current sequence until this variable gets set/unset.
+* [breakIfFinished](./step_breakIfFinished.html)
 * [breakSequence](./step_breakSequence.html): Prematurely stops execution of this sequence if the condition is satisfied.
 * [clearHttpCache](./step_clearHttpCache.html): Drops all entries from HTTP cache in the session.
 * [conditional](./step_conditional.html): Perform an action or sequence of actions conditionally.

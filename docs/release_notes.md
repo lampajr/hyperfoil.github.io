@@ -2,6 +2,20 @@
 ---
 # Release notes
 
+## 0.16 (2021-06-11)
+
+* This release removes some code-bloat for extension developers, using reflection to scan the scenario:
+    * Session variables do not need to be explicitly reserved in `ResourceUtilizer.reserve()` method.
+    * Components owning another components do not have to propagate the resource resevation calls.
+* Automatic check for reading from a variable that's never written to.
+* Controller can loads statistics from old runs (therefore CLI can show stats from runs before reboot)
+    * Statistics from old runs are unloaded in order to prevent running out-of-memory in constrained environments.
+* Phases can now be marked with `isWarmup: true` - reporting can hide data from these phases by default
+* Agents deployed via SSH can set list of cpus on which to run (using taskset).
+* Self-checks for excessive CPU usage on agents, record CPU usage in each phase.
+* Various fixes and improvements in WebCLI.
+
+
 ## 0.15 (2021-04-09)
 
 * Introduced statistics for connections (#connections by type, active connections and in-flight requests...)

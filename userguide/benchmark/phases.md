@@ -24,6 +24,7 @@ There are different types of phases based on the mode of starting new users:
 | decreasingRate | The same as `increasingRate` but requires `initialUsersPerSec` > `targetUsersPerSec`. |
 | atOnce         | All users are be started when the phase starts running and once the scenario is completed the users won't retry the scenario. |
 | always         | There is fixed number of users and once the scenario is completed the users will start executing the scenario from beginning. This is called a closed-model and is similar to the way many benchmarks with fixed number of threads work. |
+| noop           | This phase cannot have any scenario (or forks). It might be useful to add periods of inactivity into the benchmark. |
 
 See the example of phases configuration:
 
@@ -75,6 +76,7 @@ These properties are common for all types of phases:
 | startAfterStrict  | Phases that must be *terminated* before this phase can start. Use the same syntax as for `startAfter`. |
 | duration          | Intended duration for the phase (must be defined but for the `atOnce` type). After this time elapses no new sessions will be started; there might be some running sessions still executing operations, though. |
 | maxDuration       | After this time elapses all sessions are forcefully terminated. |
+| isWarmup          | This marker property is propagated to results JSON and allows the reporter to hide some phases by default. |
 | maxUnfinishedSessions | Maximum number of session that are allowed to be open when the phase *finishes*. When there are more open sessions all the other sessions are cancelled and the benchmark is terminated. Unlimited by default. |
 | maxIterations     | Maximum number of [iterations](#iterations) this phase will be scaled to. More about that below. |
 | [scenario]({{ "/userguide/benchmark/scenario.html" | absolute_url }}) | The scenario this phase should execute. |

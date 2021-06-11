@@ -31,6 +31,7 @@ When you really want to use `${wild-animal}` in a value for such component you s
 There are a few transformations that you can perform with a variable value while interpolating the pattern:
 * `${urlencode:my-variable}` will replace characters in the `my-variable` using [URLEncoder.encode](https://docs.oracle.com/javase/7/docs/api/java/net/URLEncoder.html#encode(java.lang.String,%20java.lang.String)) (using UTF-8 encoding).
 * `${{ '{%05d' }}:my-number}` and other formatter strings ending with `d`, `o`, `x` or `X` will convert an integer variable using [Formatter](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html).
+* `${replace/<regexp>/<replacement>/<flags>:my-variable}` perform Java regexp replacement on `my-variable` contents. Note that you can use any character after `replace`, not just `/` - this becomes the separator between regexp, replacement and flags. The only flags currently supported is `g` - replacing all occurences of that string (by default only first occurence is replaced).
 
 ## Sequence-scoped access
 

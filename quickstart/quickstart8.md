@@ -12,13 +12,13 @@ Each extension will consist of two classes:
 
 Let's start with a `io.hyperfoil.api.config.Step` implementation. The interface has single method `invoke(Session)` that should return `true` if the step was executed and `false` if its execution has been blocked and should be retried later. In case that the execution is blocked the invocation must not have any side effects - e.g. if the step is fetching objects from some pools and one of the pools is depleted, it should release the already acquired objects back to the pool.
 
-We'll create a step that will divide variable from a session by a (configurable) constant and store the result in another variable. As the step creates a new variable we need to reserve a space for this in the session; that's why it will implement `io.hyperfoil.api.session.ResourceUtilizer` as well:
+We'll create a step that will divide variable from a session by a (configurable) constant and store the result in another variable.
 
-{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='23:62' %}
+{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='21:50' %}
 
 Then we need a builder class that will allow us to configure the step. To keep related classes together we will define it as inner static class:
 
-{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='62:127' %}
+{% include codesample.html src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' slice='51:116' %}
 
 As the comments say, the builder is using fluent setter syntax to set the attributes. When you want to nest attributes under another builder, you can just add parameter-less method `FooBuilder foo()` the returns an instance of `FooBuilder`; the parser will fill this instance as well. There are some interfaces your builder can implement to accept lists or different structures, but the description is out of scope of this quickstart.
 
@@ -34,7 +34,7 @@ The builder class has two annotations: `@Name` which specifies the name we'll us
 
 The whole class {% include ghlink.md text='can be inspected here' src='distribution/src/main/java/io/hyperfoil/example/DivideStep.java' %} and it is already included in the `extensions` directory. You can try running `bin/standalone.sh`, upload and run {% include example_link.md src='divide.hf.yaml' %}. You should see about 5 log messages in the server log.
 
-{% include codesample.html src='distribution/src/main/resources/examples/two-agents.hf.yaml' %}
+{% include codesample.html src='distribution/src/main/resources/examples/divide.hf.yaml' %}
 
 There are several other integration points but `Step`:
 * `io.hyperfoil.api.session.Action` is very similar to step, but it does not allow blocking. Implement `Action.BuilderFactory` to define new actions.

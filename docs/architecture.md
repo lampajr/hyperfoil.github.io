@@ -22,9 +22,9 @@ So we end up with the `io.hyperfoil.api.config.Benchmark` instance that holds th
 
 Hyperfoil tries to minimize allocations during the benchmark as while Java garbage collector is a good friend of every developer it has a negative effect on the real-time properties of the program. You should use collectors that minimize pause times (such as Shenandoah or ZGC) rather than those that maximize throughput. This is why we allocate all what we could need ahead.
 
-Before the benchmark starts each agent creates all the sessions (based on the `maxSessions` property in case of open-model phases). When `Session.reserve()` is called it calls `reserve()` method on all steps that implement `ResourceUtilizer` interface. In this method the step must call `Access.declareInt()/declareObject()` on all session variables it **writes** (more about that below) and `Session.declareResource()` on all the resources it uses.
+Before the benchmark starts each agent creates all the sessions (based on the `maxSessions` property in case of open-model phases). When `Session.reserve()` is called it calls `reserve()` method on all steps that implement `ResourceUtilizer` interface. In this method the step must call `Session.declareResource()` on all the resources it uses.
 
-If the step contains any child components (actions, handlers...) it must recursively call the `ResourceUtilizer.reserve()` method on these, too. As implementation of the `ResourceUtilizer` is optional (only those components that would have to declare something have this set) there are convenience static methods on the `ResourceUtilizer` class to delegate the invocation to children.
+Note: in previous versions of Hyperfoil it was necessary to also explicitly declare that the step can write into a session variable, and recursively call the `ResourceUtilizer.reserve()` method on all children components. Since version 0.16 Hyperfoil discovers all `ResourceUtilizer` implementors in the scenario tree; the recursive invocation is no longer necessary.
 
 ## Scenario execution
 
@@ -43,7 +43,7 @@ There are two possible results from the `invoke()` method that returns a boolean
 
 The session contains a map of variables the scenario uses. The keys are usually strings but this is not mandated; some steps may e.g. choose to use an unique object as the key. The values in the map are wrapper objects that hold a boolean flag whether this variable is set and the value itself. To avoid boxing and unboxing there's a different wrapper for integers and other objects - it's up to step to check the wrapper type and convert the value if necessary.
 
-The map is not manipulated directly - a builder for a step that should work with variable `foo` should call `SessionFactory.access("foo")` in its `build()` method and pass the received `Access` to the step it creates. The step then operates exclusively using `Access` methods. And example of this can be found in the [getting started: custom steps]({{ '/quickstart/quickstart8.html' | absolute_url }}) guide.
+The map is not manipulated directly - a builder for a step that should work with variable `foo` should call `SessionFactory.readAccess("foo")`, `SessionFactory.intAccess("foo")` or `SessionFactory.objectAccess("foo")` in its `build()` method and pass the received `Access` to the step it creates. The step then operates exclusively using `Access` methods. And example of this can be found in the [getting started: custom steps]({{ '/quickstart/quickstart8.html' | absolute_url }}) guide.
 
 ### Sequence-scoped access
 
@@ -52,14 +52,13 @@ In quickstarts there are examples of *sequence-scoped access* - variables with `
 ```java
 @Override
 public void reserve(Session session) {
-    var.declareObject(session);
     if (!var.isSet(session)) {
         var.setObject(session, ObjectVar.newArray(session, concurrency));
     }
 }
 ```
 
-The array is often created in a non-conurrent sequence that starts several concurrent instances of another sequence - the `var` would be used with the simple access (without the `[.]` suffix) in the original sequence, and with `[.]` in the concurrent sequences. Each of the concurrent sequences would get a different `SequenceInstance.index()` and with sequence-scoped access these would work on the variable on this position in the array. The step does not need to be tailored specifically to work on sequence-scoped variables; when creating the `Access` instance using `SessionFactory.access()` the presence of the suffix is automatically checked and the returned `Access`will relay the operations to the slot in the array.
+The array is often created in a non-conurrent sequence that starts several concurrent instances of another sequence - the `var` would be used with the simple access (without the `[.]` suffix) in the original sequence, and with `[.]` in the concurrent sequences. Each of the concurrent sequences would get a different `SequenceInstance.index()` and with sequence-scoped access these would work on the variable on this position in the array. The step does not need to be tailored specifically to work on sequence-scoped variables; when creating the `Access` instance using `SessionFactory.objectAccess()` the presence of the suffix is automatically checked and the returned `Access` will relay the operations to the slot in the array.
 
 ## Session resources
 
@@ -109,3 +108,4 @@ public class FooStep implements Step, ResourceUtilizer {
 ## Component adapters
 
 There are several types of extension components: steps, actions and processors get extra attention but it is possible to use other interfaces as well. Actions are the simplest of these: these do not require any input (but the session) and do always execute without blocking. Therefore it is possible to use an action on any place where a step or processor would fit. When loading the component by name Hyperfoil automatically wraps the action into an adapter to the target component type.
+
