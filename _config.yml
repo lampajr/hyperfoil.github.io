@@ -27,11 +27,11 @@ github:
   repository_url: https://github.com/Hyperfoil/Hyperfoil
 
 last_release:
-  zip: hyperfoil-0.16.zip
-  dir: hyperfoil-0.16
-  tag: release-0.16
-  galaxy_version: "0.16.0"
-  url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.16/hyperfoil-0.16.zip
+  zip: hyperfoil-0.17.zip
+  dir: hyperfoil-0.17
+  tag: release-0.17
+  galaxy_version: "0.17.0"
+  url: https://github.com/Hyperfoil/Hyperfoil/releases/download/release-0.17/hyperfoil-0.17.zip
 
 # Build settings
 markdown: kramdown

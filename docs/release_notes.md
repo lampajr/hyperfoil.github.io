@@ -2,6 +2,11 @@
 ---
 # Release notes
 
+## 0.17 (2021-10-21)
+
+* More options for configuration of agent pods (resources, labels...) - courtesy of Stephen Connolly
+* Upgrade of Apache MINA 
+
 ## 0.16 (2021-06-11)
 
 * This release removes some code-bloat for extension developers, using reflection to scan the scenario:
