@@ -1,6 +1,9 @@
 ---
 ---
+
 # Deploying in Kubernetes/Openshift
+
+> Note: currently we support only Openshift deployments out-of-the-box. This is tracked as [issue #207](https://github.com/Hyperfoil/Hyperfoil/issues/206) - we will welcome if the community helps paving the path to vanilla Kubernetes.
 
 A convenient alternative to running Hyperfoil on hosts with SSH access is deploying it in Kubernetes or Openshift. The recommended way to install it using an operator in your Openshift console - just go to Operators - OperatorHub and search for 'hyperfoil', and follow the installation wizard. Alternatively you can [deploy the controller manually]({{ "/userguide/installation/k8s_manual.html" | absolute_url }})
 
@@ -69,29 +72,29 @@ Running Hyperfoil inside the cluster you are trying to test might skew results d
 
 ## Reference
 
-| Property                   | Description        |
-| -------------------------- | ------------------ |
-| version                    | Tag for controller image (e.g. `0.14` for a released version or `0.15-SNAPSHOT` for last build from main (master) branch). Defaults to `latest`. |
-| image                      | Controller image. If 'version' is defined, too, the tag is replaced (or appended). Defaults to 'quay.io/hyperfoil/hyperfoil' |
-| [route](#route)            | Configuration for the route leading to Controller REST endpoint. |
-| [auth](#auth)              | Authorization configuration. |
-| log                        | Name of the config map and optionally its entry (separated by '/': e.g myconfigmap/log4j2-superverbose.xml) storing Log4j2 configuration file. By default the Controller uses its embedded configuration. |
-| agentDeployTimeout         | Deploy timeout for agents, in milliseconds. |
-| triggerUrl                 | Value for `io.hyperfoil.trigger.url` - [see above](#starting-the-controller-manually)
-| preHooks                   | List of config map names holding hooks that run before the run starts. |
-| postHooks                  | List of config map names holding hooks that run when the run finishes. |
-| persistentVolumeClaim      | Name of the PVC Hyperfoil should mount for its workdir. |
+| Property              | Description                                                                                                                                                                                               |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| version               | Tag for controller image (e.g. `0.14` for a released version or `0.15-SNAPSHOT` for last build from main (master) branch). Defaults to `latest`.                                                          |
+| image                 | Controller image. If 'version' is defined, too, the tag is replaced (or appended). Defaults to 'quay.io/hyperfoil/hyperfoil'                                                                              |
+| [route](#route)       | Configuration for the route leading to Controller REST endpoint.                                                                                                                                          |
+| [auth](#auth)         | Authorization configuration.                                                                                                                                                                              |
+| log                   | Name of the config map and optionally its entry (separated by '/': e.g myconfigmap/log4j2-superverbose.xml) storing Log4j2 configuration file. By default the Controller uses its embedded configuration. |
+| agentDeployTimeout    | Deploy timeout for agents, in milliseconds.                                                                                                                                                               |
+| triggerUrl            | Value for `io.hyperfoil.trigger.url` - [see above](#starting-the-controller-manually)                                                                                                                     |
+| preHooks              | List of config map names holding hooks that run before the run starts.                                                                                                                                    |
+| postHooks             | List of config map names holding hooks that run when the run finishes.                                                                                                                                    |
+| persistentVolumeClaim | Name of the PVC Hyperfoil should mount for its workdir.                                                                                                                                                   |
 
 ### route
 
-| Property | Description |
-| ---------| ----------- |
-| host     | Host for the route leading to Controller REST endpoint. Example: hyperfoil.apps.cloud.example.com |
-| type     | Either 'http' (for plain-text routes - not recommended), 'edge', 'reencrypt' or 'passthrough' |
+| Property | Description                                                                                                                                                    |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| host     | Host for the route leading to Controller REST endpoint. Example: hyperfoil.apps.cloud.example.com                                                              |
+| type     | Either 'http' (for plain-text routes - not recommended), 'edge', 'reencrypt' or 'passthrough'                                                                  |
 | tls      | Name of the secret hosting `tls.crt`, `tls.key` and optionally `ca.crt`. This is mandatory for `passthrough` routes and optional for edge and reencrypt routes |
 
 ### auth
 
-| Property | Description |
-| -------- | ----------- |
+| Property | Description                                                                                                          |
+| -------- | -------------------------------------------------------------------------------------------------------------------- |
 | secret   | Name of secret used for basic authentication. Must contain key `password`; Hyperfoil accepts any username for login. |

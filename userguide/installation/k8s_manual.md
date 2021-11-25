@@ -1,17 +1,22 @@
 ---
 ---
+
 # Deploying Hyperfoil Controller in Kubernetes/Openshift manually
+
+> Note: currently we support only Openshift deployments out-of-the-box. This is tracked as [issue #207](https://github.com/Hyperfoil/Hyperfoil/issues/206) - we will welcome if the community helps paving the path to vanilla Kubernetes.
 
 If you cannot [use the operator]({{ "/userguide/installation/k8s.html" | absolute_url }}) or if you're running vanilla Kubernetes you can define all the resource manually. You deploy only the controller; each agent is then started when the run starts as a `pod` in the same namespace and stopped when the run completes.
 
 Following steps install Hyperfoil controller in Openshift, assuming that you have all the required priviledges. With vanilla Kubernetes you might have to replace the `route` with an appropriate `ingress`.
 
 <span>1.</span> Create new namespace for hyperfoil:
+
 ```
 > oc new-project hyperfoil
 ```
 
 <span>2.</span> Create required resources:
+
 ```
 > curl -s -L k8s.hyperfoil.io | oc apply -f -
 role.rbac.authorization.k8s.io/controller created
@@ -25,6 +30,7 @@ route.route.openshift.io/hyperfoil created
 The route will use hostname following the format `hyperfoil-hyperfoil.apps.my.cluster.domain` - feel free to customize the hostname as needed.
 
 <span>3.</span> Wait until the image gets downloaded and the container starts:
+
 ```
 > oc get po
 NAME                  READY   STATUS              RESTARTS   AGE
@@ -35,6 +41,7 @@ controller-1-deploy   0/1     Completed           0          72s
 <span>4.</span> Open CLI and connect to the controller
 
 While default Hyperfoil port is 8090, Openshift router will expose the service on port 80.
+
 ```
 > bin/cli.sh
 [hyperfoil]$ connect hyperfoil-hyperfoil.apps.my.cluster.domain -p 80
