@@ -1,5 +1,3 @@
----
----
 # thinkTime
 
 Block current sequence for specified duration.

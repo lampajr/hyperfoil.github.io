@@ -1,5 +1,3 @@
----
----
 # scheduleDelay
 
 Define a point in future until which we should wait. Does not cause waiting.

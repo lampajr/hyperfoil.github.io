@@ -1,5 +1,3 @@
----
----
 # hotrodRequest
 
 Issues a HotRod request and registers handlers for the response.

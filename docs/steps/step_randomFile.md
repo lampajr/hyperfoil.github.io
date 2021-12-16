@@ -1,5 +1,3 @@
----
----
 # randomFile
 
 Reads bytes from a randomly chosen file into a variable. Two formats are supported: Example 1 - without weights: 

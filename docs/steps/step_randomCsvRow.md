@@ -1,5 +1,3 @@
----
----
 # randomCsvRow
 
 Stores random row from a CSV-formatted file to variables.

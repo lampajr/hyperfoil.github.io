@@ -1,5 +1,3 @@
----
----
 # pushSharedMap
 
 Store values from session variables into a map shared across all sessions using the same executor into session variables. 

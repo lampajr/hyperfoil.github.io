@@ -1,5 +1,3 @@
----
----
 # httpRequest
 
 Issues a HTTP request and registers handlers for the response.
@@ -17,6 +15,7 @@ Issues a HTTP request and registers handlers for the response.
 | CONNECT (alternative)| [Builder](#connect) | Issue HTTP CONNECT request to given path. |
 | DELETE | String | Issue HTTP DELETE request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
 | DELETE (alternative)| [Builder](#delete) | Issue HTTP DELETE request to given path. |
+| endpoint | [Builder](#endpoint) | HTTP endpoint this request should target. Must match to the <code>name</code> of the entries in <code>http</code> section. |
 | GET | String | Issue HTTP GET request to given path. This can be a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. |
 | GET (alternative)| [Builder](#get) | Issue HTTP GET request to given path. |
 | handler | [Builder](#handler) | HTTP response handlers. |
@@ -147,6 +146,21 @@ Generic builder for generating a string.
 | pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 | value | String | String value used verbatim. |
 
+### <a id="endpoint"></a>endpoint
+
+Generic builder for generating a string.
+
+
+| Inline definition |
+| -------- |
+| A pattern for <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">string interpolation</a>. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | Object | Load the string from session variable. |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
+| value | String | String value used verbatim. |
+
 ### <a id="GET"></a>GET
 
 Generic builder for generating a string.
@@ -241,16 +255,24 @@ Tests session variable containing boolean value.
 
 Condition comparing integer in session variable.
 
+
+| Inline definition |
+| -------- |
+| Parses condition in the form &lt;variable&gt; &lt;operator&gt; &lt;value&gt;
+             where operator is one of: <code>==</code>, <code>!=</code>,
+             <code>&lt;&gt;</code> (the same as <code>!=</code>),
+             <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&lt;</code>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
+| equalTo | [Builder](#handlerheaderconditionalintconditionequalto) | Compared variable must be equal to this value. |
 | fromVar | Object | Variable name. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
+| greaterOrEqualTo | [Builder](#handlerheaderconditionalintconditiongreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#handlerheaderconditionalintconditiongreaterthan) | Compared variable must be greater than this value. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| lessOrEqualTo | [Builder](#handlerheaderconditionalintconditionlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#handlerheaderconditionalintconditionlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#handlerheaderconditionalintconditionnotequalto) | Compared variable must not be equal to this value. |
 
 ### <a id="handler.header.conditional.allConditions.&lt;list of mappings&gt;.stringCondition"></a>handler.header.conditional.allConditions.&lt;list of mappings&gt;.stringCondition
 
@@ -296,16 +318,96 @@ One or more header handlers that should be invoked.
 
 Condition comparing integer in session variable.
 
+
+| Inline definition |
+| -------- |
+| Parses condition in the form &lt;variable&gt; &lt;operator&gt; &lt;value&gt;
+             where operator is one of: <code>==</code>, <code>!=</code>,
+             <code>&lt;&gt;</code> (the same as <code>!=</code>),
+             <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&lt;</code>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
+| equalTo | [Builder](#handlerheaderconditionalintconditionequalto) | Compared variable must be equal to this value. |
 | fromVar | Object | Variable name. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
+| greaterOrEqualTo | [Builder](#handlerheaderconditionalintconditiongreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#handlerheaderconditionalintconditiongreaterthan) | Compared variable must be greater than this value. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| lessOrEqualTo | [Builder](#handlerheaderconditionalintconditionlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#handlerheaderconditionalintconditionlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#handlerheaderconditionalintconditionnotequalto) | Compared variable must not be equal to this value. |
+
+### <a id="handler.header.conditional.intCondition.equalTo"></a>handler.header.conditional.intCondition.equalTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.intCondition.greaterOrEqualTo"></a>handler.header.conditional.intCondition.greaterOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.intCondition.greaterThan"></a>handler.header.conditional.intCondition.greaterThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.intCondition.lessOrEqualTo"></a>handler.header.conditional.intCondition.lessOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.intCondition.lessThan"></a>handler.header.conditional.intCondition.lessThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.intCondition.notEqualTo"></a>handler.header.conditional.intCondition.notEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
 
 ### <a id="handler.header.conditional.stringCondition"></a>handler.header.conditional.stringCondition
 
@@ -330,12 +432,84 @@ Condition comparing string in session variable.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| equalTo | [Builder](#handlerheaderconditionalstringconditionlengthequalto) | Compared variable must be equal to this value. |
+| greaterOrEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthgreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#handlerheaderconditionalstringconditionlengthgreaterthan) | Compared variable must be greater than this value. |
+| lessOrEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#handlerheaderconditionalstringconditionlengthlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthnotequalto) | Compared variable must not be equal to this value. |
+
+### <a id="handler.header.conditional.stringCondition.length.equalTo"></a>handler.header.conditional.stringCondition.length.equalTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.stringCondition.length.greaterOrEqualTo"></a>handler.header.conditional.stringCondition.length.greaterOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.stringCondition.length.greaterThan"></a>handler.header.conditional.stringCondition.length.greaterThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.stringCondition.length.lessOrEqualTo"></a>handler.header.conditional.stringCondition.length.lessOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.stringCondition.length.lessThan"></a>handler.header.conditional.stringCondition.length.lessThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="handler.header.conditional.stringCondition.length.notEqualTo"></a>handler.header.conditional.stringCondition.length.notEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
 
 ### <a id="handler.header.filter"></a>handler.header.filter
 
@@ -370,12 +544,12 @@ Compares if the header name matches expression and invokes a processor with the 
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| equalTo | [Builder](#handlerheaderconditionalstringconditionlengthequalto) | Compared variable must be equal to this value. |
+| greaterOrEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthgreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#handlerheaderconditionalstringconditionlengthgreaterthan) | Compared variable must be greater than this value. |
+| lessOrEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#handlerheaderconditionalstringconditionlengthlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#handlerheaderconditionalstringconditionlengthnotequalto) | Compared variable must not be equal to this value. |
 
 ### <a id="handler.header.recordHeaderTime"></a>handler.header.recordHeaderTime
 

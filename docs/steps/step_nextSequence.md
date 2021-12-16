@@ -1,5 +1,3 @@
----
----
 # nextSequence
 
 Schedules a new sequence instance to be executed.

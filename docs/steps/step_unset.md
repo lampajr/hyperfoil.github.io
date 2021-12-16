@@ -1,5 +1,3 @@
----
----
 # unset
 
 Undefine variable name.

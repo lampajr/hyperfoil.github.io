@@ -1,5 +1,3 @@
----
----
 # awaitDelay
 
 Block this sequence until referenced delay point.

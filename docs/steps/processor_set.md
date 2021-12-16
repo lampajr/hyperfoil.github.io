@@ -22,6 +22,7 @@ Creates integer arrays to be stored in the session.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
+| fromVar | String | Contents of the new array. If the variable contains an array or a list, items will be copied to the elements with the same index up to the size of this array. If the variable contains a different value all elements will be initialized to this value. |
 | size | int | Size of the array. |
 
 ### <a id="objectArray"></a>objectArray
@@ -30,5 +31,6 @@ Creates object arrays to be stored in the session.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
+| fromVar | String | Contents of the new array. If the variable contains an array or a list, items will be copied to the elements with the same index up to the size of this array. If the variable contains a different value all elements will be initialized to this value. |
 | size | int | Size of the array. |
 

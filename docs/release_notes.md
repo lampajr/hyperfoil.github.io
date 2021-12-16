@@ -2,6 +2,20 @@
 ---
 # Release notes
 
+## 0.18 (2021-12-16)
+
+* New benchmark templating system: `!param`, `!concat` and `!foreach`
+* Mechanisms for storing global, agent-wide and thread-wide data
+* Improved error reporting and logging
+* HTTP endpoints can be referred to using a name rather than authority (host:port combination)
+* Custom SLAs: Tests that have external statistics can place SLAs on these.
+* Closed-model phases can be configured with `.usersPerAgent` and `.usersPerThread`
+* New actions for manipulating collections 
+* New step and action for restarting current sequence
+* New action for marking request as invalid manually
+* Other utility processors and added properties on existings steps/actions
+* Fix various issues with statistics from auxiliary verticles.
+
 ## 0.17 (2021-10-21)
 
 * More options for configuration of agent pods (resources, labels...) - courtesy of Stephen Connolly

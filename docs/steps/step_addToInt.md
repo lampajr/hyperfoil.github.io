@@ -1,5 +1,3 @@
----
----
 # addToInt
 
 Add value to integer variable in the session.

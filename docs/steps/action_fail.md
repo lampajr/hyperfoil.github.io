@@ -4,6 +4,11 @@
 
 Fail the phase with given message. Used mostly for testing/debugging.
 
+| Inline definition |
+| -------- |
+| Message to fail with (unconditionally). |
+
+
 | Property | Type | Description |
 | ------- | ------- | -------- |
 | allConditions | [Builder](#allconditions) | Condition combining multiple other conditions with 'AND' logic. |
@@ -52,16 +57,24 @@ Tests session variable containing boolean value.
 
 Condition comparing integer in session variable.
 
+
+| Inline definition |
+| -------- |
+| Parses condition in the form &lt;variable&gt; &lt;operator&gt; &lt;value&gt;
+             where operator is one of: <code>==</code>, <code>!=</code>,
+             <code>&lt;&gt;</code> (the same as <code>!=</code>),
+             <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&lt;</code>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
+| equalTo | [Builder](#intconditionequalto) | Compared variable must be equal to this value. |
 | fromVar | Object | Variable name. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
+| greaterOrEqualTo | [Builder](#intconditiongreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#intconditiongreaterthan) | Compared variable must be greater than this value. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| lessOrEqualTo | [Builder](#intconditionlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#intconditionlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#intconditionnotequalto) | Compared variable must not be equal to this value. |
 
 ### <a id="allConditions.&lt;list of mappings&gt;.stringCondition"></a>allConditions.&lt;list of mappings&gt;.stringCondition
 
@@ -95,16 +108,96 @@ Tests session variable containing boolean value.
 
 Condition comparing integer in session variable.
 
+
+| Inline definition |
+| -------- |
+| Parses condition in the form &lt;variable&gt; &lt;operator&gt; &lt;value&gt;
+             where operator is one of: <code>==</code>, <code>!=</code>,
+             <code>&lt;&gt;</code> (the same as <code>!=</code>),
+             <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&lt;</code>. |
+
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
+| equalTo | [Builder](#intconditionequalto) | Compared variable must be equal to this value. |
 | fromVar | Object | Variable name. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
+| greaterOrEqualTo | [Builder](#intconditiongreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#intconditiongreaterthan) | Compared variable must be greater than this value. |
 | isSet | boolean | Check if the value is set or unset. By default the variable must be set. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| lessOrEqualTo | [Builder](#intconditionlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#intconditionlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#intconditionnotequalto) | Compared variable must not be equal to this value. |
+
+### <a id="intCondition.equalTo"></a>intCondition.equalTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="intCondition.greaterOrEqualTo"></a>intCondition.greaterOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="intCondition.greaterThan"></a>intCondition.greaterThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="intCondition.lessOrEqualTo"></a>intCondition.lessOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="intCondition.lessThan"></a>intCondition.lessThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="intCondition.notEqualTo"></a>intCondition.notEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
 
 ### <a id="stringCondition"></a>stringCondition
 
@@ -129,10 +222,82 @@ Condition comparing string in session variable.
 
 | Property | Type | Description |
 | ------- | ------- | ------- |
-| equalTo | int | Compared variable must be equal to this value. |
-| greaterOrEqualTo | int | Compared variable must be greater or equal to this value. |
-| greaterThan | int | Compared variable must be greater than this value. |
-| lessOrEqualTo | int | Compared variable must be lower or equal to this value. |
-| lessThan | int | Compared variable must be lower than this value. |
-| notEqualTo | int | Compared variable must not be equal to this value. |
+| equalTo | [Builder](#stringconditionlengthequalto) | Compared variable must be equal to this value. |
+| greaterOrEqualTo | [Builder](#stringconditionlengthgreaterorequalto) | Compared variable must be greater or equal to this value. |
+| greaterThan | [Builder](#stringconditionlengthgreaterthan) | Compared variable must be greater than this value. |
+| lessOrEqualTo | [Builder](#stringconditionlengthlessorequalto) | Compared variable must be lower or equal to this value. |
+| lessThan | [Builder](#stringconditionlengthlessthan) | Compared variable must be lower than this value. |
+| notEqualTo | [Builder](#stringconditionlengthnotequalto) | Compared variable must not be equal to this value. |
+
+### <a id="stringCondition.length.equalTo"></a>stringCondition.length.equalTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="stringCondition.length.greaterOrEqualTo"></a>stringCondition.length.greaterOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="stringCondition.length.greaterThan"></a>stringCondition.length.greaterThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="stringCondition.length.lessOrEqualTo"></a>stringCondition.length.lessOrEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="stringCondition.length.lessThan"></a>stringCondition.length.lessThan
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
+
+### <a id="stringCondition.length.notEqualTo"></a>stringCondition.length.notEqualTo
+
+
+| Inline definition |
+| -------- |
+| Uses the argument as a constant value. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| fromVar | String | Input variable name. |
+| value | int | Value (integer). |
 

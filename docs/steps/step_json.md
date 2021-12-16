@@ -1,5 +1,3 @@
----
----
 # json
 
 Parse JSON in variable into another variable.
@@ -23,6 +21,7 @@ Custom transformation executed on the value of the selected item. Note that the 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | actions | [ActionsTransformer.Builder](#replaceactions) | This transformer stores the (defragmented) input into a variable, using requested format. After that it executes all the actions and fetches transformed value using the pattern. |
+| pattern | [Pattern.TransformerBuilder](#replacepattern) | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 
 ### <a id="replace.actions"></a>replace.actions
 
@@ -34,4 +33,17 @@ This transformer stores the (defragmented) input into a variable, using requeste
 | format | enum | Format into which should this transformer convert the buffers before storing. Default is <code>STRING</code>.<br>Options:{::nomarkdown}<ul><li><code>BYTEBUF</code>: {:/}Store the buffer directly. Beware that this may cause memory leaks!{::nomarkdown}</li><li><code>BYTES</code>: {:/}Store data as byte array.{::nomarkdown}</li><li><code>STRING</code>: {:/}Interprets the bytes as UTF-8 string.{::nomarkdown}</li></ul>{:/} |
 | pattern | String | <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">Pattern</a> to use when fetching the transformed value. |
 | var | String | Variable used as the intermediate storage for the data. |
+
+### <a id="replace.pattern"></a>replace.pattern
+
+Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables.
+
+
+| Inline definition |
+| -------- |
+| The pattern formatting string. |
+
+| Property | Type | Description |
+| ------- | ------- | ------- |
+| pattern | String | Use <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> replacing session variables. |
 

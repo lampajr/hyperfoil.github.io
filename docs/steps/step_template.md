@@ -1,5 +1,3 @@
----
----
 # template
 
 Format <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a> into session variable.
