@@ -2,6 +2,7 @@ function insertCodesample(where, tag, src, slice) {
     var pre = document.createElement('pre');
     var code = document.createElement('code');
     code.id = (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    code.innerHTML = '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>'
     pre.insertBefore(code, null);
     where.parentNode.insertBefore(pre, document.currentScript)
     fetch('https://raw.githubusercontent.com/Hyperfoil/Hyperfoil/' + tag + '/' + src , { cache: "reload"})
