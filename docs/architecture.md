@@ -112,7 +112,7 @@ public class FooStep implements Step, ResourceUtilizer {
 
 There are several types of extension components: steps, actions and processors get extra attention but it is possible to use other interfaces as well. Actions are the simplest of these: these do not require any input (but the session) and do always execute without blocking. Therefore it is possible to use an action on any place where a step or processor would fit. When loading the component by name Hyperfoil automatically wraps the action into an adapter to the target component type.
 
-# Thread-local, agent-local and global data
+## Thread-local, agent-local and global data
 
 Besides session variables Hyperfoil offers 3 more levels of memory. Neither of those is limited to the currently executing phase: this data is not reset until the run completes.
 
