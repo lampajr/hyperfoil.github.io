@@ -54,6 +54,8 @@
       link: /userguide/benchmark/scenario.html
     - title: Session variables
       link: /userguide/benchmark/variables.html
+  - title: Templates
+    link: /userguide/templates.html
   - title: Examples
     link: /userguide/examples.html
   - title: Troubleshooting
