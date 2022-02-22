@@ -2666,6 +2666,18 @@ redirect_from: /schema
         "fromVar" : {
           "type" : "string"
         },
+        "processor" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.processor.Processor$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.processor.Processor$Builder"
+            }
+          } ]
+        },
         "query" : {
           "type" : "string"
         },
@@ -3887,6 +3899,51 @@ redirect_from: /schema
               "$ref" : "#/definitions/io.hyperfoil.http.html.EmbeddedResourceHandlerBuilder"
             }
           } ]
+        },
+        "onTagAttribute" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.http.html.TagAttributeHandlerBuilder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.http.html.TagAttributeHandlerBuilder"
+            }
+          } ]
+        }
+      }
+    },
+    "io.hyperfoil.http.html.TagAttributeHandlerBuilder" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "attribute" : {
+          "type" : "string"
+        },
+        "format" : {
+          "enum" : [ "BYTEBUF", "BYTES", "STRING" ]
+        },
+        "processor" : {
+          "oneOf" : [ {
+            "$ref" : "#/definitions/io.hyperfoil.api.processor.Processor$Builder"
+          }, {
+            "type" : "array",
+            "minLength" : 1,
+            "additionalItems" : false,
+            "items" : {
+              "$ref" : "#/definitions/io.hyperfoil.api.processor.Processor$Builder"
+            }
+          } ]
+        },
+        "tag" : {
+          "type" : "string"
+        },
+        "toArray" : {
+          "type" : "string"
+        },
+        "toVar" : {
+          "type" : "string"
         }
       }
     },

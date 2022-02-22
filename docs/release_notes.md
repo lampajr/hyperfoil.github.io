@@ -2,6 +2,11 @@
 ---
 # Release notes
 
+## 0.19 (2022-02-22)
+
+* Minor release with bugfixes
+* Generic HTML tag parser: [parseHtml.onTagAttribute]({{ "/docs/steps/processor_parseHtml.html#ontagattribute" | absolute_url }})
+
 ## 0.18 (2021-12-16)
 
 * New benchmark templating system: `!param`, `!concat` and `!foreach`

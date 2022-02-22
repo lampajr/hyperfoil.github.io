@@ -7,6 +7,7 @@ Parse JSON in variable into another variable.
 | delete | boolean | If this is set to true, the selected key will be deleted from the JSON and the modified JSON will be passed to the <code>processor</code>. |
 | format | enum | Conversion to apply on the matching parts with 'toVar' or 'toArray' shortcuts.<br>Options:{::nomarkdown}<ul><li><code>BYTEBUF</code>: {:/}Store the buffer directly. Beware that this may cause memory leaks!{::nomarkdown}</li><li><code>BYTES</code>: {:/}Store data as byte array.{::nomarkdown}</li><li><code>STRING</code>: {:/}Interprets the bytes as UTF-8 string.{::nomarkdown}</li></ul>{:/} |
 | fromVar | String | Variable to load JSON from. |
+| processor | [Processor.Builder](index.html#processors) | Add one or more processors. |
 | query | String | Query selecting the part of JSON. |
 | replace | [Transformer.Builder](#replace) | Custom transformation executed on the value of the selected item. Note that the output value must contain quotes (if applicable) and be correctly escaped. |
 | replace (alternative)| String | Replace value of selected item with value generated through a <a href="https://hyperfoil.io/userguide/benchmark/variables.html#string-interpolation">pattern</a>. Note that the result must contain quotes and be correctly escaped. |

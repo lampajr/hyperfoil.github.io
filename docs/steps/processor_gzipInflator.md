@@ -7,5 +7,5 @@ Decompresses a GZIP data and pipes the output to delegated processors. If the da
 | Property | Type | Description |
 | ------- | ------- | -------- |
 | encodingVar | Object | Variable used to pass header value from header handlers. |
-| processor | [Processor.Builder](index.html#processors) | Add one or more delegated processors. |
+| processor | [Processor.Builder](index.html#processors) | Add one or more processors. |
 

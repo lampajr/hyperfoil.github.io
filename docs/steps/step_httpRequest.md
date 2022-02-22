@@ -518,7 +518,7 @@ Compares if the header name matches expression and invokes a processor with the 
 | Property | Type | Description |
 | ------- | ------- | ------- |
 | header | [Builder](#handlerheaderfilterheader) | Condition on the header name. |
-| processor | [Processor.Builder](index.html#processors) | Add one or more delegated processors. |
+| processor | [Processor.Builder](index.html#processors) | Add one or more processors. |
 
 ### <a id="handler.header.filter.header"></a>handler.header.filter.header
 
