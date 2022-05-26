@@ -1,3 +1,6 @@
+---
+excerpt: "Undefine variable name."
+---
 # unset
 
 Undefine variable name.

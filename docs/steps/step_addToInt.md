@@ -1,3 +1,6 @@
+---
+excerpt: "Add value to integer variable in the session."
+---
 # addToInt
 
 Add value to integer variable in the session.

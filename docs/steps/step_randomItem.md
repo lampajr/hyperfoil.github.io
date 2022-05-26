@@ -1,3 +1,6 @@
+---
+excerpt: "Stores random item from a list or array into session variable."
+---
 # randomItem
 
 Stores random item from a list or array into session variable.

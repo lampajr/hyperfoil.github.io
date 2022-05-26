@@ -1,4 +1,5 @@
 ---
+excerpt: "Perform an action or sequence of actions conditionally."
 ---
 # conditional
 

@@ -1,4 +1,5 @@
 ---
+excerpt: "Sets value in a counter shared by all sessions in the same executor."
 ---
 # setSharedCounter
 

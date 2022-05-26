@@ -1,3 +1,6 @@
+---
+excerpt: "Block current sequence for specified duration."
+---
 # thinkTime
 
 Block current sequence for specified duration.

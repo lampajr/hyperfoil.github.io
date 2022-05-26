@@ -1,4 +1,5 @@
 ---
+excerpt: "Appends value to an array stored in another variable."
 ---
 # addItem
 

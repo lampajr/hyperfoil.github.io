@@ -1,4 +1,5 @@
 ---
+excerpt: "Set element in a collection on given position."
 ---
 # setItem
 

@@ -1,4 +1,5 @@
 ---
+excerpt: "Records number of parts this processor is invoked on."
 ---
 # count
 

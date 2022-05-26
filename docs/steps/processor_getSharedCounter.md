@@ -1,8 +1,9 @@
 ---
+excerpt: "Retrieves value from a counter shared by all sessions in the same executor and stores that in a session variable. "
 ---
 # getSharedCounter
 
-Retrieves value from a counter shared by all sessions in the same executor and stores that in a session variable. If the value exceeds allowed integer range (-2^31 .. 2^31 - 1) it is capped.
+Retrieves value from a counter shared by all sessions in the same executor and stores that in a session variable. <br> If the value exceeds allowed integer range (-2^31 .. 2^31 - 1) it is capped.
 
 | Inline definition |
 | -------- |

@@ -1,3 +1,6 @@
+---
+excerpt: "Block this sequence until referenced delay point."
+---
 # awaitDelay
 
 Block this sequence until referenced delay point.

@@ -1,8 +1,9 @@
 ---
+excerpt: "Passes the data to nested processor if the condition holds. "
 ---
 # conditional
 
-Passes the data to nested processor if the condition holds. Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.
+Passes the data to nested processor if the condition holds. <br> Note that the condition may be evaluated multiple times and therefore any nested processors should not change the results of the condition.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |

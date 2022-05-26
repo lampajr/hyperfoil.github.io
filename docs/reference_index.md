@@ -9,7 +9,7 @@ This reference lists all the steps and handlers used in a scenario. The lists be
 There are few generic types of components:
 * [steps]({{ "/docs/reference_steps.html" | absolute_url }})
 * [actions]({{ "/docs/reference_actions.html" | absolute_url }})
-* [processors]({{ "/docs/reference_steps.html" | absolute_url }})
+* [processors]({{ "/docs/reference_processors.html" | absolute_url }})
 
 This documentation is auto-generated from Javadoc in source code, explaining format for each key-value pair in benchmark YAML. If there is an issue with these docs (e.g. property showing no description) please [file an issue on GitHub](https://github.com/Hyperfoil/Hyperfoil/issues/new).
 

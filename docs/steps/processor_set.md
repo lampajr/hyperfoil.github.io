@@ -1,4 +1,5 @@
 ---
+excerpt: "Set variable in session to certain value."
 ---
 # set
 

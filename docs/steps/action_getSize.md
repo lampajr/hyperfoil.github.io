@@ -1,4 +1,5 @@
 ---
+excerpt: "Calculates size of an array/collection held in variable into another variable"
 ---
 # getSize
 

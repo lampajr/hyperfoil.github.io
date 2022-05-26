@@ -1,4 +1,5 @@
 ---
+excerpt: "Stores data in an array stored as session variable."
 ---
 # array
 

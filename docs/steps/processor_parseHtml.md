@@ -1,4 +1,5 @@
 ---
+excerpt: "Parses HTML tags and invokes handlers based on criteria."
 ---
 # parseHtml
 

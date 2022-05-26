@@ -1,7 +1,11 @@
 ---
+excerpt: "Parse string into integer and store it in a variable. "
 ---
 # stringToInt
 
+Parse string into integer and store it in a variable. 
+
+ If the parsing fails the target variable is not modified.
 
 | Inline definition |
 | -------- |

@@ -1,6 +1,9 @@
+---
+excerpt: "Stores the current time in milliseconds as string to a session variable."
+---
 # timestamp
 
-Stores the current time in milliseconds as {@link String} to a session variable.
+Stores the current time in milliseconds as string to a session variable.
 
 | Inline definition |
 | -------- |

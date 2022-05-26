@@ -1,4 +1,5 @@
 ---
+excerpt: "Parses JSON responses using simple queries."
 ---
 # json
 

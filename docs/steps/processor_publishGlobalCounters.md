@@ -1,8 +1,22 @@
 ---
+excerpt: "Gathers values from session variables and publishes them globally (to all agents). "
 ---
 # publishGlobalCounters
 
-Gathers values from session variables and publishes them globally (to all agents). You can name the counters individually (example 1) or use the variable names (example 2): <br> <code> # Example 1: - publishGlobalCounters: key: myKey vars: [ foo, bar ] # Example 2: - publishGlobalCounters: key: someOtherKey vars: - foo: myFoo - bar: bbb </code>
+Gathers values from session variables and publishes them globally (to all agents). <br> You can name the counters individually (example 1) or use the variable names (example 2): <br> 
+```<code>
+# Example 1:
+- publishGlobalCounters:
+    key: myKey
+    vars: [ foo, bar ]
+# Example 2:
+- publishGlobalCounters:
+    key: someOtherKey
+    vars:
+    - foo: myFoo
+    - bar: bbb
+</code>```
+
 
 | Property | Type | Description |
 | ------- | ------- | -------- |

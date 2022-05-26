@@ -1,3 +1,6 @@
+---
+excerpt: "Stores random (linearly distributed) integer into session variable."
+---
 # randomInt
 
 Stores random (linearly distributed) integer into session variable.

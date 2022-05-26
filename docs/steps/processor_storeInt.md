@@ -1,4 +1,5 @@
 ---
+excerpt: "Converts buffers into integral value and stores it in a variable."
 ---
 # storeInt
 

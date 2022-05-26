@@ -1,8 +1,9 @@
 ---
+excerpt: "Collects results of processor invocation into a unbounded list. "
 ---
 # collection
 
-Collects results of processor invocation into a unbounded list. WARNING: This processor should be used rarely as it allocates memory during the benchmark.
+Collects results of processor invocation into a unbounded list. <br> WARNING: This processor should be used rarely as it allocates memory during the benchmark.
 
 | Inline definition |
 | -------- |

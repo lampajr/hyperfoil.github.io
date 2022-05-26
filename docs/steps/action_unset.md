@@ -1,4 +1,5 @@
 ---
+excerpt: "Undefine variable name."
 ---
 # unset
 

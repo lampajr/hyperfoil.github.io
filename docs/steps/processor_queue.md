@@ -1,8 +1,9 @@
 ---
+excerpt: "Stores defragmented data in a queue. "
 ---
 # queue
 
-Stores defragmented data in a queue. For each item in the queue a new sequence instance will be started (subject the concurrency constraints) with sequence index that allows it to read an object from an array using sequence-scoped access.
+Stores defragmented data in a queue. <br> For each item in the queue a new sequence instance will be started (subject the concurrency constraints) with sequence index that allows it to read an object from an array using sequence-scoped access.
 
 | Property | Type | Description |
 | ------- | ------- | -------- |

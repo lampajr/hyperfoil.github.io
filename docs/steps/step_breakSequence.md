@@ -1,3 +1,6 @@
+---
+excerpt: "Prematurely stops execution of this sequence if the condition is satisfied."
+---
 # breakSequence
 
 Prematurely stops execution of this sequence if the condition is satisfied.

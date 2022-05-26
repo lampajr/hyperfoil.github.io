@@ -1,4 +1,5 @@
 ---
+excerpt: "Set session variable to an integral value."
 ---
 # setInt
 

@@ -1,3 +1,6 @@
+---
+excerpt: "Adds value to a counter shared by all sessions in the same executor."
+---
 # addToSharedCounter
 
 Adds value to a counter shared by all sessions in the same executor.

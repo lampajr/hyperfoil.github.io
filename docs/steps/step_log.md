@@ -1,3 +1,6 @@
+---
+excerpt: "Log a message and variable values."
+---
 # log
 
 Log a message and variable values.

@@ -1,3 +1,6 @@
+---
+excerpt: "Block current sequence until this variable gets set/unset."
+---
 # awaitVar
 
 Block current sequence until this variable gets set/unset.

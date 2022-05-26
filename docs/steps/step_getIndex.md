@@ -1,3 +1,6 @@
+---
+excerpt: "Lookup index of an item in an array/collection."
+---
 # getIndex
 
 Lookup index of an item in an array/collection.

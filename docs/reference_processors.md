@@ -10,4 +10,4 @@ Also it is possible to use an [action]({{ "/docs/reference_actions.html" | absol
 
 List of currently implemented processors:
 
-{% include refcomp.html prefix="/docs/steps/processor_" %}
+{% include refcomp.html prefix="/docs/steps/processor_" excerpt=true %}

@@ -1,3 +1,6 @@
+---
+excerpt: "Makes the data available to all sessions in the same agent, including those using different executors."
+---
 # publishAgentData
 
 Makes the data available to all sessions in the same agent, including those using different executors.

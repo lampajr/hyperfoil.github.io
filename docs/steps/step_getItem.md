@@ -1,3 +1,6 @@
+---
+excerpt: "Retrieves n-th item from an array or collection."
+---
 # getItem
 
 Retrieves n-th item from an array or collection.

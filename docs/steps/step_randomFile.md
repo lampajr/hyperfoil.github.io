@@ -1,6 +1,9 @@
+---
+excerpt: "Reads bytes from a randomly chosen file into a variable. "
+---
 # randomFile
 
-Reads bytes from a randomly chosen file into a variable. Two formats are supported: Example 1 - without weights: 
+Reads bytes from a randomly chosen file into a variable. <br> Two formats are supported: <br> Example 1 - without weights: 
 ```
 toVar: myVar
 files:

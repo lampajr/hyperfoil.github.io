@@ -1,3 +1,6 @@
+---
+excerpt: "Stores random row from a CSV-formatted file to variables."
+---
 # randomCsvRow
 
 Stores random row from a CSV-formatted file to variables.

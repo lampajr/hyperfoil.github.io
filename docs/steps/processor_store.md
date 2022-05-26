@@ -1,4 +1,5 @@
 ---
+excerpt: "Stores data in a session variable (overwriting on multiple occurences)."
 ---
 # store
 

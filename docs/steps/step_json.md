@@ -1,3 +1,6 @@
+---
+excerpt: "Parse JSON in variable into another variable."
+---
 # json
 
 Parse JSON in variable into another variable.

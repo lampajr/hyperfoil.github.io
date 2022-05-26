@@ -1,4 +1,5 @@
 ---
+excerpt: "Removes element from an array of variables."
 ---
 # removeItem
 

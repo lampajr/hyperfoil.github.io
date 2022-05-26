@@ -1,3 +1,6 @@
+---
+excerpt: "Move values from a map shared across all sessions using the same executor into session variables. "
+---
 # pullSharedMap
 
 Move values from a map shared across all sessions using the same executor into session variables. 

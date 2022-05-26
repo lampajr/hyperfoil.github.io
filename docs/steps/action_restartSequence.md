@@ -1,4 +1,5 @@
 ---
+excerpt: "Schedules a restart of this sequence."
 ---
 # restartSequence
 

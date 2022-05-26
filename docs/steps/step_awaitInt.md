@@ -1,3 +1,6 @@
+---
+excerpt: "Block current sequence until condition becomes true."
+---
 # awaitInt
 
 Block current sequence until condition becomes true.

@@ -1,3 +1,6 @@
+---
+excerpt: "Instantiates a sequence for each invocation."
+---
 # newSequence
 
 Instantiates a sequence for each invocation.
