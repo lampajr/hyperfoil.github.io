@@ -2,6 +2,10 @@
 ---
 # Release notes
 
+## 0.21 (2022-07-12)
+
+* Minor bugfix-only release.
+
 ## 0.20 (2022-05-26)
 
 * Vert.x 4.3 and Infinispan 13 for clustering
