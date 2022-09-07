@@ -28,6 +28,10 @@ In this simple constant-rate benchmark you can customize the number of users sta
 
 Parameters don't have to be upper-case. The identifier is case-sensitive, though.
 
+<pre class="language-plaintext">
+<code>$ run scalar-value-example -P NUM_USERS=5 -P DURATION=60s
+</code></pre>
+
 # Concat
 
 Sometimes you need to replace only part of a string: `!concat` will let you do that:
