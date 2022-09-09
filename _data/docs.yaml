@@ -60,6 +60,10 @@
     link: /userguide/examples.html
   - title: Troubleshooting
     link: /userguide/troubleshooting.html
+- title: Migration
+  items:
+  - title: wrk/wrk2
+    link: /docs/migration/wrk.html
 - title: Reference
   link: /docs/reference_index.html
   include: reference.html
