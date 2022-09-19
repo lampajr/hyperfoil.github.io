@@ -1,5 +1,5 @@
 ---
-redirect_from: /schema
+redirectFrom: /schema
 ---
 {
   "$schema" : "http://json-schema.org/draft-07/schema",
@@ -2976,6 +2976,12 @@ redirect_from: /schema
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "localeCountry" : {
+          "type" : "string"
+        },
+        "pattern" : {
+          "type" : "string"
+        },
         "toVar" : {
           "type" : "string"
         }

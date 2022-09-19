@@ -2,6 +2,14 @@
 ---
 # Release notes
 
+## 0.22 (2022-09-19)
+
+* Fixes and output synchronization in `wrk`/`wrk2` commands
+* Fixes for aarch-64
+* Formatting in `timestamp` step
+* When a template is missing referenced file CLI asks user to provide it
+* One-key switch for interactive statistics in CLI
+
 ## 0.21 (2022-07-12)
 
 * Minor bugfix-only release.
