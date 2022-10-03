@@ -24,6 +24,11 @@
     link: /quickstart/quickstart7.html
   - title: Custom components
     link: /quickstart/quickstart8.html
+- title: How To...
+  link: /docs/howtos.html
+  items:
+  - title: Use credentials from file
+    link: /docs/howto/credentials.html
 - title: User Guide
   items:
   - title: Installation
