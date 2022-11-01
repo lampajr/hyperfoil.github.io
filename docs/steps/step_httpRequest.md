@@ -528,7 +528,7 @@ Compares if the header name matches expression and invokes a processor with the 
 
 | Inline definition |
 | -------- |
-| String that should be matched. |
+| Literal value the string should match. |
 
 | Property | Type | Description |
 | ------- | ------- | ------- |

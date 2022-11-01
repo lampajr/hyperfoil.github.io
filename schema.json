@@ -1817,8 +1817,8 @@ redirectFrom: /schema
         "file" : {
           "type" : "string"
         },
-        "removeQuotes" : {
-          "type" : "boolean"
+        "separator" : {
+          "type" : "string"
         },
         "skipComments" : {
           "type" : "boolean"

@@ -2,6 +2,12 @@
 ---
 # Release notes
 
+## 0.23 (2022-10-31)
+
+* Fix for HTTP2 requests not flushing request body
+* Reimplemented randomCsvRow CSV parsing and quotes handling
+* Command `upload` in CLI/WebCLI now accepts URL
+
 ## 0.22 (2022-09-19)
 
 * Fixes and output synchronization in `wrk`/`wrk2` commands
