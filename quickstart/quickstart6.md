@@ -1,15 +1,17 @@
 ---
 ---
+
 # Getting started: Running the server
 
-Until now we have always started our benchmarks using an embedded *controller* in the CLI, using the `start-local` command. This spawns a server in the CLI JVM. CLI communicates with it using standard REST API, though the server port is randomized and listens on localhost only. All the benchmarks and run results are also stored in `/tmp/hyperfoil/` - you can change the directory as an argument to the `start-local` command.
+Until now we have always started our benchmarks using an embedded _controller_ in the CLI, using the `start-local` command. This spawns a server in the CLI JVM. CLI communicates with it using standard REST API, though the server port is randomized and listens on localhost only. All the benchmarks and run results are also stored in `/tmp/hyperfoil/` - you can change the directory as an argument to the `start-local` command.
 While the embedded controller might be convenient for a quick test or when developing the scenario it's not something that you'd use for a full-fledged benchmark.
 
-When testing a reasonably performing system you need multiple nodes driving the load - we call them *agents*. These agents sync up, receive commands and report statistics to a master node, the *controller*. This node exposes a RESTful API to upload & start the benchmark, watch its progress and download results.
+When testing a reasonably performing system you need multiple nodes driving the load - we call them _agents_. These agents sync up, receive commands and report statistics to a master node, the _controller_. This node exposes a RESTful API to upload & start the benchmark, watch its progress and download results.
 
 There are two other scripts in the `bin/` directory:
-* `standalone.sh` starts both the controller and (one) agent in a single JVM. This is not too different from the controller embedded in CLI.
-* `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
+
+- `standalone.sh` starts both the controller and (one) agent in a single JVM. This is not too different from the controller embedded in CLI.
+- `controller.sh` starts clustered [Vert.x](https://vertx.io/) and deploys the controller. Agents are started as needed in different nodes. You'll see this in the [next quickstart]({{ "/quickstart/quickstart7.html" | absolute_url }}).
 
 Also note that it is possible to [run Hyperfoil in Openshift]({{ "/userguide/installation/k8s.html" | absolute_url }}).
 
@@ -35,7 +37,8 @@ Phase    Name  Requests  Responses  Mean       Min        p50.0      p90.0      
 example  test  1         1          267911168  267386880  268435455  268435455  268435455  268435455  268435455  268435455  2655879       0            0      0         0    1    0    0    0      0        0             0
 ```
 
-Reading CSV files directly is not too comfortable; you can check the details through CLI as well:
+Reading CSV/JSON files directly is not too comfortable; you can check the details through CLI as well:
+
 <pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ stats
 Total stats from run 002D
@@ -47,7 +50,7 @@ example:
 By the time you type the `stats` command into CLI the benchmark is already completed and the CLI shows stats for the whole run. Let's try running the {% include example_link.md src='eshop-scale.hf.yaml' %} we've seen in previous quickstart; this will give us some time to observe on-line statistics as the benchmark is progressing:
 
 ```shell
-> docker run -v $(pwd)/examples/eshop.server:/config:z -p 8080:8083 jordimartin/mmock
+> podman run --rm -p 8080:8083 quay.io/hyperfoil/hyperfoil-examples
 ```
 
 <pre class="nohighlight hljs"><code>

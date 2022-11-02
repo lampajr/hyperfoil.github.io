@@ -1,5 +1,6 @@
 ---
 ---
+
 # Getting started: Starting clustered Hyperfoil
 
 [Previously]({{ "/quickstart/quickstart6.html" | absolute_url }}) we've learned to start Hyperfoil in standalone server mode, and to do some runs through CLI. In this quickstart we'll see how to run your benchmark distributed to several agent nodes.
@@ -14,13 +15,14 @@ When we were running in the standalone or local mode we did not have to set any 
 
 The load the benchmark generates is evenly split among the agents, so if you want to use another agent, you don't need to do any calculations - just add the agent and you're good to go.
 
-Open three terminals; in the first start the controller using `bin/controller.sh`, in second one open the CLI with `bin/cli.sh` and in the third one start the mock server:
+Open three terminals; in the first start the controller using `bin/controller.sh`, in second one open the CLI with `bin/cli.sh` and in the third one start the example workload server:
 
 ```shell
-> docker run -v $(pwd)/examples/two-agents.server:/config:z -p 8080:8083 jordimartin/mmock
+> podman run --rm -p 8080:8083 quay.io/hyperfoil/hyperfoil-examples
 ```
 
 Connect, upload, start and check out the benchmark using CLI exactly the same way as we did in the previous quickstart:
+
 <pre class="nohighlight hljs"><code>
 [hyperfoil@localhost]$ connect
 Connected!
