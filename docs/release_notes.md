@@ -2,6 +2,17 @@
 ---
 # Release notes
 
+## 0.24.1 (2023-02-02)
+
+* Return correct protocol
+* Validate wrk benchmark before running simulation
+
+## 0.24 (2022-12-15)
+
+* Initial support for Mac OS/x86_64
+* Fix serialization for Timestamp
+* Dependency updates
+
 ## 0.23 (2022-10-31)
 
 * Fix for HTTP2 requests not flushing request body
