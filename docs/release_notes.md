@@ -2,6 +2,10 @@
 ---
 # Release notes
 
+## 0.24.2 (2023-05-02)
+
+* Bug fix and enhancements release
+ 
 ## 0.24.1 (2023-02-02)
 
 * Return correct protocol
