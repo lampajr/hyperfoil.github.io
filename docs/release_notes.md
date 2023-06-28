@@ -2,9 +2,15 @@
 ---
 # Release notes
 
+## 0.25 (2023-06-28)
+
+* startWith: Delay feature
+* Enhancements
+* Bug fixes
+ 
 ## 0.24.2 (2023-05-02)
 
-* Bug fix and enhancements release
+* Bug fix and enhancements
  
 ## 0.24.1 (2023-02-02)
 
