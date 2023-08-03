@@ -77,4 +77,4 @@ See also further information about [custom extensions development]({{ "/docs/ext
 
 ---
 
-This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "/docs/" | absolute_url }}) or talk to us on [Zulip](https://hyperfoil.zulipchat.com/).
+This is the last quickstart in this series; if you seek more info check out the [documentation]({{ "/docs/" | absolute_url }}) or talk to us on [GitHub Discussions](https://github.com/Hyperfoil/Hyperfoil/discussions).
