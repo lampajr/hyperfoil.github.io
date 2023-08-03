@@ -2,6 +2,14 @@
 ---
 # Release notes
 
+## 0.25.2 (2023-08-03)
+
+* Big fix: Version command not working
+ 
+## 0.25.1 (2023-08-02)
+
+* Update dependencies
+ 
 ## 0.25 (2023-06-28)
 
 * startWith: Delay feature
