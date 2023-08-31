@@ -72,3 +72,13 @@ http:
   addresses:
   - 127.0.0.1:8080
 ```
+
+## When I use a session variable I am seeing the error "Variable foo is not set!"
+
+```
+Errors:
+in-vm: Variable foo is not set!
+```
+
+ On occasion a scenario step has been seen to execute out of sequence. To ensure the variable is set beforehand use `initialSequences` with the step that populates the variable.
+ 

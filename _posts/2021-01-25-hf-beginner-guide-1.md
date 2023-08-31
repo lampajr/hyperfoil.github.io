@@ -263,7 +263,7 @@ scenario:
       GET: /offering/${offering}
 ```
 
-We have extended the `fetchDetails` sequence to two steps. In the first step [randomInt](/docs/steps/step_randomInt.html) we generate a random integer between 1 and 100 (inclusive) and store that in the *user session* under the key `offering`. Each virtual user has its own session that defines the state of the scenario and keeps all the session variables. In the second step [httpRequest](/docs/steps/step_httpRequest.html) we specify the path for a GET request using a template interpolating `${offering}` into the value of the variable.
+We have extended the `fetchDetails` sequence to two steps. In the first step [randomInt](/docs/steps/step_randomInt.html) we generate a random integer between 1 and 100 (inclusive) and store that in the *user session* under the key `offering`. Each virtual user has its own session that defines the state of the scenario and keeps all the session variables. Consider using [initialSequences](/userguide/benchmark/scenario.html) to ensure session variables are populated. In the second step [httpRequest](/docs/steps/step_httpRequest.html) we specify the path for a GET request using a template interpolating `${offering}` into the value of the variable.
 
 If you execute the request using web browser with a network monitor you'll find out that it's not just the document located at `http://localhost:8080/offering/1` it is fetching. There's also images, scripts and CSS. Hyperfoil offers an [easy-to-use option](/2020/11/16/fetch-embedded.html) to download resources fetched from the HTML page:
 
